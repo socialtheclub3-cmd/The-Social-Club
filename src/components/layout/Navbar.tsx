@@ -114,10 +114,10 @@ const Navbar: React.FC = () => {
               onChange={(e) => setCurrency(e.target.value as any)}
               className="appearance-none bg-[#1E1E1E]/5 dark:bg-white/10 hover:bg-[#1E1E1E]/10 dark:hover:bg-white/20 text-[#1E1E1E] dark:text-white rounded-full px-3 py-1.5 text-xs font-bold cursor-pointer outline-none focus:ring-2 focus:ring-[#A78BFA] transition-all"
             >
-              <option value="USD">USD</option>
-              <option value="SAR">SAR</option>
-              <option value="AED">AED</option>
-              <option value="EGP">EGP</option>
+              <option value="USD">🇺🇸 USD ($)</option>
+              <option value="SAR">🇸🇦 SAR (ر.س)</option>
+              <option value="AED">🇦🇪 AED (د.إ)</option>
+              <option value="EGP">🇪🇬 EGP (ج.م)</option>
             </select>
 
             {/* Dark/Light Mode Toggle */}
@@ -153,10 +153,10 @@ const Navbar: React.FC = () => {
               onChange={(e) => setCurrency(e.target.value as any)}
               className="appearance-none bg-[#1E1E1E]/50 dark:bg-white/10 text-[#1E1E1E] dark:text-white rounded-full px-2 py-1 text-[10px] font-bold cursor-pointer outline-none"
             >
-              <option value="USD">USD</option>
-              <option value="SAR">SAR</option>
-              <option value="AED">AED</option>
-              <option value="EGP">EGP</option>
+              <option value="USD">🇺🇸 USD ($)</option>
+              <option value="SAR">🇸🇦 SAR (ر.س)</option>
+              <option value="AED">🇦🇪 AED (د.إ)</option>
+              <option value="EGP">🇪🇬 EGP (ج.م)</option>
             </select>
 
             <button
