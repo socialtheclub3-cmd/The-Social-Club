@@ -25,7 +25,7 @@ const LiveTicker: React.FC = () => {
   const events = isAr ? eventsAr : eventsEn;
 
   useEffect(() => {
-    // Start showing popups after 3 seconds
+    // Show first one after 3 seconds
     const initialDelay = setTimeout(() => {
       showNextEvent();
     }, 3000);
@@ -37,17 +37,16 @@ const LiveTicker: React.FC = () => {
     setEventIndex(Math.floor(Math.random() * events.length));
     setIsVisible(true);
     
-    // Hide after 5 seconds
+    // Hide after 15 seconds (duration of animation)
     setTimeout(() => {
       setIsVisible(false);
       
-      // Show next one after 2 to 3 minutes
-      const nextDelay = 120000 + Math.random() * 60000;
+      // Show next one after 10 minutes (600,000 ms)
       setTimeout(() => {
         showNextEvent();
-      }, nextDelay);
+      }, 600000);
       
-    }, 5000);
+    }, 15000);
   };
 
   const currentEvent = events[eventIndex];
@@ -56,26 +55,24 @@ const LiveTicker: React.FC = () => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, y: 50, x: isAr ? 50 : -50 }}
-          animate={{ opacity: 1, y: 0, x: 0 }}
-          exit={{ opacity: 0, y: 20, scale: 0.9 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          className={`fixed bottom-24 ${isAr ? 'right-6' : 'left-6'} z-[8000] bg-white/90 dark:bg-[#1E1E1E]/90 backdrop-blur-md shadow-2xl border border-white/20 dark:border-white/10 rounded-2xl p-4 w-72 md:w-80 flex items-start gap-4`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed top-[72px] left-0 w-full z-[8000] bg-[#1E1E1E] text-white py-2 overflow-hidden flex items-center"
         >
-          <div className="w-10 h-10 rounded-full bg-[#A78BFA]/20 flex items-center justify-center flex-shrink-0 mt-1">
-            <CheckCircle size={20} className="text-[#A78BFA]" />
-          </div>
-          <div>
-            <p className="text-sm font-bold text-[#1E1E1E] dark:text-white mb-1">
-              {currentEvent.name}
-            </p>
-            <p className="text-xs text-[#1E1E1E]/70 dark:text-white/70">
-              {currentEvent.action}
-            </p>
-            <p className="text-[10px] text-[#A78BFA] font-semibold mt-2">
+          <motion.div
+            initial={{ x: isAr ? '-100vw' : '100vw' }}
+            animate={{ x: isAr ? '100vw' : '-100vw' }}
+            transition={{ duration: 15, ease: 'linear' }}
+            className="flex items-center gap-3 whitespace-nowrap px-4"
+          >
+            <CheckCircle size={16} className="text-[#7ED6B7]" />
+            <span className="font-bold">{currentEvent.name}</span>
+            <span className="opacity-80">{currentEvent.action}</span>
+            <span className="text-[#7ED6B7] text-xs ml-2">
               {isAr ? 'منذ قليل' : 'Just now'}
-            </p>
-          </div>
+            </span>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
