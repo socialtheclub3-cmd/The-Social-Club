@@ -40,8 +40,8 @@ const FinalCTA: React.FC = () => {
       <div className="container-custom relative z-10 text-center">
         <AnimatedSection>
           <span className="inline-flex items-center gap-2 mb-6">
-            <span className="w-2 h-2 rounded-full bg-[#A78BFA]" />
-            <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.18em] text-[#A78BFA]">
+            <span className="w-2 h-2 rounded-full bg-[#1E1E1E]" />
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.18em] text-[#1E1E1E]">
               {t.badge}
             </span>
           </span>
