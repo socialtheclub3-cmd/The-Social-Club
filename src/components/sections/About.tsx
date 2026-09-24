@@ -67,7 +67,7 @@ const About: React.FC = () => {
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 text-sm font-black"
-                    style={{ backgroundColor: `${pillar.color}20`, color: pillar.color }}
+                    style={{ backgroundColor: `${pillar.color}20`, color: '#1E1E1E' }}
                   >
                     {pillar.label[0]}
                   </div>
