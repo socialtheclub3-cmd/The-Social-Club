@@ -25,10 +25,10 @@ const LiveTicker: React.FC = () => {
   const events = isAr ? eventsAr : eventsEn;
 
   useEffect(() => {
-    // Show first one after 3 seconds
+    // Show first one after 5 minutes (300,000 ms)
     const initialDelay = setTimeout(() => {
       showNextEvent();
-    }, 3000);
+    }, 300000);
 
     return () => clearTimeout(initialDelay);
   }, [lang]);
