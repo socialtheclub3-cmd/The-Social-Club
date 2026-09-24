@@ -41,8 +41,8 @@ const LiveTicker: React.FC = () => {
     setTimeout(() => {
       setIsVisible(false);
       
-      // Show next one after 10 to 20 seconds
-      const nextDelay = 10000 + Math.random() * 10000;
+      // Show next one after 2 to 3 minutes
+      const nextDelay = 120000 + Math.random() * 60000;
       setTimeout(() => {
         showNextEvent();
       }, nextDelay);
