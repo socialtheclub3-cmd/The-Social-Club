@@ -10,8 +10,12 @@ const StickyCTA: React.FC = () => {
   const isAr = lang === 'ar';
 
   useEffect(() => {
+    if (isDismissed) {
+      setIsVisible(false);
+      return;
+    }
+
     const handleScroll = () => {
-      if (isDismissed) return;
       // Show CTA after scrolling 500px down
       if (window.scrollY > 500) {
         setIsVisible(true);
@@ -22,7 +26,7 @@ const StickyCTA: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isDismissed]);
 
   const handleBooking = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
