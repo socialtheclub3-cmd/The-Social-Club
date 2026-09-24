@@ -25,6 +25,7 @@ export interface CaseStudy {
   timeline: string;
   industry: string;
   industryAr: string;
+  logo?: string;
 }
 
 interface CaseStudyModalProps {
