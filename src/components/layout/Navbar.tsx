@@ -1,9 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, Globe } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Menu, X, Sun, Moon, Globe, ChevronDown } from 'lucide-react';
 import Logo from '../ui/Logo';
 import Button from '../ui/Button';
 import { useApp } from '../../context/AppContext';
 import { translations } from '../../data/translations';
+
+const currencies = [
+  { value: 'USD', label: 'USD ($)', flag: 'us' },
+  { value: 'SAR', label: 'SAR (ر.س)', flag: 'sa' },
+  { value: 'AED', label: 'AED (د.إ)', flag: 'ae' },
+  { value: 'EGP', label: 'EGP (ج.م)', flag: 'eg' },
+];
+
+const CurrencyDropdown: React.FC<{ currency: string; setCurrency: any; isMobile?: boolean }> = ({ currency, setCurrency, isMobile }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const selected = currencies.find(c => c.value === currency) || currencies[0];
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className={`flex items-center gap-1.5 bg-[#1E1E1E]/5 dark:bg-white/10 hover:bg-[#1E1E1E]/10 dark:hover:bg-white/20 text-[#1E1E1E] dark:text-white rounded-full font-bold transition-all ${isMobile ? 'px-2 py-1 text-[10px]' : 'px-3 py-1.5 text-xs'}`}
+        aria-label="Select currency"
+      >
+        <img src={`https://flagcdn.com/w20/${selected.flag}.png`} alt={selected.value} className="w-3.5 h-2.5 sm:w-4 sm:h-3 object-cover rounded-sm shadow-sm" />
+        <span>{selected.value}</span>
+        <ChevronDown size={isMobile ? 12 : 14} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+      
+      {isOpen && (
+        <div className="absolute top-full mt-2 right-0 bg-white dark:bg-[#1E1E1E] rounded-xl shadow-xl border border-[#1E1E1E]/10 dark:border-white/10 py-2 w-32 sm:w-36 z-[9000] overflow-hidden">
+          {currencies.map(opt => (
+            <button
+              key={opt.value}
+              onClick={() => { setCurrency(opt.value); setIsOpen(false); }}
+              className={`flex items-center gap-2.5 w-full px-4 py-2.5 text-xs font-bold text-left transition-colors ${currency === opt.value ? 'bg-[#A78BFA]/10 text-[#A78BFA]' : 'text-[#1E1E1E] dark:text-white hover:bg-[#1E1E1E]/5 dark:hover:bg-white/5'}`}
+            >
+              <img src={`https://flagcdn.com/w20/${opt.flag}.png`} alt={opt.value} className="w-4 h-3 object-cover rounded-sm shadow-sm" />
+              <span>{opt.label}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -109,16 +162,7 @@ const Navbar: React.FC = () => {
             </button>
 
             {/* Currency Switcher */}
-            <select
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value as any)}
-              className="appearance-none bg-[#1E1E1E]/5 dark:bg-white/10 hover:bg-[#1E1E1E]/10 dark:hover:bg-white/20 text-[#1E1E1E] dark:text-white rounded-full px-3 py-1.5 text-xs font-bold cursor-pointer outline-none focus:ring-2 focus:ring-[#A78BFA] transition-all"
-            >
-              <option value="USD">🇺🇸 USD ($)</option>
-              <option value="SAR">🇸🇦 SAR (ر.س)</option>
-              <option value="AED">🇦🇪 AED (د.إ)</option>
-              <option value="EGP">🇪🇬 EGP (ج.م)</option>
-            </select>
+            <CurrencyDropdown currency={currency} setCurrency={setCurrency} />
 
             {/* Dark/Light Mode Toggle */}
             <button
@@ -148,16 +192,7 @@ const Navbar: React.FC = () => {
 
           {/* Mobile Actions: Lang, Theme, Currency & Hamburger */}
           <div className="flex md:hidden items-center gap-2">
-            <select
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value as any)}
-              className="appearance-none bg-[#1E1E1E]/50 dark:bg-white/10 text-[#1E1E1E] dark:text-white rounded-full px-2 py-1 text-[10px] font-bold cursor-pointer outline-none"
-            >
-              <option value="USD">🇺🇸 USD ($)</option>
-              <option value="SAR">🇸🇦 SAR (ر.س)</option>
-              <option value="AED">🇦🇪 AED (د.إ)</option>
-              <option value="EGP">🇪🇬 EGP (ج.م)</option>
-            </select>
+            <CurrencyDropdown currency={currency} setCurrency={setCurrency} isMobile />
 
             <button
               onClick={toggleLang}
