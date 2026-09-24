@@ -124,6 +124,44 @@ const caseStudies: CaseStudy[] = [
       'استراتيجية محتوى مستهدفة للمسؤولين',
     ],
   },
+  {
+    id: 'eduguide',
+    name: 'EduGuide Chatbot',
+    nameAr: 'إديوجايد شات بوت',
+    category: 'Education · Conversational AI',
+    categoryAr: 'التعليم · الذكاء الاصطناعي',
+    gradient: 'linear-gradient(135deg, #7ED6B7 0%, #1E1E1E 100%)',
+    logo: '/eduguide-logo.jpg',
+    industry: 'Education Services',
+    industryAr: 'الخدمات التعليمية',
+    timeline: 'Results in 30 days',
+    challenge:
+      'The student service center was overwhelmed with repetitive inquiries about admissions, schedules, and exams. Response times were slow, and students were frustrated with the lack of instant support.',
+    challengeAr:
+      'كان مركز خدمة الطلاب غارقاً في الاستفسارات المتكررة حول القبول، الجداول، والامتحانات. كانت أوقات الرد بطيئة، وكان الطلاب يشعرون بالإحباط بسبب غياب الدعم الفوري.',
+    solution:
+      'We developed "EduGuide", an intelligent conversational AI chatbot integrated directly into their website and WhatsApp. It automatically resolves 85% of standard student queries 24/7, routing only complex issues to human advisors.',
+    solutionAr:
+      'قمنا بتطوير "إديوجايد"، وهو شات بوت ذكي متكامل مع موقعهم وواتساب. يقوم بحل 85٪ من استفسارات الطلاب الشائعة تلقائياً على مدار الساعة، ويحول الحالات المعقدة فقط للمستشارين البشريين.',
+    results: [
+      { icon: Users, value: '10k+', label: 'Students Assisted', labelAr: 'طالب تمت مساعدته', color: '#7ED6B7' },
+      { icon: TrendingUp, value: '85%', label: 'Auto-Resolution Rate', labelAr: 'معدل الحل التلقائي', color: '#22C55E' },
+      { icon: Target, value: '< 2s', label: 'Average Response Time', labelAr: 'متوسط سرعة الرد', color: '#FF8A3D' },
+      { icon: DollarSign, value: '-60%', label: 'Support Costs', labelAr: 'انخفاض تكاليف الدعم', color: '#A78BFA' },
+    ],
+    deliverables: [
+      'Custom NLP Chatbot Development',
+      'WhatsApp Business API Integration',
+      'Student Portal Web Widget',
+      'Analytics & Training Dashboard',
+    ],
+    deliverablesAr: [
+      'تطوير شات بوت ذكي مخصص',
+      'الربط مع واتساب أعمال (API)',
+      'أداة محادثة ذكية على بوابة الطلاب',
+      'لوحة تحكم وتقارير الأداء',
+    ],
+  },
 ];
 
 const OurWork: React.FC = () => {
@@ -143,6 +181,10 @@ const OurWork: React.FC = () => {
         ? lang === 'ar'
           ? 'متجر إلكتروني عالي الأداء مع حملات محتوى إبداعي رفعت متوسط سلة الشراء ومعدل تكرار الطلبات.'
           : 'High-speed headless e-commerce store with performance creative testing driving 3.4x return on ad spend in first 90 days.'
+        : cs.id === 'eduguide'
+        ? lang === 'ar'
+          ? 'بناء شات بوت ذكي لخدمة الطلاب على مدار الساعة، مما قلل ضغط الاستفسارات بنسبة 85%.'
+          : 'An intelligent student service chatbot providing 24/7 support and resolving 85% of queries automatically.'
         : lang === 'ar'
         ? 'بناء صفحة هبوط تقنية فائقة الإقناع مع نظام تأهيل تلقائي للمكالمات الاستشارية لكبار المديرين التنفيذيين.'
         : 'Interactive SaaS landing experience paired with automated qualification sequences booking 40+ executive demos monthly.',
@@ -151,6 +193,8 @@ const OurWork: React.FC = () => {
         ? lang === 'ar' ? ['إعلانات مدفوعة', 'موقع ويب فخم', 'جلب عملاء'] : ['Paid Media', 'Luxury Web', 'Lead Gen']
         : cs.id === 'bloom'
         ? lang === 'ar' ? ['تصميم متجر', 'تسويق رقمي', 'تحسين تحويلات'] : ['E-Commerce', 'Creative Ads', 'CRO']
+        : cs.id === 'eduguide'
+        ? lang === 'ar' ? ['ذكاء اصطناعي', 'خدمة عملاء', 'أتمتة'] : ['AI Chatbot', 'Customer Support', 'Automation']
         : lang === 'ar' ? ['موقع مخصص', 'أتمتة CRM', 'جلب عملاء'] : ['Custom Web', 'CRM Automation', 'Lead Gen'],
   }));
 
@@ -198,10 +242,16 @@ const OurWork: React.FC = () => {
                     </span>
                     {/* Decorative inner card */}
                     <div className="absolute inset-6 bottom-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center p-4">
-                      <div className="text-center">
-                        <p className="text-white font-black text-xl leading-tight">{lang === 'ar' ? project.nameAr : project.name}</p>
-                        <p className="text-white/80 text-xs mt-1">{lang === 'ar' ? project.industryAr : project.industry}</p>
-                      </div>
+                      {project.logo ? (
+                        <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-white shadow-xl shadow-black/10 flex items-center justify-center p-2">
+                          <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
+                        </div>
+                      ) : (
+                        <div className="text-center">
+                          <p className="text-white font-black text-xl leading-tight">{lang === 'ar' ? project.nameAr : project.name}</p>
+                          <p className="text-white/80 text-xs mt-1">{lang === 'ar' ? project.industryAr : project.industry}</p>
+                        </div>
+                      )}
                     </div>
 
                     {/* Hover overlay with quick metrics */}
