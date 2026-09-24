@@ -10,7 +10,7 @@ const TrustIntro: React.FC = () => {
   const th = translations[lang].hero;
 
   const indicators = [
-    { label: th.marketing, color: '#A78BFA', bg: 'rgba(167,139,250,0.12)' },
+    { label: th.marketing, color: '#1E1E1E', bg: 'rgba(30,30,30,0.1)' },
     { label: th.web, color: '#FF8A3D', bg: 'rgba(255,138,61,0.12)' },
     { label: th.leads, color: '#7ED6B7', bg: 'rgba(126,214,183,0.12)' },
   ];
@@ -25,13 +25,13 @@ const TrustIntro: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left: Statement */}
           <AnimatedSection direction="left">
-            <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] text-[#A78BFA] mb-4">
+            <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] text-[#1E1E1E] mb-4">
               {t.pill}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-[1.2] mb-6">
               {t.headline}
               <br />
-              <span style={{ color: '#A78BFA' }}>{t.highlight}</span>
+              <span className="text-[#1E1E1E]">{t.highlight}</span>
             </h2>
             <div className="flex gap-3 mt-8 flex-wrap">
               {indicators.map((ind) => (
@@ -65,7 +65,7 @@ const TrustIntro: React.FC = () => {
                 { val: t.stat4Value, lbl: t.stat4Label },
               ].map((stat, idx) => (
                 <div key={idx} className="p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-xs transition-transform duration-300 hover:-translate-y-1">
-                  <p className="text-2xl font-black text-[#A78BFA] mb-1">
+                  <p className="text-2xl font-black text-[#1E1E1E] mb-1">
                     <AnimatedCounter value={stat.val} duration={2} />
                   </p>
                   <p className="text-xs text-white/60 font-medium leading-snug">{stat.lbl}</p>
