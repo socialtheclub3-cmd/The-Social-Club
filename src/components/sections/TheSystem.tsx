@@ -51,7 +51,7 @@ const TheSystem: React.FC = () => {
                 : 'Most agencies stop at content or ads. We build the entire growth engine — from the first impression to the closed deal — so every piece works together seamlessly.'}
             </p>
             <div className="mt-8 p-5 rounded-2xl border border-white/10 bg-white/5">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#A78BFA] mb-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#1E1E1E] mb-2">
                 {lang === 'ar' ? 'القيمة الحقيقية لمنظومتنا' : 'Why it matters'}
               </p>
               <p className="text-sm text-white/70 leading-relaxed">
