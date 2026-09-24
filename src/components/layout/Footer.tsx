@@ -12,11 +12,9 @@ const InstagramIcon = () => (
     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
   </svg>
 );
-const LinkedinIcon = () => (
+const TiktokIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
   </svg>
 );
 const FacebookIcon = () => (
@@ -84,13 +82,13 @@ const Footer: React.FC = () => {
                 <InstagramIcon />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.tiktok.com/@thesocialclub.3"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-lg bg-white/10 hover:bg-[#A78BFA] flex items-center justify-center transition-colors duration-200"
-                aria-label="LinkedIn"
+                aria-label="TikTok"
               >
-                <LinkedinIcon />
+                <TiktokIcon />
               </a>
               <a
                 href="https://www.facebook.com/share/1FC5LeU7fu/?mibextid=wwXIfr"
