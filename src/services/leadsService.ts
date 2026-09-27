@@ -12,6 +12,8 @@ export interface Lead {
   service: string;
   budget?: string;
   projectDetails: string;
+  preferredDate?: string;
+  preferredTime?: string;
   createdAt: string;
   status: LeadStatus;
   notes?: string;
@@ -119,7 +121,7 @@ export const leadsService = {
 
   exportToCSV: (leads: Lead[]): void => {
     if (leads.length === 0) return;
-    const headers = ['ID', 'Date', 'Status', 'Name', 'Company', 'Email', 'Phone', 'Service', 'Budget', 'Project Details'];
+    const headers = ['ID', 'Date', 'Status', 'Name', 'Company', 'Email', 'Phone', 'Service', 'Budget', 'Project Details', 'Preferred Date', 'Preferred Time'];
     const rows = leads.map((l) => [
       l.id,
       new Date(l.createdAt).toLocaleString(),
@@ -131,6 +133,8 @@ export const leadsService = {
       `"${(l.service || '').replace(/"/g, '""')}"`,
       `"${(l.budget || '').replace(/"/g, '""')}"`,
       `"${(l.projectDetails || '').replace(/"/g, '""')}"`,
+      `"${(l.preferredDate || '').replace(/"/g, '""')}"`,
+      `"${(l.preferredTime || '').replace(/"/g, '""')}"`,
     ]);
 
     const csvContent = '\uFEFF' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
