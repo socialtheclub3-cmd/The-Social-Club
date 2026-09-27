@@ -41,6 +41,8 @@ const Admin: React.FC = () => {
   const isAr = lang === 'ar';
   const ArrowBack = isAr ? ArrowRight : ArrowLeft;
   const NextArrow = isAr ? ChevronLeft : ChevronRight;
+  
+  console.log("Admin Dashboard Rendered - Checking Tabs");
 
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
