@@ -23,7 +23,7 @@ class Particle {
     // Theme colors: Lavender, Pink, Orange, Mint
     const colors = isDark 
       ? ['rgba(167, 139, 250, 0.6)', 'rgba(255, 143, 177, 0.6)', 'rgba(126, 214, 183, 0.6)'] 
-      : ['rgba(167, 139, 250, 0.5)', 'rgba(255, 138, 61, 0.5)', 'rgba(126, 214, 183, 0.5)'];
+      : ['rgba(167, 139, 250, 0.8)', 'rgba(255, 138, 61, 0.8)', 'rgba(126, 214, 183, 0.8)'];
     this.color = colors[Math.floor(Math.random() * colors.length)];
   }
 
@@ -125,9 +125,12 @@ const InteractiveBackground: React.FC = () => {
           
           if (distance < (canvas.width / 7) * (canvas.height / 7)) {
             opacityValue = 1 - (distance / 20000);
-            ctx.strokeStyle = isDark 
+            
+            // Re-check theme on each frame for the lines
+            const currentIsDark = document.documentElement.classList.contains('dark');
+            ctx.strokeStyle = currentIsDark 
               ? `rgba(255, 255, 255, ${opacityValue * 0.08})` 
-              : `rgba(0, 0, 0, ${opacityValue * 0.06})`;
+              : `rgba(0, 0, 0, ${opacityValue * 0.15})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
@@ -152,6 +155,16 @@ const InteractiveBackground: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
 
+    // Watch for theme changes to re-init particles with correct colors
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          init();
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true });
+
     handleResize();
     animate();
 
@@ -159,9 +172,10 @@ const InteractiveBackground: React.FC = () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
+      observer.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isDark, lang, isMobile]);
+  }, [lang, isMobile]);
 
   if (isMobile) return null;
 
