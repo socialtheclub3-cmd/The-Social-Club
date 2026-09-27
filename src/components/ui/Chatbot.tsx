@@ -181,20 +181,23 @@ const Chatbot: React.FC = () => {
   return (
     <>
       {/* Floating Button (Draggable) */}
-      <motion.button
+      <motion.div
         drag
         dragMomentum={false}
-        dragElastic={0.1}
+        dragConstraints={{ top: -800, bottom: 800, left: -800, right: 800 }}
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 ${isAr ? 'right-6' : 'left-6'} z-40 touch-none w-14 h-14 rounded-full bg-[#1E1E1E] dark:bg-white text-white dark:text-[#1E1E1E] flex items-center justify-center shadow-lg shadow-black/20 overflow-hidden group ${isOpen ? 'hidden' : ''}`}
-        style={{ cursor: 'grab' }}
+        className={`fixed bottom-6 ${isAr ? 'right-6' : 'left-6'} z-40 ${isOpen ? 'hidden' : ''}`}
+        style={{ touchAction: 'none' }}
       >
-        <Sparkles size={24} className="group-hover:animate-pulse text-[#A78BFA]" />
-      </motion.button>
+        <button
+          onClick={() => setIsOpen(true)}
+          className="w-14 h-14 rounded-full bg-[#1E1E1E] dark:bg-white text-white dark:text-[#1E1E1E] flex items-center justify-center shadow-lg shadow-black/20 overflow-hidden group hover:scale-110 active:scale-95 transition-transform"
+          style={{ cursor: 'grab' }}
+        >
+          <Sparkles size={24} className="group-hover:animate-pulse text-[#A78BFA]" />
+        </button>
+      </motion.div>
 
       {/* Chat Window */}
       <AnimatePresence>
