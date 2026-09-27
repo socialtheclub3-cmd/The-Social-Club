@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { blogPosts } from '../data/blogData';
+import { blogService } from '../services/blogService';
+import type { BlogPost as BlogPostType } from '../data/blogData';
 import AnimatedSection from '../components/ui/AnimatedSection';
 
 const BlogPost: React.FC = () => {
@@ -10,15 +11,24 @@ const BlogPost: React.FC = () => {
   const { lang } = useApp();
   const navigate = useNavigate();
   const isAr = lang === 'ar';
-
-  const post = blogPosts.find((p) => p.id === id);
+  
+  const [post, setPost] = useState<BlogPostType | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!post) {
-      navigate('/blog');
-    }
-  }, [post, navigate]);
+    const unsubscribe = blogService.subscribe((posts) => {
+      const found = posts.find((p) => p.id === id);
+      if (found) {
+        setPost(found);
+      } else {
+        navigate('/blog');
+      }
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, [id, navigate]);
 
+  if (loading) return <div className="min-h-screen bg-[#FBF6EF] dark:bg-[#121212]" />;
   if (!post) return null;
 
   return (
