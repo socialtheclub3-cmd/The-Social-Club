@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PlusCircle, Trash2, Edit2, FileText, Image as ImageIcon } from 'lucide-react';
+import { PlusCircle, FileText } from 'lucide-react';
 import { blogService } from '../../services/blogService';
 import type { BlogPost } from '../../data/blogData';
 
