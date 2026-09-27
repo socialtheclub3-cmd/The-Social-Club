@@ -17,6 +17,11 @@ const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Clear messages when language changes so it can re-greet in the new language
+  useEffect(() => {
+    setMessages([]);
+  }, [lang]);
+
   // Initial Greeting
   useEffect(() => {
     if (isOpen && messages.length === 0) {
@@ -118,7 +123,7 @@ const Chatbot: React.FC = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 ${isAr ? 'left-6' : 'left-6'} z-40 w-14 h-14 rounded-full bg-[#1E1E1E] dark:bg-white text-white dark:text-[#1E1E1E] flex items-center justify-center shadow-lg shadow-black/20 overflow-hidden group ${isOpen ? 'hidden' : ''}`}
+        className={`fixed bottom-6 ${isAr ? 'right-6' : 'left-6'} z-40 w-14 h-14 rounded-full bg-[#1E1E1E] dark:bg-white text-white dark:text-[#1E1E1E] flex items-center justify-center shadow-lg shadow-black/20 overflow-hidden group ${isOpen ? 'hidden' : ''}`}
       >
         <Sparkles size={24} className="group-hover:animate-pulse text-[#A78BFA]" />
       </motion.button>
@@ -131,7 +136,7 @@ const Chatbot: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className={`fixed bottom-6 ${isAr ? 'left-6' : 'left-6'} z-50 w-[340px] sm:w-[380px] h-[500px] bg-white dark:bg-[#1C1C1C] rounded-2xl shadow-2xl border border-[#1E1E1E]/10 dark:border-white/10 flex flex-col overflow-hidden`}
+            className={`fixed bottom-6 ${isAr ? 'right-6' : 'left-6'} z-50 w-[340px] sm:w-[380px] h-[500px] bg-white dark:bg-[#1C1C1C] rounded-2xl shadow-2xl border border-[#1E1E1E]/10 dark:border-white/10 flex flex-col overflow-hidden`}
             dir={isAr ? 'rtl' : 'ltr'}
           >
             {/* Header */}
