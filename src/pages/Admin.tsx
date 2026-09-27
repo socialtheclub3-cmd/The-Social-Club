@@ -34,6 +34,7 @@ import { pricingService, type PricingConfig } from '../services/pricingService';
 import { useApp } from '../context/AppContext';
 import PricingAdminView from '../components/admin/PricingAdminView';
 import BlogAdminView from '../components/admin/BlogAdminView';
+import AnalyticsCharts from '../components/admin/AnalyticsCharts';
 
 const DEFAULT_PASSWORD = 'Thesocialclub26';
 
@@ -524,6 +525,9 @@ const Admin: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Charts Dashboard */}
+        {activeTab === 'leads' && <AnalyticsCharts leads={leads} isAr={isAr} />}
 
         {/* Search & Filter Toolbar */}
         <div className="bg-white dark:bg-[#1A1A1A] p-4 rounded-2xl border border-[#1E1E1E]/8 dark:border-white/10 shadow-xs mb-6 flex flex-col md:flex-row gap-4 items-center justify-between">
