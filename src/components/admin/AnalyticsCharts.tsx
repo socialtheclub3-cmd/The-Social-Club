@@ -45,7 +45,15 @@ const AnalyticsCharts: React.FC<AnalyticsChartsProps> = ({ leads, isAr }) => {
 
   const COLORS = ['#A78BFA', '#7ED6B7', '#FF8FB1', '#60A5FA', '#FBBF24'];
 
-  if (leads.length === 0) return null;
+  if (leads.length === 0) {
+    return (
+      <div className="bg-white dark:bg-[#1A1A1A] p-8 rounded-2xl border border-[#1E1E1E]/8 dark:border-white/10 shadow-xs mb-6 text-center">
+        <p className="text-[#1E1E1E]/50 dark:text-white/50 text-sm font-bold">
+          {isAr ? 'لا توجد بيانات كافية لعرض الرسوم البيانية. انتظر حتى يتم تسجيل طلبات جديدة.' : 'Not enough data to display analytics. Wait for new leads.'}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6" dir="ltr">
@@ -87,7 +95,7 @@ const AnalyticsCharts: React.FC<AnalyticsChartsProps> = ({ leads, isAr }) => {
                 paddingAngle={5}
                 dataKey="value"
               >
-                {servicesData.map((entry, index) => (
+                {servicesData.map((_, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
