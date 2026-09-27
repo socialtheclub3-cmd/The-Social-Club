@@ -64,8 +64,18 @@ const InteractiveBackground: React.FC = () => {
   // We use dark mode detection from classList since context doesn't expose it directly in useApp (unless added)
   // Actually, let's just read document element class
   const isDark = document.documentElement.classList.contains('dark');
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return; // Do not run on mobile
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -151,7 +161,9 @@ const InteractiveBackground: React.FC = () => {
       window.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isDark, lang]);
+  }, [isDark, lang, isMobile]);
+
+  if (isMobile) return null;
 
   return (
     <canvas
