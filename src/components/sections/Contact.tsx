@@ -7,6 +7,7 @@ import { useApp } from '../../context/AppContext';
 import { translations } from '../../data/translations';
 import { leadsService } from '../../services/leadsService';
 import emailjs from '@emailjs/browser';
+import { InlineWidget } from 'react-calendly';
 
 interface FormData {
   name: string;
@@ -210,21 +211,36 @@ const Contact: React.FC = () => {
           <AnimatedSection delay={100} className="lg:col-span-3">
             <div className="bg-white dark:bg-[#1C1C1C] rounded-3xl p-6 sm:p-10 border border-[#1E1E1E]/8 dark:border-white/10 shadow-lg">
               {submitted ? (
-                <div className="text-center py-12 flex flex-col items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-[#7ED6B7]/20 flex items-center justify-center text-[#7ED6B7] mb-2">
-                    <CheckCircle size={36} />
+                <div className="py-2 flex flex-col items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-[#7ED6B7]/20 flex items-center justify-center text-[#7ED6B7] mb-2">
+                    <CheckCircle size={28} />
                   </div>
-                  <h3 className="text-2xl font-black text-[#1E1E1E] dark:text-white">
-                    {lang === 'ar' ? 'تم استلام طلبك بنجاح!' : 'Inquiry Received!'}
+                  <h3 className="text-xl font-black text-[#1E1E1E] dark:text-white text-center">
+                    {lang === 'ar' ? 'تم استلام طلبك بنجاح! 🎉' : 'Inquiry Received! 🎉'}
                   </h3>
-                  <p className="text-sm text-[#1E1E1E]/60 dark:text-white/60 max-w-sm leading-relaxed">
-                    {t.successMsg}
+                  <p className="text-sm text-[#1E1E1E]/60 dark:text-white/60 max-w-sm leading-relaxed text-center mb-4">
+                    {lang === 'ar' 
+                      ? 'عشان نكسب وقت، احجز ميعاد مكالمة استكشافية مجانية دلوقتي مع خبير النمو بتاعنا:'
+                      : 'To save time, book your free discovery call with our growth expert right now:'}
                   </p>
+                  
+                  {/* Calendly Widget */}
+                  <div className="w-full h-[500px] sm:h-[600px] rounded-2xl overflow-hidden border border-[#1E1E1E]/10 dark:border-white/10 bg-white">
+                    <InlineWidget 
+                      url="https://calendly.com/socialtheclub-3" 
+                      styles={{ height: '100%', width: '100%' }} 
+                      prefill={{
+                        email: form.email,
+                        name: form.name,
+                      }}
+                    />
+                  </div>
+
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="text-sm font-black text-[#A78BFA] hover:underline cursor-pointer mt-4"
+                    className="text-xs font-bold text-[#1E1E1E]/50 dark:text-white/50 hover:text-[#A78BFA] transition-colors mt-2"
                   >
-                    {lang === 'ar' ? 'إرسال طلب مشروع آخر' : 'Submit another inquiry'}
+                    {lang === 'ar' ? 'سأقوم بالحجز لاحقاً (إرسال طلب جديد)' : 'I will book later (Submit new request)'}
                   </button>
                 </div>
               ) : (
