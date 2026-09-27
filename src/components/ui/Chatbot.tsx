@@ -180,17 +180,24 @@ const Chatbot: React.FC = () => {
 
   return (
     <>
-      {/* Floating Button */}
-      <motion.button
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 ${isAr ? 'right-6' : 'left-6'} z-40 w-14 h-14 rounded-full bg-[#1E1E1E] dark:bg-white text-white dark:text-[#1E1E1E] flex items-center justify-center shadow-lg shadow-black/20 overflow-hidden group ${isOpen ? 'hidden' : ''}`}
+      {/* Floating Button (Draggable) */}
+      <motion.div
+        drag
+        dragMomentum={false}
+        dragElastic={0.1}
+        className={`fixed bottom-6 ${isAr ? 'right-6' : 'left-6'} z-40 touch-none ${isOpen ? 'hidden' : ''}`}
       >
-        <Sparkles size={24} className="group-hover:animate-pulse text-[#A78BFA]" />
-      </motion.button>
+        <motion.button
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setIsOpen(true)}
+          className="w-14 h-14 rounded-full bg-[#1E1E1E] dark:bg-white text-white dark:text-[#1E1E1E] flex items-center justify-center shadow-lg shadow-black/20 overflow-hidden group"
+        >
+          <Sparkles size={24} className="group-hover:animate-pulse text-[#A78BFA]" />
+        </motion.button>
+      </motion.div>
 
       {/* Chat Window */}
       <AnimatePresence>
@@ -200,7 +207,7 @@ const Chatbot: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className={`fixed bottom-6 ${isAr ? 'right-6' : 'left-6'} z-50 w-[340px] sm:w-[380px] h-[500px] bg-white dark:bg-[#1C1C1C] rounded-2xl shadow-2xl border border-[#1E1E1E]/10 dark:border-white/10 flex flex-col overflow-hidden`}
+            className={`fixed bottom-0 sm:bottom-6 ${isAr ? 'sm:right-6' : 'sm:left-6'} z-50 w-full sm:w-[380px] h-[85vh] sm:h-[500px] max-h-[800px] bg-white dark:bg-[#1C1C1C] sm:rounded-2xl shadow-2xl border-t sm:border border-[#1E1E1E]/10 dark:border-white/10 flex flex-col overflow-hidden`}
             dir={isAr ? 'rtl' : 'ltr'}
           >
             {/* Header */}
