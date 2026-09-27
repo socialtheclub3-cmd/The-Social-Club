@@ -72,12 +72,7 @@ const WhatsAppButton: React.FC = () => {
       </AnimatePresence>
 
       {/* Main floating button (Draggable) */}
-      <motion.div 
-        drag
-        dragMomentum={false}
-        dragElastic={0.1}
-        className="relative touch-none"
-      >
+      <div className="relative">
         {/* Pulse animation ring */}
         {!isOpen && (
           <>
@@ -87,11 +82,15 @@ const WhatsAppButton: React.FC = () => {
         )}
 
         <motion.button
+          drag
+          dragMomentum={false}
+          dragElastic={0.1}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsOpen(!isOpen)}
-          className="relative w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1EBE5A] shadow-lg shadow-[#25D366]/30 flex items-center justify-center transition-colors duration-200"
+          className="relative w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1EBE5A] shadow-lg shadow-[#25D366]/30 flex items-center justify-center transition-colors duration-200 touch-none"
           aria-label={isAr ? 'تواصل عبر واتساب' : 'Contact us on WhatsApp'}
+          style={{ cursor: 'grab' }}
         >
           <AnimatePresence mode="wait">
             {isOpen ? (
@@ -117,7 +116,7 @@ const WhatsAppButton: React.FC = () => {
             )}
           </AnimatePresence>
         </motion.button>
-      </motion.div>
+      </div>
     </div>
   );
 };
