@@ -34,7 +34,7 @@ const DraggableFAB: React.FC<DraggableFABProps> = ({ children, className, onClic
       }
     };
 
-    const handlePointerUp = (e: PointerEvent) => {
+    const handlePointerUp = () => {
       if (!dragStarted.current) return;
       dragStarted.current = false;
       
