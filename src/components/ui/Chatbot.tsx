@@ -5,6 +5,8 @@ import { useApp } from '../../context/AppContext';
 import { leadsService } from '../../services/leadsService';
 
 type FlowState = 'menu' | 'asking_name' | 'asking_phone';
+
+type Message = {
   id: number;
   text: string;
   sender: 'bot' | 'user';
