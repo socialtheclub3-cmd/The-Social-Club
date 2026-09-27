@@ -1,6 +1,7 @@
-import { collection, doc, setDoc, deleteDoc, onSnapshot, getDocs } from 'firebase/firestore';
+import { collection, doc, setDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
-import { BlogPost, blogPosts as defaultBlogPosts } from '../data/blogData';
+import { blogPosts as defaultBlogPosts } from '../data/blogData';
+import type { BlogPost } from '../data/blogData';
 
 const STORAGE_KEY = 'tsc_blog_database';
 
@@ -27,7 +28,7 @@ export const blogService = {
         if (posts.length === 0) {
           posts = defaultBlogPosts;
           defaultBlogPosts.forEach(p => {
-             setDoc(doc(db, 'blog_posts', p.id), p).catch(console.error);
+             setDoc(doc(db!, 'blog_posts', p.id), p).catch(console.error);
           });
         }
         
@@ -49,7 +50,7 @@ export const blogService = {
   savePost: async (post: BlogPost): Promise<BlogPost> => {
     if (db) {
       try {
-        await setDoc(doc(db, 'blog_posts', post.id), post);
+        await setDoc(doc(db!, 'blog_posts', post.id), post);
       } catch (e) {
         console.error("Error saving blog to Firestore", e);
       }
@@ -69,7 +70,7 @@ export const blogService = {
 
   deletePost: async (id: string): Promise<void> => {
     if (db) {
-      await deleteDoc(doc(db, 'blog_posts', id));
+      await deleteDoc(doc(db!, 'blog_posts', id));
     } else {
       const posts = blogService.getPostsLocal();
       const filtered = posts.filter((p) => p.id !== id);
