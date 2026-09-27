@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Button from '../ui/Button';
 import StaggeredText from '../ui/StaggeredText';
+import InteractiveBackground from '../ui/InteractiveBackground';
 import { useApp } from '../../context/AppContext';
 import { translations } from '../../data/translations';
 
@@ -50,6 +51,8 @@ const Hero: React.FC = () => {
         {/* Mint dot */}
         <div className="absolute bottom-1/3 right-[20%] w-2 h-2 rounded-full bg-[#7ED6B7] opacity-50" />
       </div>
+
+      <InteractiveBackground />
 
       {/* Spark lines (brand accent) */}
       <div className={`absolute top-[18%] ${lang === 'ar' ? 'left-[12%]' : 'right-[12%]'} pointer-events-none`} aria-hidden="true">
