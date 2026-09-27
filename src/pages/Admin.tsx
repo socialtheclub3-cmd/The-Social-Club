@@ -31,7 +31,9 @@ import { leadsService } from '../services/leadsService';
 import type { Lead, LeadStatus } from '../services/leadsService';
 import { pricingService, type PricingConfig } from '../services/pricingService';
 import { useApp } from '../context/AppContext';
+import { useApp } from '../context/AppContext';
 import PricingAdminView from '../components/admin/PricingAdminView';
+import BlogAdminView from '../components/admin/BlogAdminView';
 
 const DEFAULT_PASSWORD = 'Thesocialclub26';
 
@@ -54,7 +56,7 @@ const Admin: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('kanban');
-  const [activeTab, setActiveTab] = useState<'leads' | 'pricing'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'pricing' | 'blog'>('leads');
   const [pricingConfig, setPricingConfig] = useState<PricingConfig>(pricingService.getPricing());
 
   // Modals
@@ -374,6 +376,17 @@ const Admin: React.FC = () => {
                 <TrendingUp size={13} />
                 <span>{isAr ? 'الأسعار' : 'Pricing'}</span>
               </button>
+              <button
+                onClick={() => setActiveTab('blog')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  activeTab === 'blog'
+                    ? 'bg-white dark:bg-[#222] text-[#1E1E1E] dark:text-white shadow-xs'
+                    : 'text-[#1E1E1E]/50 dark:text-white/50 hover:text-[#1E1E1E]'
+                }`}
+              >
+                <FileText size={13} />
+                <span>{isAr ? 'المدونة' : 'Blog'}</span>
+              </button>
             </div>
 
             {/* View Mode Switcher */}
@@ -453,6 +466,8 @@ const Admin: React.FC = () => {
       <div className="container-custom py-8">
         {activeTab === 'pricing' ? (
           <PricingAdminView pricingConfig={pricingConfig} setPricingConfig={setPricingConfig} isAr={isAr} />
+        ) : activeTab === 'blog' ? (
+          <BlogAdminView isAr={isAr} />
         ) : (
           <>
         {/* KPI Metrics Summary */}
