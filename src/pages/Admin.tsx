@@ -25,7 +25,8 @@ import {
   Save,
   Send,
   Building2,
-  FileText
+  FileText,
+  Calendar
 } from 'lucide-react';
 import { leadsService } from '../services/leadsService';
 import type { Lead, LeadStatus } from '../services/leadsService';
@@ -645,6 +646,14 @@ const Admin: React.FC = () => {
                               </span>
                             )}
                           </div>
+                          
+                          {/* Preferred Booking */}
+                          {(lead.preferredDate || lead.preferredTime) && (
+                            <div className="flex items-center gap-1.5 mb-2.5 text-[10px] font-bold text-[#A78BFA] bg-[#A78BFA]/10 px-2 py-1.5 rounded-lg w-fit">
+                              <Calendar size={12} />
+                              <span>{lead.preferredDate} {lead.preferredTime}</span>
+                            </div>
+                          )}
 
                           {/* Notes Preview if available */}
                           {lead.notes && (
@@ -773,9 +782,15 @@ const Admin: React.FC = () => {
                           <span className="font-bold text-[#A78BFA] block capitalize">
                             {lead.service ? lead.service.replace('-', ' ') : 'General'}
                           </span>
-                          <span className="text-[11px] text-[#1E1E1E]/50 dark:text-white/50">
+                          <span className="text-[11px] text-[#1E1E1E]/50 dark:text-white/50 block">
                             {lead.budget ? `${isAr ? 'ميزانية: ' : 'Budget: '}${lead.budget}` : '-'}
                           </span>
+                          {(lead.preferredDate || lead.preferredTime) && (
+                            <div className="flex items-center gap-1 mt-1.5 text-[10px] font-bold text-[#A78BFA]">
+                              <Calendar size={11} />
+                              <span>{lead.preferredDate} {lead.preferredTime}</span>
+                            </div>
+                          )}
                         </td>
 
                         <td className="py-4 px-5 whitespace-nowrap text-[#1E1E1E]/60 dark:text-white/60 text-[11px]">
