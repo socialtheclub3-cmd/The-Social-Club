@@ -70,6 +70,7 @@ const Navbar: React.FC = () => {
     { label: t.services, href: '#services' },
     { label: lang === 'ar' ? 'حاسبة النمو' : 'Growth Calc', href: '#calculator' },
     { label: t.work, href: '#work' },
+    { label: lang === 'ar' ? 'المدونة' : 'Blog', href: '/blog' },
     { label: lang === 'ar' ? 'الباقات' : 'Pricing', href: '#pricing' },
     { label: t.about, href: '#about' },
   ];
@@ -97,6 +98,17 @@ const Navbar: React.FC = () => {
   const handleNavClick = (href: string) => {
     setActiveLink(href);
     setMenuOpen(false);
+
+    if (href.startsWith('/')) {
+      window.location.href = href;
+      return;
+    }
+
+    if (window.location.pathname !== '/' && href.startsWith('#')) {
+      window.location.href = '/' + href;
+      return;
+    }
+
     const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
