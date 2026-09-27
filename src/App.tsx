@@ -13,6 +13,7 @@ import CookieConsent from './components/ui/CookieConsent';
 import ExitIntentPopup from './components/ui/ExitIntentPopup';
 import LiveTicker from './components/ui/LiveTicker';
 import StickyCTA from './components/ui/StickyCTA';
+import Chatbot from './components/ui/Chatbot';
 
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
@@ -40,6 +41,7 @@ function App() {
       {!isAdmin && <Navbar />}
       {!isAdmin && <StickyCTA />}
       {!isAdmin && <WhatsAppButton />}
+      {!isAdmin && <Chatbot />}
       {!isAdmin && <LiveTicker />}
       {!isAdmin && <ExitIntentPopup />}
       <Routes>
