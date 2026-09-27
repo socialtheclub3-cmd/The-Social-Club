@@ -71,8 +71,13 @@ const WhatsAppButton: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Main floating button */}
-      <div className="relative">
+      {/* Main floating button (Draggable) */}
+      <motion.div 
+        drag
+        dragMomentum={false}
+        dragElastic={0.1}
+        className="relative touch-none"
+      >
         {/* Pulse animation ring */}
         {!isOpen && (
           <>
@@ -112,7 +117,7 @@ const WhatsAppButton: React.FC = () => {
             )}
           </AnimatePresence>
         </motion.button>
-      </div>
+      </motion.div>
     </div>
   );
 };
