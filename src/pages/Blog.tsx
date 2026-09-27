@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Calendar, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import AnimatedSection from '../components/ui/AnimatedSection';
-import { blogPosts } from '../data/blogData';
+import { blogService } from '../services/blogService';
+import type { BlogPost } from '../data/blogData';
 
 const Blog: React.FC = () => {
   const { lang } = useApp();
   const isAr = lang === 'ar';
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    const unsubscribe = blogService.subscribe((data) => setPosts(data));
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="pt-24 min-h-screen bg-[#FBF6EF] dark:bg-[#121212] transition-colors duration-300">
@@ -31,7 +38,7 @@ const Blog: React.FC = () => {
       <section className="section-padding pt-0">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-            {blogPosts.map((post, i) => (
+            {posts.map((post, i) => (
               <AnimatedSection key={post.id} delay={i * 100}>
                 <Link
                   to={`/blog/${post.id}`}
