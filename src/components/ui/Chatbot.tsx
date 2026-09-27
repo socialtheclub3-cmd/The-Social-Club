@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, ChevronRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
+import { leadsService } from '../../services/leadsService';
 
-type Message = {
+type FlowState = 'menu' | 'asking_name' | 'asking_phone';
   id: number;
   text: string;
   sender: 'bot' | 'user';
@@ -16,10 +17,17 @@ const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Conversational Form State
+  const [flowState, setFlowState] = useState<FlowState>('menu');
+  const [inputText, setInputText] = useState('');
+  const [leadData, setLeadData] = useState({ name: '', phone: '' });
 
   // Clear messages when language changes so it can re-greet in the new language
   useEffect(() => {
     setMessages([]);
+    setFlowState('menu');
+    setLeadData({ name: '', phone: '' });
   }, [lang]);
 
   // Initial Greeting
@@ -84,13 +92,11 @@ const Chatbot: React.FC = () => {
           botResponse = {
             id: Date.now() + 1,
             text: isAr 
-              ? 'عظيم جداً! تقدر تملى بياناتك في آخر الصفحة، وهنكلمك في أسرع وقت. أو تكلمنا واتساب لو مستعجل.' 
-              : 'Awesome! You can fill out the contact form at the bottom of the page, or message us on WhatsApp if you are in a hurry.',
-            sender: 'bot',
-            options: [
-              { label: isAr ? 'الذهاب لنموذج التواصل' : 'Go to Contact Form', action: 'goto_contact' }
-            ]
+              ? 'خطوة ممتازة! خلينا نبدأ.. ممكن أعرف اسم حضرتك؟' 
+              : 'Great step! Let\'s get started. May I have your name?',
+            sender: 'bot'
           };
+          setFlowState('asking_name');
           break;
         case 'goto_contact':
           setIsOpen(false);
@@ -110,6 +116,62 @@ const Chatbot: React.FC = () => {
           };
           break;
       }
+      setMessages(prev => [...prev, botResponse]);
+    }, 600);
+  };
+
+  const handleTextInput = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputText.trim() || flowState === 'menu') return;
+
+    const userText = inputText.trim();
+    setInputText('');
+
+    // Add user message
+    const userMsg: Message = { id: Date.now(), text: userText, sender: 'user' };
+    setMessages(prev => [...prev, userMsg]);
+
+    setTimeout(() => {
+      let botResponse: Message;
+
+      if (flowState === 'asking_name') {
+        setLeadData(prev => ({ ...prev, name: userText }));
+        botResponse = {
+          id: Date.now() + 1,
+          text: isAr 
+            ? `أهلاً بيك يا ${userText}! 🌟 رقم تليفونك كام عشان فريقنا يتواصل معاك؟`
+            : `Nice to meet you, ${userText}! 🌟 What's your phone number so our team can reach you?`,
+          sender: 'bot'
+        };
+        setFlowState('asking_phone');
+      } 
+      else if (flowState === 'asking_phone') {
+        // Save the lead
+        leadsService.saveLead({
+          name: leadData.name,
+          phone: userText,
+          email: 'Captured via Chatbot', // default
+          company: '',
+          service: 'General Consultation', // default from chat
+          budget: '',
+          projectDetails: 'Lead captured directly through the Chatbot.'
+        });
+
+        botResponse = {
+          id: Date.now() + 1,
+          text: isAr 
+            ? 'تم استلام بياناتك بنجاح! 🎉 فريقنا هيكلمك في أقرب وقت. تقدر تستكشف الموقع براحتك دلوقتي.'
+            : 'Your request is received successfully! 🎉 Our team will call you ASAP. Feel free to explore the site.',
+          sender: 'bot',
+          options: [
+            { label: isAr ? 'الرجوع للقائمة' : 'Back to menu', action: 'menu' }
+          ]
+        };
+        setFlowState('menu');
+      } else {
+        return; // safety
+      }
+
       setMessages(prev => [...prev, botResponse]);
     }, 600);
   };
@@ -193,17 +255,27 @@ const Chatbot: React.FC = () => {
             </div>
 
             {/* Footer / Input */}
-            <div className="p-3 border-t border-[#1E1E1E]/5 dark:border-white/5 bg-white dark:bg-[#1C1C1C] flex gap-2">
+            <form onSubmit={handleTextInput} className="p-3 border-t border-[#1E1E1E]/5 dark:border-white/5 bg-white dark:bg-[#1C1C1C] flex gap-2">
               <input 
                 type="text" 
-                placeholder={isAr ? 'اختر من الخيارات المتاحة...' : 'Choose an option above...'}
-                disabled
-                className="flex-1 bg-[#F8F4EE] dark:bg-[#121212] rounded-xl px-4 py-2 text-xs opacity-60 cursor-not-allowed focus:outline-none"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder={
+                  flowState === 'menu' 
+                    ? (isAr ? 'اختر من الخيارات المتاحة...' : 'Choose an option above...')
+                    : (isAr ? 'اكتب ردك هنا...' : 'Type your reply here...')
+                }
+                disabled={flowState === 'menu'}
+                className="flex-1 bg-[#F8F4EE] dark:bg-[#121212] rounded-xl px-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#A78BFA] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
               />
-              <button disabled className="w-10 h-10 rounded-xl bg-[#1E1E1E]/20 dark:bg-white/20 text-black/50 dark:text-white/50 flex items-center justify-center cursor-not-allowed">
-                <Send size={16} />
+              <button 
+                type="submit"
+                disabled={flowState === 'menu' || !inputText.trim()} 
+                className="w-10 h-10 rounded-xl bg-[#A78BFA] text-white flex items-center justify-center disabled:bg-[#1E1E1E]/20 disabled:dark:bg-white/20 disabled:text-black/50 disabled:dark:text-white/50 disabled:cursor-not-allowed transition-colors"
+              >
+                <Send size={16} className={isAr ? 'rotate-180' : ''} />
               </button>
-            </div>
+            </form>
           </motion.div>
         )}
       </AnimatePresence>
