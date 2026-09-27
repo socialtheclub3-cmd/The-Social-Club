@@ -31,7 +31,6 @@ import { leadsService } from '../services/leadsService';
 import type { Lead, LeadStatus } from '../services/leadsService';
 import { pricingService, type PricingConfig } from '../services/pricingService';
 import { useApp } from '../context/AppContext';
-import { useApp } from '../context/AppContext';
 import PricingAdminView from '../components/admin/PricingAdminView';
 import BlogAdminView from '../components/admin/BlogAdminView';
 
@@ -351,9 +350,9 @@ const Admin: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             {/* Main Tabs (Leads vs Pricing) */}
-            <div className="hidden sm:inline-flex p-1 bg-[#F8F4EE] dark:bg-[#121212] rounded-xl border border-[#1E1E1E]/8 dark:border-white/8 mr-2 ml-2">
+            <div className="flex p-1 bg-[#F8F4EE] dark:bg-[#121212] rounded-xl border border-[#1E1E1E]/8 dark:border-white/8 mr-2 ml-2">
               <button
                 onClick={() => setActiveTab('leads')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
