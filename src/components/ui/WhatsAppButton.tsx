@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import DraggableFAB from './DraggableFAB';
 
 const WhatsAppButton: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,12 +73,9 @@ const WhatsAppButton: React.FC = () => {
       </AnimatePresence>
 
       {/* Main floating button (Draggable) */}
-      <motion.div 
-        drag
-        dragMomentum={false}
-        dragConstraints={{ top: -800, bottom: 800, left: -800, right: 800 }}
+      <DraggableFAB 
+        onClick={() => setIsOpen(!isOpen)}
         className="relative"
-        style={{ touchAction: 'none' }}
       >
         {/* Pulse animation ring */}
         {!isOpen && (
@@ -88,10 +86,8 @@ const WhatsAppButton: React.FC = () => {
         )}
 
         <button
-          onClick={() => setIsOpen(!isOpen)}
           className="relative w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1EBE5A] shadow-lg shadow-[#25D366]/30 flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95"
           aria-label={isAr ? 'تواصل عبر واتساب' : 'Contact us on WhatsApp'}
-          style={{ cursor: 'grab' }}
         >
           <AnimatePresence mode="wait">
             {isOpen ? (
@@ -117,7 +113,7 @@ const WhatsAppButton: React.FC = () => {
             )}
           </AnimatePresence>
         </button>
-      </motion.div>
+      </DraggableFAB>
     </div>
   );
 };
