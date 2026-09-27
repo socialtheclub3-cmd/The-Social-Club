@@ -16,6 +16,8 @@ interface FormData {
   service: string;
   budget: string;
   projectDetails: string;
+  preferredDate: string;
+  preferredTime: string;
 }
 
 const initialForm: FormData = {
@@ -26,6 +28,8 @@ const initialForm: FormData = {
   service: '',
   budget: '',
   projectDetails: '',
+  preferredDate: '',
+  preferredTime: '',
 };
 
 const Contact: React.FC = () => {
@@ -98,6 +102,8 @@ const Contact: React.FC = () => {
         service: form.service,
         budget: form.budget,
         projectDetails: form.projectDetails,
+        preferredDate: form.preferredDate,
+        preferredTime: form.preferredTime,
       });
 
       // Send email via EmailJS
@@ -109,7 +115,7 @@ const Contact: React.FC = () => {
           from_email: form.email,
           service: serviceOptions.find(opt => opt.value === form.service)?.label || form.service,
           budget: budgetOptions.find(opt => opt.value === form.budget)?.label || form.budget,
-          message: form.projectDetails,
+          message: `${form.projectDetails}\n\nPreferred Call Date: ${form.preferredDate}\nPreferred Call Time: ${form.preferredTime}`,
           company: form.company,
           phone: form.phone,
         },
@@ -347,6 +353,36 @@ const Contact: React.FC = () => {
                           </option>
                         ))}
                       </select>
+                    </div>
+                  </div>
+
+                  {/* Preferred Date & Time */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label htmlFor="preferredDate" className="block text-xs font-bold text-[#1E1E1E]/70 dark:text-white/70 mb-1.5">
+                        {lang === 'ar' ? 'تاريخ المكالمة المفضل' : 'Preferred Call Date'} <span className="text-[#1E1E1E]/40 font-normal">(اختياري)</span>
+                      </label>
+                      <input
+                        type="date"
+                        id="preferredDate"
+                        name="preferredDate"
+                        value={form.preferredDate}
+                        onChange={handleChange}
+                        className={fieldClass('preferredDate')}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="preferredTime" className="block text-xs font-bold text-[#1E1E1E]/70 dark:text-white/70 mb-1.5">
+                        {lang === 'ar' ? 'الوقت المفضل' : 'Preferred Time'} <span className="text-[#1E1E1E]/40 font-normal">(اختياري)</span>
+                      </label>
+                      <input
+                        type="time"
+                        id="preferredTime"
+                        name="preferredTime"
+                        value={form.preferredTime}
+                        onChange={handleChange}
+                        className={fieldClass('preferredTime')}
+                      />
                     </div>
                   </div>
 
