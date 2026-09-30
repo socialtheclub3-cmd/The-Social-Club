@@ -10,7 +10,7 @@ import Process from '../components/sections/Process';
 import WhyUs from '../components/sections/WhyUs';
 import FeaturedProject from '../components/sections/FeaturedProject';
 import About from '../components/sections/About';
-import Testimonials from '../components/sections/Testimonials';
+// import Testimonials from '../components/sections/Testimonials';
 import Pricing from '../components/sections/Pricing';
 import FAQ from '../components/sections/FAQ';
 import FinalCTA from '../components/sections/FinalCTA';
