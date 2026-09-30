@@ -221,7 +221,7 @@ const Contact: React.FC = () => {
 
           {/* Right: Multi-Step Form */}
           <AnimatedSection delay={100} className="lg:col-span-3">
-            <div className="bg-white dark:bg-[#1C1C1C] rounded-3xl p-6 sm:p-10 border border-[#1E1E1E]/8 dark:border-white/10 shadow-xl relative min-h-[500px] flex flex-col">
+            <div className="bg-white dark:bg-[#1C1C1C] rounded-3xl p-5 sm:p-10 border border-[#1E1E1E]/8 dark:border-white/10 shadow-xl relative min-h-[400px] flex flex-col">
               
               {submitted ? (
                 <div className="flex-1 flex flex-col items-center justify-center text-center py-12 animate-in fade-in zoom-in duration-500">
@@ -260,12 +260,12 @@ const Contact: React.FC = () => {
                     </div>
                   </div>
 
-                  <form onSubmit={handleSubmit} noValidate className="flex-1 flex flex-col relative overflow-hidden">
-                    <AnimatePresence mode="wait" custom={step}>
+                  <form onSubmit={handleSubmit} noValidate className="flex-1 flex flex-col relative">
+                    <AnimatePresence mode="wait">
                       
                       {/* STEP 1: SERVICE */}
                       {step === 1 && (
-                        <motion.div key="step1" variants={formVariants} initial="hidden" animate="enter" exit="exit" transition={{ duration: 0.3 }} className="flex-1 flex flex-col justify-center absolute inset-0">
+                        <motion.div key="step1" variants={formVariants} initial="hidden" animate="enter" exit="exit" transition={{ duration: 0.3 }} className="flex flex-col justify-center w-full py-2">
                           <h3 className="text-2xl font-black text-[#1E1E1E] dark:text-white mb-6">
                             {isAr ? 'إيه الخدمة اللي بتدور عليها؟ 👀' : 'What service are you looking for? 👀'}
                           </h3>
@@ -294,7 +294,7 @@ const Contact: React.FC = () => {
 
                       {/* STEP 2: BUDGET */}
                       {step === 2 && (
-                        <motion.div key="step2" variants={formVariants} initial="hidden" animate="enter" exit="exit" transition={{ duration: 0.3 }} className="flex-1 flex flex-col justify-center absolute inset-0">
+                        <motion.div key="step2" variants={formVariants} initial="hidden" animate="enter" exit="exit" transition={{ duration: 0.3 }} className="flex flex-col justify-center w-full py-2">
                           <h3 className="text-2xl font-black text-[#1E1E1E] dark:text-white mb-6">
                             {isAr ? 'إيه ميزانيتك التسويقية التقريبية شهرياً؟ 💰' : 'What is your estimated monthly budget? 💰'}
                           </h3>
@@ -323,7 +323,7 @@ const Contact: React.FC = () => {
 
                       {/* STEP 3: DETAILS */}
                       {step === 3 && (
-                        <motion.div key="step3" variants={formVariants} initial="hidden" animate="enter" exit="exit" transition={{ duration: 0.3 }} className="flex-1 flex flex-col justify-center absolute inset-0 overflow-y-auto pr-2 pb-20">
+                        <motion.div key="step3" variants={formVariants} initial="hidden" animate="enter" exit="exit" transition={{ duration: 0.3 }} className="flex flex-col justify-center w-full py-2">
                           <h3 className="text-2xl font-black text-[#1E1E1E] dark:text-white mb-6">
                             {isAr ? 'احكيلنا شوية عن مشروعك 📝' : 'Tell us a bit about your project 📝'}
                           </h3>
@@ -361,7 +361,7 @@ const Contact: React.FC = () => {
 
                       {/* STEP 4: CONTACT INFO */}
                       {step === 4 && (
-                        <motion.div key="step4" variants={formVariants} initial="hidden" animate="enter" exit="exit" transition={{ duration: 0.3 }} className="flex-1 flex flex-col justify-center absolute inset-0">
+                        <motion.div key="step4" variants={formVariants} initial="hidden" animate="enter" exit="exit" transition={{ duration: 0.3 }} className="flex flex-col justify-center w-full py-2">
                           <h3 className="text-2xl font-black text-[#1E1E1E] dark:text-white mb-6">
                             {isAr ? 'ممتاز! هنبعتلك الخطة فين؟ 📬' : 'Awesome! Where should we send it? 📬'}
                           </h3>
