@@ -67,6 +67,7 @@ const Navbar: React.FC = () => {
 
   const navLinks = [
     { label: t.home, href: '#home' },
+    { label: t.about, href: '#about' },
     { label: t.services, href: '#services' },
     { label: t.work, href: '#work' },
     { label: lang === 'ar' ? 'المدونة' : 'Blog', href: '/blog' },
