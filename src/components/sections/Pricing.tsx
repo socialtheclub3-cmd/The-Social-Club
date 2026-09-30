@@ -44,14 +44,6 @@ const Pricing: React.FC = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
-      // Pre-fill or focus message if available
-      const textarea = document.getElementById('contact-message') as HTMLTextAreaElement | null;
-      if (textarea) {
-        textarea.value = isAr 
-          ? `مرحباً، أود الاستفسار والبدء مع: ${planName}`
-          : `Hi, I would like to get started with the ${planName} package.`;
-        textarea.focus();
-      }
     }
   };
 
