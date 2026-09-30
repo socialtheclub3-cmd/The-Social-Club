@@ -5,6 +5,7 @@ import { useApp } from '../context/AppContext';
 import AnimatedSection from '../components/ui/AnimatedSection';
 import { blogService } from '../services/blogService';
 import type { BlogPost } from '../data/blogData';
+import SEO from '../components/SEO';
 
 const Blog: React.FC = () => {
   const { lang } = useApp();
@@ -18,6 +19,7 @@ const Blog: React.FC = () => {
 
   return (
     <div className="pt-24 min-h-screen bg-[#FBF6EF] dark:bg-[#121212] transition-colors duration-300">
+      <SEO title="Blog & Insights" description="Latest marketing insights, tips, and growth strategies from The Social Club." />
       {/* Header */}
       <section className="pt-16 pb-12 overflow-hidden">
         <div className="container-custom">
