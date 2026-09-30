@@ -54,8 +54,8 @@ const StickyCTA: React.FC = () => {
               </span>
               <p className="text-sm font-semibold text-[#1E1E1E] dark:text-white">
                 {isAr
-                  ? 'باقي 3 أماكن فقط لاستشارات هذا الأسبوع!'
-                  : 'Only 3 spots left for this week’s consultations!'}
+                  ? 'خصم 10% لأول 3 عملاء هذا الشهر!'
+                  : '10% OFF for the first 3 clients this month!'}
               </p>
             </div>
             
@@ -64,7 +64,7 @@ const StickyCTA: React.FC = () => {
                 onClick={handleBooking}
                 className="bg-[#1E1E1E] dark:bg-white text-white dark:text-[#1E1E1E] px-6 py-2 rounded-full text-sm font-bold flex items-center gap-2 hover:scale-105 transition-transform duration-200 shadow-lg shadow-black/10"
               >
-                {isAr ? 'احجز مكانك الآن' : 'Claim Your Spot'}
+                {isAr ? 'احصل على الخصم' : 'Claim Offer'}
                 <ArrowRight size={16} className={isAr ? 'rotate-180' : ''} />
               </button>
               
