@@ -342,7 +342,7 @@ const Contact: React.FC = () => {
                             {errors.projectDetails && <p className="text-xs font-bold text-[#FF8FB1] mt-2">{errors.projectDetails}</p>}
                           </div>
                           
-                          <div className="grid grid-cols-2 gap-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2">
                             <div>
                               <label className="block text-[10px] font-black uppercase tracking-wider text-[#1E1E1E]/50 dark:text-white/50 mb-2">
                                 {isAr ? 'اليوم المفضل للمكالمة' : 'Preferred Date'} <span className="text-[9px] font-normal opacity-70">(Optional)</span>
