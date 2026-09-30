@@ -66,9 +66,10 @@ const Navbar: React.FC = () => {
   const t = translations[lang].nav;
 
   const navLinks = [
+    { label: t.home, href: '#home' },
     { label: t.services, href: '#services' },
     { label: t.work, href: '#work' },
-    { label: lang === 'ar' ? 'حاسبة النمو' : 'Growth Calc', href: '#calculator' },
+    { label: lang === 'ar' ? 'المدونة' : 'Blog', href: '/blog' },
     { label: lang === 'ar' ? 'نماذج الشراكة' : 'Partnership', href: '#pricing' },
   ];
 
