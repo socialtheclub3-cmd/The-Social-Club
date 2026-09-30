@@ -30,9 +30,7 @@ import {
 } from 'lucide-react';
 import { leadsService } from '../services/leadsService';
 import type { Lead, LeadStatus } from '../services/leadsService';
-import { pricingService, type PricingConfig } from '../services/pricingService';
 import { useApp } from '../context/AppContext';
-import PricingAdminView from '../components/admin/PricingAdminView';
 import BlogAdminView from '../components/admin/BlogAdminView';
 import AnalyticsCharts from '../components/admin/AnalyticsCharts';
 
@@ -59,8 +57,7 @@ const Admin: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('kanban');
-  const [activeTab, setActiveTab] = useState<'leads' | 'pricing' | 'blog'>('leads');
-  const [pricingConfig, setPricingConfig] = useState<PricingConfig>(pricingService.getPricing());
+  const [activeTab, setActiveTab] = useState<'leads' | 'blog'>('leads');
 
   // Modals
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
@@ -83,10 +80,8 @@ const Admin: React.FC = () => {
   // Load leads
   useEffect(() => {
     const unsubscribeLeads = leadsService.subscribe((data) => setLeads(data));
-    const unsubscribePricing = pricingService.subscribe((config) => setPricingConfig(config));
     return () => {
       unsubscribeLeads();
-      unsubscribePricing();
     };
   }, []);
 
@@ -368,17 +363,7 @@ const Admin: React.FC = () => {
                 <Users size={13} />
                 <span>{isAr ? 'العملاء' : 'Leads'}</span>
               </button>
-              <button
-                onClick={() => setActiveTab('pricing')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  activeTab === 'pricing'
-                    ? 'bg-white dark:bg-[#222] text-[#1E1E1E] dark:text-white shadow-xs'
-                    : 'text-[#1E1E1E]/50 dark:text-white/50 hover:text-[#1E1E1E]'
-                }`}
-              >
-                <TrendingUp size={13} />
-                <span>{isAr ? 'الأسعار' : 'Pricing'}</span>
-              </button>
+
               <button
                 onClick={() => setActiveTab('blog')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
@@ -467,9 +452,7 @@ const Admin: React.FC = () => {
       </header>
 
       <div className="container-custom py-8">
-        {activeTab === 'pricing' ? (
-          <PricingAdminView pricingConfig={pricingConfig} setPricingConfig={setPricingConfig} isAr={isAr} />
-        ) : activeTab === 'blog' ? (
+        {activeTab === 'blog' ? (
           <BlogAdminView isAr={isAr} />
         ) : (
           <>
