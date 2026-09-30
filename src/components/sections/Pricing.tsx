@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Check, Sparkles, Zap, Shield, ArrowRight, ArrowLeft } from 'lucide-react';
 import AnimatedSection from '../ui/AnimatedSection';
 import SectionHeading from '../ui/SectionHeading';
