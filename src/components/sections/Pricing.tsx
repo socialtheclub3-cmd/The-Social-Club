@@ -40,7 +40,7 @@ const Pricing: React.FC = () => {
     },
   ];
 
-  const handleSelectPlan = (planName: string) => {
+  const handleSelectPlan = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
@@ -137,7 +137,7 @@ const Pricing: React.FC = () => {
                   <div>
                     <button
                       type="button"
-                      onClick={() => handleSelectPlan(plan.data.name)}
+                      onClick={() => handleSelectPlan()}
                       className={`w-full py-3.5 px-6 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
                         plan.popular
                           ? 'bg-[#A78BFA] hover:bg-[#906fe7] text-[#1E1E1E] shadow-md shadow-[#A78BFA]/30 hover:scale-[1.02]'
