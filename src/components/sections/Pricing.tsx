@@ -6,21 +6,12 @@ import Button from '../ui/Button';
 import TiltCard from '../ui/TiltCard';
 import { useApp } from '../../context/AppContext';
 import { translations } from '../../data/translations';
-import { pricingService, type PricingConfig } from '../../services/pricingService';
 
 const Pricing: React.FC = () => {
-  const { lang, formatCurrency } = useApp();
+  const { lang } = useApp();
   const t = translations[lang].pricing;
   const isAr = lang === 'ar';
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
-
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'quarterly'>('monthly');
-  const [prices, setPrices] = useState<PricingConfig>(pricingService.getPricing());
-
-  useEffect(() => {
-    const unsubscribe = pricingService.subscribe((config) => setPrices(config));
-    return () => unsubscribe();
-  }, []);
 
   const plans = [
     {
@@ -30,8 +21,6 @@ const Pricing: React.FC = () => {
       icon: Zap,
       accent: '#FF8A3D',
       popular: false,
-      priceMonthly: prices.starter.monthly,
-      priceQuarterly: prices.starter.quarterly,
     },
     {
       id: 'scale',
@@ -40,8 +29,6 @@ const Pricing: React.FC = () => {
       icon: Sparkles,
       accent: '#A78BFA',
       popular: true,
-      priceMonthly: prices.scale.monthly,
-      priceQuarterly: prices.scale.quarterly,
     },
     {
       id: 'enterprise',
@@ -50,8 +37,6 @@ const Pricing: React.FC = () => {
       icon: Shield,
       accent: '#7ED6B7',
       popular: false,
-      priceMonthly: prices.enterprise.monthly,
-      priceQuarterly: prices.enterprise.quarterly,
     },
   ];
 
@@ -87,42 +72,12 @@ const Pricing: React.FC = () => {
             subtitle={t.subtitle}
             align="center"
           />
-
-          {/* Billing Switcher Toggle */}
-          <div className="mt-8 inline-flex items-center p-1.5 rounded-full bg-white dark:bg-[#1E1E1E] border border-[#1E1E1E]/10 dark:border-white/10 shadow-xs">
-            <button
-              type="button"
-              onClick={() => setBillingCycle('monthly')}
-              className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 ${
-                billingCycle === 'monthly'
-                  ? 'bg-[#1E1E1E] text-white dark:bg-white dark:text-[#121212] shadow-sm'
-                  : 'text-[#1E1E1E]/60 dark:text-white/60 hover:text-[#1E1E1E] dark:hover:text-white'
-              }`}
-            >
-              {isAr ? 'اشتراك شهري' : 'Monthly'}
-            </button>
-            <button
-              type="button"
-              onClick={() => setBillingCycle('quarterly')}
-              className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-300 flex items-center gap-1.5 ${
-                billingCycle === 'quarterly'
-                  ? 'bg-[#1E1E1E] text-white dark:bg-white dark:text-[#121212] shadow-sm'
-                  : 'text-[#1E1E1E]/60 dark:text-white/60 hover:text-[#1E1E1E] dark:hover:text-white'
-              }`}
-            >
-              <span>{isAr ? 'اشتراك ربع سنوي' : 'Quarterly'}</span>
-              <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded-full bg-[#A78BFA] text-[#1E1E1E]">
-                {isAr ? 'خصم 15%' : 'Save 15%'}
-              </span>
-            </button>
-          </div>
         </AnimatedSection>
 
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
           {plans.map((plan, idx) => {
             const Icon = plan.icon;
-            const currentPrice = billingCycle === 'quarterly' ? plan.priceQuarterly : plan.priceMonthly;
 
             return (
               <AnimatedSection key={plan.id} delay={idx * 120} className="flex w-full">
@@ -163,16 +118,11 @@ const Pricing: React.FC = () => {
                       {plan.data.tagline}
                     </p>
 
-                    {/* Price */}
+                    {/* Price Placeholder */}
                     <div className="flex items-baseline gap-1.5 mb-6 pb-6 border-b border-[#1E1E1E]/8 dark:border-white/10">
-                      <span className="text-4xl sm:text-5xl font-black tracking-tight text-[#1E1E1E] dark:text-white">
-                        {formatCurrency(currentPrice)}
+                      <span className="text-xl font-black tracking-tight text-[#1E1E1E] dark:text-white">
+                        {isAr ? 'يحدد بناءً على المشروع' : 'Custom Blueprint'}
                       </span>
-                      {plan.data.period && (
-                        <span className="text-xs font-semibold text-[#1E1E1E]/50 dark:text-white/50">
-                          {plan.data.period}
-                        </span>
-                      )}
                     </div>
 
                     {/* Features list */}
