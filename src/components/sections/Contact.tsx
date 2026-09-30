@@ -14,7 +14,7 @@ interface FormData {
   company: string;
   email: string;
   phone: string;
-  service: string;
+  services: string[];
   budget: string;
   projectDetails: string;
   preferredDate: string;
@@ -26,7 +26,7 @@ const initialForm: FormData = {
   company: '',
   email: '',
   phone: '',
-  service: '',
+  services: [],
   budget: '',
   projectDetails: '',
   preferredDate: '',
@@ -54,10 +54,10 @@ const Contact: React.FC = () => {
   };
 
   const serviceOptions = [
-    { id: 'digital-marketing', icon: Megaphone, label: isAr ? 'التسويق الرقمي وإدارة السوشيال ميديا' : 'Digital Marketing & Social Media' },
+    { id: 'digital-marketing', icon: Megaphone, label: isAr ? 'التسويق الرقمي والسوشيال ميديا' : 'Digital Marketing & Social Media' },
     { id: 'web-development', icon: Code, label: isAr ? 'تصميم وتطوير المواقع' : 'Web Design & Development' },
     { id: 'lead-generation', icon: TrendingUp, label: isAr ? 'توليد العملاء (Lead Generation)' : 'Lead Generation & SEO' },
-    { id: 'full-growth', icon: Briefcase, label: isAr ? 'شريك نمو متكامل (Full Growth)' : 'Full Growth Partner' },
+    { id: 'branding', icon: Briefcase, label: isAr ? 'بناء الهوية والعلامة التجارية' : 'Branding & Identity' },
   ];
 
   const budgetOptions = [
@@ -67,9 +67,9 @@ const Contact: React.FC = () => {
   ];
 
   const validateStep = (currentStep: number): boolean => {
-    const errs: Partial<FormData> = {};
+    const errs: Partial<FormData> & { service?: string } = {};
     if (currentStep === 1) {
-      if (!form.service) errs.service = isAr ? 'يرجى اختيار الخدمة' : 'Please select a service';
+      if (form.services.length === 0) errs.service = isAr ? 'يرجى اختيار خدمة واحدة على الأقل' : 'Please select at least one service';
     } else if (currentStep === 2) {
       if (!form.budget) errs.budget = isAr ? 'يرجى تحديد الميزانية' : 'Please select a budget';
     } else if (currentStep === 3) {
@@ -101,7 +101,16 @@ const Contact: React.FC = () => {
     }
   };
 
-  const handleOptionSelect = (field: 'service' | 'budget', value: string) => {
+  const handleServiceToggle = (id: string) => {
+    setForm(prev => {
+      const current = prev.services;
+      const updated = current.includes(id) ? current.filter(s => s !== id) : [...current, id];
+      return { ...prev, services: updated };
+    });
+    setErrors(prev => ({ ...prev, service: undefined }));
+  };
+
+  const handleOptionSelect = (field: 'budget', value: string) => {
     setForm(prev => ({ ...prev, [field]: value }));
     setErrors(prev => ({ ...prev, [field]: undefined }));
   };
@@ -112,12 +121,17 @@ const Contact: React.FC = () => {
     setLoading(true);
 
     try {
+      const selectedServicesText = form.services
+        .map(id => serviceOptions.find(o => o.id === id)?.label)
+        .filter(Boolean)
+        .join(' + ');
+
       leadsService.saveLead({
         name: form.name,
         company: form.company,
         email: form.email,
         phone: form.phone,
-        service: serviceOptions.find(o => o.id === form.service)?.label || form.service,
+        service: selectedServicesText,
         budget: budgetOptions.find(o => o.id === form.budget)?.label || form.budget,
         projectDetails: form.projectDetails,
         preferredDate: form.preferredDate,
@@ -130,7 +144,7 @@ const Contact: React.FC = () => {
         {
           from_name: form.name,
           from_email: form.email,
-          service: serviceOptions.find(o => o.id === form.service)?.label || form.service,
+          service: selectedServicesText,
           budget: budgetOptions.find(o => o.id === form.budget)?.label || form.budget,
           message: `${form.projectDetails}\n\nPreferred Call Date: ${form.preferredDate}\nPreferred Call Time: ${form.preferredTime}`,
           company: form.company,
@@ -274,20 +288,26 @@ const Contact: React.FC = () => {
                               <button
                                 key={opt.id}
                                 type="button"
-                                onClick={() => handleOptionSelect('service', opt.id)}
-                                className={`p-4 rounded-2xl border-2 text-start transition-all duration-200 flex items-center gap-4 ${
-                                  form.service === opt.id
+                                onClick={() => handleServiceToggle(opt.id)}
+                                className={`p-4 rounded-2xl border-2 text-start transition-all duration-200 flex items-center justify-between gap-4 ${
+                                  form.services.includes(opt.id)
                                     ? 'border-[#A78BFA] bg-[#A78BFA]/10 shadow-md scale-[1.02]'
                                     : 'border-[#1E1E1E]/5 dark:border-white/5 bg-[#F8F4EE]/50 dark:bg-[#121212]/50 hover:border-[#A78BFA]/40 hover:bg-[#A78BFA]/5'
                                 }`}
                               >
-                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${form.service === opt.id ? 'bg-[#A78BFA] text-white' : 'bg-white dark:bg-[#1C1C1C] text-[#1E1E1E] dark:text-white'}`}>
-                                  <opt.icon size={18} />
+                                <div className="flex items-center gap-4">
+                                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${form.services.includes(opt.id) ? 'bg-[#A78BFA] text-white' : 'bg-white dark:bg-[#1C1C1C] text-[#1E1E1E] dark:text-white'}`}>
+                                    <opt.icon size={18} />
+                                  </div>
+                                  <span className="font-bold text-sm text-[#1E1E1E] dark:text-white leading-tight">{opt.label}</span>
                                 </div>
-                                <span className="font-bold text-sm text-[#1E1E1E] dark:text-white leading-tight">{opt.label}</span>
+                                <div className={`w-5 h-5 rounded flex items-center justify-center flex-shrink-0 border-2 ${form.services.includes(opt.id) ? 'border-[#A78BFA] bg-[#A78BFA]' : 'border-[#1E1E1E]/20 dark:border-white/20'}`}>
+                                  {form.services.includes(opt.id) && <CheckCircle size={12} className="text-white" />}
+                                </div>
                               </button>
                             ))}
                           </div>
+                          {/* @ts-ignore */}
                           {errors.service && <p className="text-xs font-bold text-[#FF8FB1] mt-2 animate-pulse">{errors.service}</p>}
                         </motion.div>
                       )}
