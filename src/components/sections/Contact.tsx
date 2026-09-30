@@ -343,17 +343,17 @@ const Contact: React.FC = () => {
                           </div>
                           
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2">
-                            <div>
+                            <div className="min-w-0 w-full">
                               <label className="block text-[10px] font-black uppercase tracking-wider text-[#1E1E1E]/50 dark:text-white/50 mb-2">
                                 {isAr ? 'اليوم المفضل للمكالمة' : 'Preferred Date'} <span className="text-[9px] font-normal opacity-70">(Optional)</span>
                               </label>
-                              <input type="date" name="preferredDate" value={form.preferredDate} onChange={handleChange} className={inputBase + " " + inputNormal} />
+                              <input type="date" name="preferredDate" value={form.preferredDate} onChange={handleChange} className={`${inputBase} ${inputNormal} appearance-none min-w-0 block w-full`} />
                             </div>
-                            <div>
+                            <div className="min-w-0 w-full">
                               <label className="block text-[10px] font-black uppercase tracking-wider text-[#1E1E1E]/50 dark:text-white/50 mb-2">
                                 {isAr ? 'الوقت المفضل' : 'Preferred Time'} <span className="text-[9px] font-normal opacity-70">(Optional)</span>
                               </label>
-                              <input type="time" name="preferredTime" value={form.preferredTime} onChange={handleChange} className={inputBase + " " + inputNormal} />
+                              <input type="time" name="preferredTime" value={form.preferredTime} onChange={handleChange} className={`${inputBase} ${inputNormal} appearance-none min-w-0 block w-full`} />
                             </div>
                           </div>
                         </motion.div>
