@@ -32,7 +32,7 @@ const Home: React.FC = () => {
       <WhyUs />
       <FeaturedProject />
       <About />
-      <Testimonials />
+      {/* <Testimonials /> */}
       <Pricing />
       <FAQ />
       <FinalCTA />
