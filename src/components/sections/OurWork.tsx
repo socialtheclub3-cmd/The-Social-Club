@@ -7,45 +7,7 @@ import { translations } from '../../data/translations';
 import CaseStudyModal, { type CaseStudy } from '../ui/CaseStudyModal';
 
 const caseStudies: CaseStudy[] = [
-  {
-    id: 'apex',
-    name: 'Apex Living Real Estate',
-    nameAr: 'أبكس للمقاولات والتطوير',
-    category: 'Luxury Real Estate · Full Growth Suite',
-    categoryAr: 'عقارات فاخرة · منظومة نمو متكاملة',
-    gradient: 'linear-gradient(135deg, #1E1E1E 0%, #A78BFA 100%)',
-    industry: 'Real Estate',
-    industryAr: 'العقارات',
-    timeline: 'Results in 90 days',
-    challenge:
-      'Apex Living had an exceptional real-estate portfolio but was relying on referrals and traditional agents. Their digital presence was non-existent, and they were missing out on a massive pool of high-net-worth online buyers and investors.',
-    challengeAr:
-      'كانت أبكس ليفينج تمتلك محفظة عقارية فاخرة لكنها تعتمد كلياً على الإحالات والوسطاء التقليديين. كان حضورها الرقمي شبه معدوم، مما جعلها تفوّت شريحة ضخمة من المشترين والمستثمرين الأثرياء.',
-    solution:
-      'We designed a luxury digital ecosystem — from a premium property showcase website to hyper-targeted Meta and Google campaigns focused on high-net-worth audiences. A custom lead qualification funnel filtered serious buyers from casual browsers, feeding directly into their sales team\'s CRM.',
-    solutionAr:
-      'صممنا منظومة رقمية فاخرة متكاملة — من موقع عرض عقارات فاخر عالي الأداء إلى حملات ميتا وجوجل مستهدفة بدقة لفئة الأثرياء والمستثمرين. مسار تأهيل عملاء مخصص يصفّي الجادين من المتصفحين ويغذي فريق المبيعات مباشرةً.',
-    results: [
-      { icon: Users, value: '450+', label: 'Qualified Buyer Inquiries', labelAr: 'استفسار مشتري مؤهل', color: '#A78BFA' },
-      { icon: TrendingUp, value: '+340%', label: 'Revenue Increase', labelAr: 'زيادة في المبيعات', color: '#22C55E' },
-      { icon: DollarSign, value: '2.8x', label: 'ROAS Achieved', labelAr: 'عائد الإنفاق الإعلاني', color: '#FF8A3D' },
-      { icon: Target, value: '-42%', label: 'Cost Per Lead', labelAr: 'انخفاض تكلفة العميل', color: '#F59E0B' },
-    ],
-    deliverables: [
-      'Luxury property showcase website',
-      'Meta & Google Ads campaigns',
-      'Lead qualification funnel',
-      'CRM integration & automation',
-      'Weekly ROI reporting dashboard',
-    ],
-    deliverablesAr: [
-      'موقع عرض عقارات فاخر',
-      'حملات إعلانية على ميتا وجوجل',
-      'مسار تأهيل العملاء المحتملين',
-      'ربط وأتمتة نظام CRM',
-      'تقارير أداء وعائد أسبوعية',
-    ],
-  },
+
   {
     id: 'bloom',
     name: 'Bloom Fashion Studio',
@@ -236,23 +198,27 @@ const OurWork: React.FC = () => {
                 <article className="group rounded-3xl overflow-hidden bg-white dark:bg-[#1C1C1C] border border-[#1E1E1E]/8 dark:border-white/10 card-lift flex flex-col h-full shadow-sm">
                   {/* Project Visual */}
                   <div className="relative aspect-[4/3] overflow-hidden" style={{ background: project.gradient }}>
+                    {project.id === 'eduguide' && project.logo ? (
+                      <img src={project.logo} alt={project.name} className="absolute inset-0 w-full h-full object-cover" />
+                    ) : (
+                      <div className="absolute inset-6 bottom-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center p-4">
+                        {project.logo ? (
+                          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-white shadow-xl shadow-black/10 flex items-center justify-center p-2">
+                            <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
+                          </div>
+                        ) : (
+                          <div className="text-center">
+                            <p className="text-white font-black text-xl leading-tight">{lang === 'ar' ? project.nameAr : project.name}</p>
+                            <p className="text-white/80 text-xs mt-1">{lang === 'ar' ? project.industryAr : project.industry}</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    
                     {/* Concept label */}
-                    <span className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} bg-black/40 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full`}>
+                    <span className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} bg-black/40 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full z-10`}>
                       {project.label}
                     </span>
-                    {/* Decorative inner card */}
-                    <div className="absolute inset-6 bottom-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center p-4">
-                      {project.logo ? (
-                        <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-white shadow-xl shadow-black/10 flex items-center justify-center p-2">
-                          <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
-                        </div>
-                      ) : (
-                        <div className="text-center">
-                          <p className="text-white font-black text-xl leading-tight">{lang === 'ar' ? project.nameAr : project.name}</p>
-                          <p className="text-white/80 text-xs mt-1">{lang === 'ar' ? project.industryAr : project.industry}</p>
-                        </div>
-                      )}
-                    </div>
 
                     {/* Hover overlay with quick metrics */}
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
