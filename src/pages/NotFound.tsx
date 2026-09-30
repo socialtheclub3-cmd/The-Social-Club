@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useApp } from '../context/AppContext';
 import Button from '../components/ui/Button';
+import SEO from '../components/SEO';
 
 const NotFound: React.FC = () => {
   const { lang } = useApp();
@@ -12,6 +13,7 @@ const NotFound: React.FC = () => {
       className="min-h-screen bg-[#FBF6EF] dark:bg-[#121212] flex items-center justify-center overflow-hidden relative"
       dir={isAr ? 'rtl' : 'ltr'}
     >
+      <SEO title="404 - Page Not Found" />
       {/* Background decorative blobs */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div
