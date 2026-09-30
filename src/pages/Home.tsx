@@ -15,10 +15,12 @@ import Pricing from '../components/sections/Pricing';
 import FAQ from '../components/sections/FAQ';
 import FinalCTA from '../components/sections/FinalCTA';
 import Contact from '../components/sections/Contact';
+import SEO from '../components/SEO';
 
 const Home: React.FC = () => {
   return (
     <main>
+      <SEO title="Home" />
       <Hero />
       <ClientLogos />
       <TrustIntro />
