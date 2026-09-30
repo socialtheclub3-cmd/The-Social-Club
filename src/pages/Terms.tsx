@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const Terms: React.FC = () => {
   const { lang } = useApp();
@@ -13,6 +14,7 @@ const Terms: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F4EE] dark:bg-[#121212] pt-24 pb-16 text-[#1E1E1E] dark:text-white transition-colors duration-300">
+      <SEO title="Terms & Conditions" description="Terms & Conditions for The Social Club Agency" />
       <div className="container-custom max-w-4xl mx-auto">
         <div className="mb-8">
           <Link to="/" className="text-[#A78BFA] font-bold hover:underline">
