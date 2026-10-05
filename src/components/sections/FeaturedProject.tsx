@@ -1,5 +1,6 @@
 import React from 'react';
-import { ArrowRight, BarChart3, Target, Zap } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { SiGoogleads, SiTiktok, SiMeta, SiShopify } from 'react-icons/si';
 import AnimatedSection from '../ui/AnimatedSection';
 import Button from '../ui/Button';
 import { useApp } from '../../context/AppContext';
@@ -61,21 +62,30 @@ const FeaturedProject: React.FC = () => {
                   </div>
                   
                   {/* Bottom animated icon boxes */}
-                  <div className="mt-auto grid grid-cols-3 gap-3 relative z-10">
-                    <div className="aspect-square bg-[#A78BFA]/20 border border-[#A78BFA]/30 rounded-xl flex flex-col items-center justify-center gap-1.5 group cursor-pointer overflow-hidden relative">
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#A78BFA]/20 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                      <BarChart3 className="text-[#A78BFA] w-6 h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
-                      <span className="text-[10px] font-bold text-[#A78BFA] opacity-0 group-hover:opacity-100 transition-opacity duration-300">Growth</span>
+                  <div className="mt-auto grid grid-cols-4 gap-2 lg:gap-3 relative z-10">
+                    {/* Meta */}
+                    <div className="aspect-square bg-[#0668E1]/20 border border-[#0668E1]/30 rounded-xl flex flex-col items-center justify-center gap-1 group cursor-pointer overflow-hidden relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0668E1]/30 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                      <SiMeta className="text-[#0668E1] dark:text-[#0668E1] w-5 h-5 lg:w-6 lg:h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
+                      <span className="text-[9px] font-bold text-[#0668E1] opacity-0 group-hover:opacity-100 transition-opacity duration-300">Meta</span>
                     </div>
-                    <div className="aspect-square bg-[#FF8FB1]/20 border border-[#FF8FB1]/30 rounded-xl flex flex-col items-center justify-center gap-1.5 group cursor-pointer overflow-hidden relative">
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#FF8FB1]/20 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                      <Target className="text-[#FF8FB1] w-6 h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
-                      <span className="text-[10px] font-bold text-[#FF8FB1] opacity-0 group-hover:opacity-100 transition-opacity duration-300">Ads</span>
+                    {/* Google Ads */}
+                    <div className="aspect-square bg-[#F4B400]/20 border border-[#F4B400]/30 rounded-xl flex flex-col items-center justify-center gap-1 group cursor-pointer overflow-hidden relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#F4B400]/30 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                      <SiGoogleads className="text-[#F4B400] w-5 h-5 lg:w-6 lg:h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
+                      <span className="text-[9px] font-bold text-[#F4B400] opacity-0 group-hover:opacity-100 transition-opacity duration-300">Google</span>
                     </div>
-                    <div className="aspect-square bg-[#FF8A3D]/20 border border-[#FF8A3D]/30 rounded-xl flex flex-col items-center justify-center gap-1.5 group cursor-pointer overflow-hidden relative">
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#FF8A3D]/20 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                      <Zap className="text-[#FF8A3D] w-6 h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
-                      <span className="text-[10px] font-bold text-[#FF8A3D] opacity-0 group-hover:opacity-100 transition-opacity duration-300">CRO</span>
+                    {/* TikTok */}
+                    <div className="aspect-square bg-[#00f2fe]/20 border border-[#00f2fe]/30 rounded-xl flex flex-col items-center justify-center gap-1 group cursor-pointer overflow-hidden relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#00f2fe]/30 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                      <SiTiktok className="text-[#00f2fe] w-5 h-5 lg:w-6 lg:h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
+                      <span className="text-[9px] font-bold text-[#00f2fe] opacity-0 group-hover:opacity-100 transition-opacity duration-300">TikTok</span>
+                    </div>
+                    {/* Shopify */}
+                    <div className="aspect-square bg-[#95BF47]/20 border border-[#95BF47]/30 rounded-xl flex flex-col items-center justify-center gap-1 group cursor-pointer overflow-hidden relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#95BF47]/30 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                      <SiShopify className="text-[#95BF47] w-5 h-5 lg:w-6 lg:h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
+                      <span className="text-[9px] font-bold text-[#95BF47] opacity-0 group-hover:opacity-100 transition-opacity duration-300">Shopify</span>
                     </div>
                   </div>
                 </div>
