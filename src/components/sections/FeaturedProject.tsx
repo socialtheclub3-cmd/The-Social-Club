@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, BarChart3, Target, Zap } from 'lucide-react';
 import AnimatedSection from '../ui/AnimatedSection';
 import Button from '../ui/Button';
 import { useApp } from '../../context/AppContext';
@@ -46,16 +46,37 @@ const FeaturedProject: React.FC = () => {
                   <div className="w-2.5 h-2.5 rounded-full bg-[#7ED6B7]" />
                   <div className="flex-1 h-5 bg-white/10 rounded-md mx-2" />
                 </div>
-                {/* Content mockup lines */}
-                <div className="flex-1 flex flex-col gap-3">
-                  <div className="h-6 bg-white/20 rounded-lg w-3/4" />
-                  <div className="h-4 bg-white/10 rounded-lg w-full" />
-                  <div className="h-4 bg-white/10 rounded-lg w-5/6" />
-                  <div className="h-4 bg-white/10 rounded-lg w-4/5" />
-                  <div className="mt-auto grid grid-cols-3 gap-3">
-                    <div className="aspect-square bg-[#A78BFA]/30 rounded-xl" />
-                    <div className="aspect-square bg-[#FF8FB1]/30 rounded-xl" />
-                    <div className="aspect-square bg-[#FF8A3D]/30 rounded-xl" />
+                {/* Dashboard Chart Mockup */}
+                <div className="flex-1 flex flex-col h-full relative mt-2">
+                  {/* Chart bars animated */}
+                  <div className="flex-1 flex items-end justify-between gap-3 px-2 pb-6 relative z-0">
+                    <div className="w-full bg-[#A78BFA]/20 rounded-t-md h-[30%] animate-pulse" style={{ animationDelay: '0ms' }} />
+                    <div className="w-full bg-[#A78BFA]/20 rounded-t-md h-[45%] animate-pulse" style={{ animationDelay: '200ms' }} />
+                    <div className="w-full bg-[#A78BFA]/30 rounded-t-md h-[65%] animate-pulse" style={{ animationDelay: '400ms' }} />
+                    <div className="w-full bg-[#A78BFA]/60 rounded-t-md h-[95%] animate-pulse relative" style={{ animationDelay: '600ms' }}>
+                      <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-white text-black text-[10px] font-black px-2 py-1 rounded shadow-lg animate-bounce">
+                        +340%
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Bottom animated icon boxes */}
+                  <div className="mt-auto grid grid-cols-3 gap-3 relative z-10">
+                    <div className="aspect-square bg-[#A78BFA]/20 border border-[#A78BFA]/30 rounded-xl flex flex-col items-center justify-center gap-1.5 group cursor-pointer overflow-hidden relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#A78BFA]/20 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                      <BarChart3 className="text-[#A78BFA] w-6 h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
+                      <span className="text-[10px] font-bold text-[#A78BFA] opacity-0 group-hover:opacity-100 transition-opacity duration-300">Growth</span>
+                    </div>
+                    <div className="aspect-square bg-[#FF8FB1]/20 border border-[#FF8FB1]/30 rounded-xl flex flex-col items-center justify-center gap-1.5 group cursor-pointer overflow-hidden relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#FF8FB1]/20 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                      <Target className="text-[#FF8FB1] w-6 h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
+                      <span className="text-[10px] font-bold text-[#FF8FB1] opacity-0 group-hover:opacity-100 transition-opacity duration-300">Ads</span>
+                    </div>
+                    <div className="aspect-square bg-[#FF8A3D]/20 border border-[#FF8A3D]/30 rounded-xl flex flex-col items-center justify-center gap-1.5 group cursor-pointer overflow-hidden relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#FF8A3D]/20 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                      <Zap className="text-[#FF8A3D] w-6 h-6 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
+                      <span className="text-[10px] font-bold text-[#FF8A3D] opacity-0 group-hover:opacity-100 transition-opacity duration-300">CRO</span>
+                    </div>
                   </div>
                 </div>
               </div>
