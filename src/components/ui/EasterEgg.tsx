@@ -65,7 +65,7 @@ const EasterEgg: React.FC = () => {
   return (
     <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity duration-500 animate-in fade-in" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center z-10 animate-[scale-in_0.5s_ease-out]">
+      <div className="easter-egg-text absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center z-10">
         <h2 className="text-5xl md:text-8xl font-black text-white mb-4 animate-bounce drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]">
           GROWTH MODE 🚀
         </h2>
@@ -77,7 +77,7 @@ const EasterEgg: React.FC = () => {
       {rockets.map((r) => (
         <div
           key={r.id}
-          className="absolute bottom-[-100px] animate-[fly-up_3s_ease-in-out_forwards]"
+          className="easter-egg-rocket absolute bottom-[-100px]"
           style={{
             left: r.left,
             animationDelay: r.delay,
@@ -89,6 +89,12 @@ const EasterEgg: React.FC = () => {
         </div>
       ))}
       <style>{`
+        .easter-egg-rocket {
+          animation: fly-up 3s ease-in-out forwards;
+        }
+        .easter-egg-text {
+          animation: scale-in 0.5s ease-out forwards;
+        }
         @keyframes fly-up {
           0% {
             transform: translateY(0) scale(1) rotate(0deg);
