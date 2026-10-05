@@ -14,6 +14,7 @@ import ExitIntentPopup from './components/ui/ExitIntentPopup';
 import LiveTicker from './components/ui/LiveTicker';
 import StickyCTA from './components/ui/StickyCTA';
 import Chatbot from './components/ui/Chatbot';
+import EasterEgg from './components/ui/EasterEgg';
 
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
@@ -44,6 +45,7 @@ function App() {
       {!isAdmin && <Chatbot />}
       {!isAdmin && <LiveTicker />}
       {!isAdmin && <ExitIntentPopup />}
+      {!isAdmin && <EasterEgg />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin />} />
