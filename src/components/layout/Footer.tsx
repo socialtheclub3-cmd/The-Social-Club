@@ -39,12 +39,12 @@ const Footer: React.FC = () => {
   const ts = translations[lang].services;
 
   const footerNav = [
-    { label: tn.home, href: '#home' },
-    { label: tn.services, href: '#services' },
-    { label: tn.work, href: '#work' },
-    { label: tn.process, href: '#process' },
-    { label: tn.about, href: '#about' },
-    { label: lang === 'ar' ? 'تواصل معنا' : 'Contact', href: '#contact' },
+    { label: tn.home, href: '/#home' },
+    { label: tn.services, href: '/#services' },
+    { label: tn.work, href: '/#work' },
+    { label: tn.process, href: '/#process' },
+    { label: tn.about, href: '/#about' },
+    { label: lang === 'ar' ? 'تواصل معنا' : 'Contact', href: '/#contact' },
   ];
 
   const footerServices = [
@@ -55,7 +55,12 @@ const Footer: React.FC = () => {
 
   const handleScroll = (href: string) => (e: React.MouseEvent) => {
     e.preventDefault();
-    const target = document.querySelector(href);
+    const hash = href.includes('#') ? '#' + href.split('#')[1] : href;
+    if (window.location.pathname !== '/') {
+      window.location.href = '/' + hash;
+      return;
+    }
+    const target = document.querySelector(hash);
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -131,8 +136,8 @@ const Footer: React.FC = () => {
               {footerServices.map((service) => (
                 <li key={service}>
                   <a
-                    href="#services"
-                    onClick={handleScroll('#services')}
+                    href="/#services"
+                    onClick={handleScroll('/#services')}
                     className="text-sm text-white/70 hover:text-[#A78BFA] transition-colors duration-200"
                   >
                     {service}
