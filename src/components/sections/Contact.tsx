@@ -138,27 +138,31 @@ const Contact: React.FC = () => {
         preferredTime: form.preferredTime,
       });
 
-      await emailjs.send(
-        'service_ecxzgc5',
-        'template_t1a7wpo',
-        {
-          from_name: form.name,
-          from_email: form.email,
-          service: selectedServicesText,
-          budget: budgetOptions.find(o => o.id === form.budget)?.label || form.budget,
-          message: `${form.projectDetails}\n\nPreferred Call Date: ${form.preferredDate}\nPreferred Call Time: ${form.preferredTime}`,
-          company: form.company,
-          phone: form.phone,
-        },
-        'qYdDNevz3Bcanc4g8'
-      );
+      try {
+        await emailjs.send(
+          'service_ecxzgc5',
+          'template_t1a7wpo',
+          {
+            from_name: form.name,
+            from_email: form.email,
+            service: selectedServicesText,
+            budget: budgetOptions.find(o => o.id === form.budget)?.label || form.budget,
+            message: `${form.projectDetails}\n\nPreferred Call Date: ${form.preferredDate}\nPreferred Call Time: ${form.preferredTime}`,
+            company: form.company,
+            phone: form.phone,
+          },
+          'qYdDNevz3Bcanc4g8'
+        );
+      } catch (e) {
+        console.warn('EmailJS service warning (lead saved locally):', e);
+      }
 
       setSubmitted(true);
       setForm(initialForm);
       setStep(1);
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert(isAr ? 'حدث خطأ، يرجى المحاولة لاحقاً' : 'An error occurred, please try again later.');
+      alert(isAr ? 'حدث خطأ، يرجى المحاولة لاحقاً أو مراسلتنا مباشرة عبر الواتساب' : 'An error occurred, please try again or contact us via WhatsApp.');
     } finally {
       setLoading(false);
     }
@@ -254,19 +258,39 @@ const Contact: React.FC = () => {
                 </div>
               ) : (
                 <>
-                  {/* Progress Bar */}
-                  <div className="mb-10">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-[#A78BFA]">
-                        {isAr ? 'طلب استشارة' : 'Project Inquiry'}
-                      </span>
-                      <span className="text-[10px] font-bold text-[#1E1E1E]/50 dark:text-white/50">
-                        {step} / 4
-                      </span>
+                  {/* Progress Bar & Step Badges */}
+                  <div className="mb-8">
+                    <div className="flex items-center justify-between gap-1 mb-4">
+                      {[
+                        { num: 1, label: isAr ? 'الخدمات' : 'Services' },
+                        { num: 2, label: isAr ? 'الميزانية' : 'Budget' },
+                        { num: 3, label: isAr ? 'المشروع' : 'Goals' },
+                        { num: 4, label: isAr ? 'بياناتك' : 'Contact' },
+                      ].map((s) => (
+                        <div
+                          key={s.num}
+                          onClick={() => {
+                            // Allow clicking previous steps
+                            if (s.num < step) setStep(s.num);
+                          }}
+                          className={`flex items-center gap-1.5 text-xs font-bold py-1 px-2.5 rounded-full transition-all ${
+                            step === s.num
+                              ? 'bg-[#A78BFA] text-[#1E1E1E]'
+                              : step > s.num
+                              ? 'bg-[#7ED6B7]/20 text-[#7ED6B7] cursor-pointer'
+                              : 'text-[#1E1E1E]/40 dark:text-white/40'
+                          }`}
+                        >
+                          <span className="w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-black border border-current">
+                            {step > s.num ? '✓' : s.num}
+                          </span>
+                          <span className="hidden sm:inline text-[11px]">{s.label}</span>
+                        </div>
+                      ))}
                     </div>
                     <div className="w-full h-1.5 bg-[#F8F4EE] dark:bg-[#2A2A2A] rounded-full overflow-hidden">
                       <motion.div 
-                        className="h-full bg-[#A78BFA]"
+                        className="h-full bg-gradient-to-r from-[#A78BFA] to-[#7ED6B7]"
                         initial={{ width: 0 }}
                         animate={{ width: `${(step / 4) * 100}%` }}
                         transition={{ duration: 0.3 }}
@@ -352,6 +376,7 @@ const Contact: React.FC = () => {
                               {isAr ? 'تفاصيل المشروع وأهدافك' : 'Project Details & Goals'} <span className="text-[#FF8FB1]">*</span>
                             </label>
                             <textarea
+                              id="contact-message"
                               name="projectDetails"
                               rows={5}
                               value={form.projectDetails}
