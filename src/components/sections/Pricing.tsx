@@ -8,7 +8,7 @@ import { useApp } from '../../context/AppContext';
 import { translations } from '../../data/translations';
 
 const Pricing: React.FC = () => {
-  const { lang } = useApp();
+  const { lang, formatCurrency } = useApp();
   const t = translations[lang].pricing;
   const isAr = lang === 'ar';
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
@@ -40,10 +40,23 @@ const Pricing: React.FC = () => {
     },
   ];
 
-  const handleSelectPlan = () => {
+  const numericPrices: Record<string, number | 'Custom'> = {
+    plan1: 1200,
+    plan2: 2800,
+    plan3: 'Custom',
+  };
+
+  const handleSelectPlan = (planName: string) => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
+      const textarea = document.getElementById('contact-message') as HTMLTextAreaElement | null;
+      if (textarea) {
+        textarea.value = isAr
+          ? `مرحباً، أود الاستفسار عن تفاصيل (${planName}) وخطة العمل المناسبة لمشروعي.`
+          : `Hello, I would like to inquire about (${planName}) and discuss the implementation roadmap for my business.`;
+        textarea.focus();
+      }
     }
   };
 
@@ -70,6 +83,7 @@ const Pricing: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
           {plans.map((plan, idx) => {
             const Icon = plan.icon;
+            const priceValue = numericPrices[plan.key];
 
             return (
               <AnimatedSection key={plan.id} delay={idx * 120} className="flex w-full">
@@ -110,11 +124,32 @@ const Pricing: React.FC = () => {
                       {plan.data.tagline}
                     </p>
 
-                    {/* Price Placeholder */}
-                    <div className="flex items-baseline gap-1.5 mb-6 pb-6 border-b border-[#1E1E1E]/8 dark:border-white/10">
-                      <span className="text-xl font-black tracking-tight text-[#1E1E1E] dark:text-white">
-                        {isAr ? 'يحدد بناءً على المشروع' : 'Custom Blueprint'}
-                      </span>
+                    {/* Price Display */}
+                    <div className="mb-6 pb-6 border-b border-[#1E1E1E]/8 dark:border-white/10">
+                      <div className="flex items-baseline gap-1.5">
+                        {priceValue === 'Custom' ? (
+                          <span className="text-2xl font-black tracking-tight text-[#1E1E1E] dark:text-white">
+                            {isAr ? 'خطة مخصصة بالكامل' : 'Custom Tailored'}
+                          </span>
+                        ) : (
+                          <>
+                            <span className="text-xs font-semibold text-[#1E1E1E]/50 dark:text-white/50">
+                              {isAr ? 'تبدأ من ' : 'Starts at '}
+                            </span>
+                            <span className="text-3xl font-black tracking-tight text-[#1E1E1E] dark:text-white">
+                              {formatCurrency(priceValue)}
+                            </span>
+                            <span className="text-xs font-normal text-[#1E1E1E]/50 dark:text-white/50">
+                              {plan.data.period}
+                            </span>
+                          </>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-[#1E1E1E]/50 dark:text-white/50 mt-1">
+                        {isAr
+                          ? 'تحدد التكلفة الدقيقة بناءً على أهدافك ونطاق العمل بعد مكالمة الاستكشاف'
+                          : 'Exact scope scoped transparently during your free strategy call'}
+                      </p>
                     </div>
 
                     {/* Features list */}
@@ -137,8 +172,8 @@ const Pricing: React.FC = () => {
                   <div>
                     <button
                       type="button"
-                      onClick={() => handleSelectPlan()}
-                      className={`w-full py-3.5 px-6 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 ${
+                      onClick={() => handleSelectPlan(plan.data.name)}
+                      className={`w-full py-3.5 px-6 rounded-2xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer ${
                         plan.popular
                           ? 'bg-[#A78BFA] hover:bg-[#906fe7] text-[#1E1E1E] shadow-md shadow-[#A78BFA]/30 hover:scale-[1.02]'
                           : 'bg-[#1E1E1E]/5 dark:bg-white/10 hover:bg-[#1E1E1E] dark:hover:bg-white hover:text-white dark:hover:text-[#121212] text-[#1E1E1E] dark:text-white'
@@ -155,8 +190,19 @@ const Pricing: React.FC = () => {
           })}
         </div>
 
+        {/* Pricing Transparency & Process Note */}
+        <AnimatedSection delay={300} className="mt-12 max-w-3xl mx-auto">
+          <div className="p-4 sm:p-5 rounded-2xl bg-[#A78BFA]/10 border border-[#A78BFA]/20 text-center">
+            <p className="text-xs text-[#1E1E1E]/80 dark:text-white/80 leading-relaxed font-medium">
+              {isAr
+                ? '💡 كيف تتحدد التكلفة الدقيقة؟ الأرقام المعروضة أعلاه هي أسعار بداية استرشادية لخدماتنا الأساسية. في مكالمة الاستكشاف المجانية (30 دقيقة)، نقوم بدراسة أهدافك وميزانيتك الإعلانية المقترحة، ونقدم لك خطة عمل واضحة وعرض سعر مفصل وشفاف بدون أي التزامات مسبقة.'
+                : '💡 How Pricing Works: The numbers above represent baseline retainer tiers. During your free 30-min discovery call, we audit your accounts and provide a transparent, customized scope aligned with your target ad spend and unit economics.'}
+            </p>
+          </div>
+        </AnimatedSection>
+
         {/* Enterprise Bottom Help Callout */}
-        <AnimatedSection delay={350} className="mt-14 max-w-2xl mx-auto text-center">
+        <AnimatedSection delay={350} className="mt-6 max-w-2xl mx-auto text-center">
           <div className="p-6 rounded-2xl border border-[#1E1E1E]/8 dark:border-white/10 bg-white/60 dark:bg-[#1E1E1E]/50 backdrop-blur-xs flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-left sm:text-start">
               <h4 className="text-sm font-black text-[#1E1E1E] dark:text-white mb-1">
