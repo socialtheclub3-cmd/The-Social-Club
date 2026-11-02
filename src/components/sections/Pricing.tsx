@@ -41,8 +41,8 @@ const Pricing: React.FC = () => {
   ];
 
   const numericPrices: Record<string, number | 'Custom'> = {
-    plan1: 1200,
-    plan2: 2800,
+    plan1: 'Custom',
+    plan2: 'Custom',
     plan3: 'Custom',
   };
 
@@ -129,7 +129,7 @@ const Pricing: React.FC = () => {
                       <div className="flex items-baseline gap-1.5">
                         {priceValue === 'Custom' ? (
                           <span className="text-2xl font-black tracking-tight text-[#1E1E1E] dark:text-white">
-                            {isAr ? 'خطة مخصصة بالكامل' : 'Custom Tailored'}
+                            {isAr ? 'تسعير مخصص (Custom)' : 'Custom Tailored'}
                           </span>
                         ) : (
                           <>
@@ -148,7 +148,7 @@ const Pricing: React.FC = () => {
                       <p className="text-[11px] text-[#1E1E1E]/50 dark:text-white/50 mt-1">
                         {isAr
                           ? 'تحدد التكلفة الدقيقة بناءً على أهدافك ونطاق العمل بعد مكالمة الاستكشاف'
-                          : 'Exact scope scoped transparently during your free strategy call'}
+                          : 'Exact scope and budget scoped transparently during your free strategy call'}
                       </p>
                     </div>
 
@@ -195,8 +195,8 @@ const Pricing: React.FC = () => {
           <div className="p-4 sm:p-5 rounded-2xl bg-[#A78BFA]/10 border border-[#A78BFA]/20 text-center">
             <p className="text-xs text-[#1E1E1E]/80 dark:text-white/80 leading-relaxed font-medium">
               {isAr
-                ? '💡 كيف تتحدد التكلفة الدقيقة؟ الأرقام المعروضة أعلاه هي أسعار بداية استرشادية لخدماتنا الأساسية. في مكالمة الاستكشاف المجانية (30 دقيقة)، نقوم بدراسة أهدافك وميزانيتك الإعلانية المقترحة، ونقدم لك خطة عمل واضحة وعرض سعر مفصل وشفاف بدون أي التزامات مسبقة.'
-                : '💡 How Pricing Works: The numbers above represent baseline retainer tiers. During your free 30-min discovery call, we audit your accounts and provide a transparent, customized scope aligned with your target ad spend and unit economics.'}
+                ? '💡 كيف نحدد التكلفة؟ جميع باقاتنا مخصصة بالكامل وفقاً لحجم مشروعك وأهدافك الفعلية. في مكالمة الاستكشاف المجانية (30 دقيقة)، نقوم بدراسة متطلباتك ونطاق العمل، ونقدم لك خطة عمل واضحة وعرض سعر مفصل وشفاف بدون أي التزامات مسبقة.'
+                : '💡 How Our Custom Pricing Works: Every growth partnership is customized to your brand’s specific stage and goals. During your free 30-min discovery call, we audit your channels and provide a transparent, customized scope and proposal aligned with your budget.'}
             </p>
           </div>
         </AnimatedSection>
