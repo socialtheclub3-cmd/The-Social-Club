@@ -6,27 +6,33 @@ import { blogService } from '../services/blogService';
 import type { BlogPost as BlogPostType } from '../data/blogData';
 import AnimatedSection from '../components/ui/AnimatedSection';
 
+import { defaultBlogPosts } from '../services/blogService';
+
 const BlogPost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { lang } = useApp();
   const navigate = useNavigate();
   const isAr = lang === 'ar';
   
-  const [post, setPost] = useState<BlogPostType | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [post, setPost] = useState<BlogPostType | null>(() => {
+    const local = blogService.getPostsLocal();
+    return local.find((p) => p.id === id) || defaultBlogPosts.find((p) => p.id === id) || null;
+  });
+  const [loading, setLoading] = useState(!post);
 
   useEffect(() => {
     const unsubscribe = blogService.subscribe((posts) => {
-      const found = posts.find((p) => p.id === id);
+      const allPosts = posts && posts.length > 0 ? posts : defaultBlogPosts;
+      const found = allPosts.find((p) => p.id === id);
       if (found) {
         setPost(found);
-      } else {
+        setLoading(false);
+      } else if (!post) {
         navigate('/blog');
       }
-      setLoading(false);
     });
     return () => unsubscribe();
-  }, [id, navigate]);
+  }, [id, navigate, post]);
 
   if (loading) return <div className="min-h-screen bg-[#FBF6EF] dark:bg-[#121212]" />;
   if (!post) return null;
