@@ -66,13 +66,13 @@ const Navbar: React.FC = () => {
   const t = translations[lang].nav;
 
   const navLinks = [
-    { label: t.home, href: '#home' },
-    { label: t.services, href: '#services' },
-    { label: lang === 'ar' ? 'حاسبة النمو' : 'Growth Calc', href: '#calculator' },
-    { label: t.work, href: '#work' },
-    { label: t.about, href: '#about' },
-    { label: lang === 'ar' ? 'نماذج الشراكة' : 'Partnership', href: '#pricing' },
-    { label: lang === 'ar' ? 'المدونة' : 'Blog', href: '/blog' },
+    { label: t.home, href: '/#home', id: '#home' },
+    { label: t.services, href: '/#services', id: '#services' },
+    { label: lang === 'ar' ? 'حاسبة النمو' : 'Growth Calc', href: '/#calculator', id: '#calculator' },
+    { label: t.work, href: '/#work', id: '#work' },
+    { label: t.about, href: '/#about', id: '#about' },
+    { label: lang === 'ar' ? 'نماذج الشراكة' : 'Partnership', href: '/#pricing', id: '#pricing' },
+    { label: lang === 'ar' ? 'المدونة' : 'Blog', href: '/blog', id: '/blog' },
   ];
 
   useEffect(() => {
@@ -99,17 +99,22 @@ const Navbar: React.FC = () => {
     setActiveLink(href);
     setMenuOpen(false);
 
-    if (href.startsWith('/')) {
+    // If it's a regular route (e.g., /blog)
+    if (href === '/blog' || !href.includes('#')) {
       window.location.href = href;
       return;
     }
 
-    if (window.location.pathname !== '/' && href.startsWith('#')) {
-      window.location.href = '/' + href;
+    const hash = '#' + href.split('#')[1];
+
+    // If we're not on the home page, redirect to home with hash
+    if (window.location.pathname !== '/') {
+      window.location.href = '/' + hash;
       return;
     }
 
-    const target = document.querySelector(href);
+    // If already on home page, smooth scroll
+    const target = document.querySelector(hash);
     if (target) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -128,10 +133,10 @@ const Navbar: React.FC = () => {
         <div className="container-custom flex items-center justify-between">
           {/* Logo */}
           <a
-            href="#home"
+            href="/#home"
             onClick={(e) => {
               e.preventDefault();
-              handleNavClick('#home');
+              handleNavClick('/#home');
             }}
             className="flex-shrink-0 focus-visible:outline-none"
             aria-label="The Social Club — Home"
@@ -140,7 +145,7 @@ const Navbar: React.FC = () => {
           </a>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-7 lg:gap-8" aria-label="Main navigation">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-7" aria-label="Main navigation">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -149,7 +154,7 @@ const Navbar: React.FC = () => {
                   e.preventDefault();
                   handleNavClick(link.href);
                 }}
-                className={`text-sm font-semibold transition-colors duration-200 link-underline ${
+                className={`text-xs xl:text-sm font-semibold transition-colors duration-200 link-underline ${
                   activeLink === link.href
                     ? 'text-[#A78BFA]'
                     : 'text-[#1E1E1E]/80 dark:text-white/80 hover:text-[#1E1E1E] dark:text-white dark:hover:text-white'
@@ -161,13 +166,13 @@ const Navbar: React.FC = () => {
           </nav>
 
           {/* Actions: Theme Toggle, Lang Switcher & CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2.5 xl:gap-3">
             {/* Language Switcher */}
             <button
               onClick={toggleLang}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#1E1E1E]/50 dark:bg-white/10 hover:bg-[#1E1E1E]/10 dark:hover:bg-white/20 text-[#1E1E1E] dark:text-white transition-all cursor-pointer"
-              title={lang === 'en' ? 'التحويل للعربية' : 'Switch to English'}
-              aria-label="Toggle language"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#1E1E1E]/5 dark:bg-white/10 hover:bg-[#1E1E1E]/10 dark:hover:bg-white/20 text-[#1E1E1E] dark:text-white transition-all cursor-pointer"
+              title={lang === 'en' ? 'التحويل للغة العربية' : 'Switch to English'}
+              aria-label={lang === 'en' ? 'التحويل إلى اللغة العربية' : 'Switch to English language'}
             >
               <Globe size={14} className="text-[#A78BFA]" />
               <span>{lang === 'en' ? 'عربي' : 'EN'}</span>
@@ -179,9 +184,9 @@ const Navbar: React.FC = () => {
             {/* Dark/Light Mode Toggle */}
             <button
               onClick={toggleTheme}
-              className="w-9 h-9 rounded-full flex items-center justify-center bg-[#1E1E1E]/50 dark:bg-white/10 hover:bg-[#1E1E1E]/10 dark:hover:bg-white/20 text-[#1E1E1E] dark:text-white transition-all cursor-pointer"
-              title={theme === 'light' ? 'Dark mode' : 'Light mode'}
-              aria-label="Toggle theme"
+              className="w-9 h-9 rounded-full flex items-center justify-center bg-[#1E1E1E]/5 dark:bg-white/10 hover:bg-[#1E1E1E]/10 dark:hover:bg-white/20 text-[#1E1E1E] dark:text-white transition-all cursor-pointer"
+              title={theme === 'light' ? (lang === 'ar' ? 'تفعيل الوضع الليلي' : 'Switch to Dark Mode') : (lang === 'ar' ? 'تفعيل الوضع النهاري' : 'Switch to Light Mode')}
+              aria-label={theme === 'light' ? (lang === 'ar' ? 'تفعيل الوضع الليلي' : 'Switch to Dark Mode') : (lang === 'ar' ? 'تفعيل الوضع النهاري' : 'Switch to Light Mode')}
             >
               {theme === 'light' ? (
                 <Moon size={16} className="text-[#1E1E1E] dark:text-white" />
@@ -192,40 +197,42 @@ const Navbar: React.FC = () => {
 
             {/* CTA Button */}
             <Button
-              href="#contact"
+              href="/#contact"
               variant="primary"
               size="sm"
               id="nav-cta"
-              onClick={() => handleNavClick('#contact')}
+              onClick={() => handleNavClick('/#contact')}
             >
               {t.cta}
             </Button>
           </div>
 
-          {/* Mobile Actions: Lang, Theme, Currency & Hamburger */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Mobile & Tablet Actions: Lang, Theme, Currency & Hamburger */}
+          <div className="flex lg:hidden items-center gap-2">
             <CurrencyDropdown currency={currency} setCurrency={setCurrency} isMobile />
 
             <button
               onClick={toggleLang}
-              className="px-2.5 py-1 rounded-full text-xs font-bold bg-[#1E1E1E]/50 dark:bg-white/10 text-[#1E1E1E] dark:text-white"
-              aria-label="Toggle language"
+              className="px-2.5 py-1 rounded-full text-xs font-bold bg-[#1E1E1E]/5 dark:bg-white/10 text-[#1E1E1E] dark:text-white"
+              title={lang === 'en' ? 'التحويل للغة العربية' : 'Switch to English'}
+              aria-label={lang === 'en' ? 'التحويل إلى اللغة العربية' : 'Switch to English language'}
             >
               {lang === 'en' ? 'عربي' : 'EN'}
             </button>
 
             <button
               onClick={toggleTheme}
-              className="w-9 h-9 rounded-full flex items-center justify-center bg-[#1E1E1E]/50 dark:bg-white/10 text-[#1E1E1E] dark:text-white"
-              aria-label="Toggle theme"
+              className="w-9 h-9 rounded-full flex items-center justify-center bg-[#1E1E1E]/5 dark:bg-white/10 text-[#1E1E1E] dark:text-white"
+              title={theme === 'light' ? (lang === 'ar' ? 'تفعيل الوضع الليلي' : 'Switch to Dark Mode') : (lang === 'ar' ? 'تفعيل الوضع النهاري' : 'Switch to Light Mode')}
+              aria-label={theme === 'light' ? (lang === 'ar' ? 'تفعيل الوضع الليلي' : 'Switch to Dark Mode') : (lang === 'ar' ? 'تفعيل الوضع النهاري' : 'Switch to Light Mode')}
             >
               {theme === 'light' ? <Moon size={16} /> : <Sun size={16} className="text-[#FFD166]" />}
             </button>
 
             <button
-              className="flex items-center justify-center w-10 h-10 rounded-lg text-[#1E1E1E] dark:text-white hover:bg-[#1E1E1E]/50 dark:hover:bg-white/10 transition-colors"
+              className="flex items-center justify-center w-10 h-10 rounded-lg text-[#1E1E1E] dark:text-white hover:bg-[#1E1E1E]/10 dark:hover:bg-white/10 transition-colors"
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={menuOpen ? (lang === 'ar' ? 'إغلاق القائمة الرئيسية' : 'Close navigation menu') : (lang === 'ar' ? 'فتح القائمة الرئيسية' : 'Open navigation menu')}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               id="hamburger-btn"
@@ -239,7 +246,7 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu Overlay */}
       <div
         id="mobile-menu"
-        className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${
+        className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
           menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         role="dialog"
@@ -263,8 +270,8 @@ const Navbar: React.FC = () => {
             <Logo />
             <button
               onClick={() => setMenuOpen(false)}
-              className="w-10 h-10 flex items-center justify-center rounded-lg text-[#1E1E1E] dark:text-white hover:bg-[#1E1E1E]/50"
-              aria-label="Close menu"
+              className="w-10 h-10 flex items-center justify-center rounded-lg text-[#1E1E1E] dark:text-white hover:bg-[#1E1E1E]/10 dark:hover:bg-white/10"
+              aria-label={lang === 'ar' ? 'إغلاق القائمة' : 'Close menu'}
             >
               <X size={22} />
             </button>
@@ -290,11 +297,11 @@ const Navbar: React.FC = () => {
           {/* Mobile CTA */}
           <div className="px-6 py-8 border-t border-[#1E1E1E]/10 dark:border-white/10">
             <Button
-              href="#contact"
+              href="/#contact"
               variant="primary"
               size="lg"
               className="w-full"
-              onClick={() => handleNavClick('#contact')}
+              onClick={() => handleNavClick('/#contact')}
             >
               {t.cta}
             </Button>
