@@ -18,12 +18,12 @@ export interface PricingConfig {
 
 const defaultPricing: PricingConfig = {
   starter: {
-    monthly: 1200,
-    quarterly: 990,
+    monthly: 'Custom',
+    quarterly: 'Custom',
   },
   scale: {
-    monthly: 2800,
-    quarterly: 2350,
+    monthly: 'Custom',
+    quarterly: 'Custom',
   },
   enterprise: {
     monthly: 'Custom',
