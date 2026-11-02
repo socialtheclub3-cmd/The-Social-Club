@@ -36,10 +36,16 @@ const CookieConsent: React.FC = () => {
                 ? 'نحن نستخدم ملفات تعريف الارتباط (Cookies) لضمان حصولك على أفضل تجربة على موقعنا ولتحليل حركة المرور، مما يساعدنا على تقديم خدمة أفضل لعملائنا.'
                 : 'We use cookies to ensure you get the best experience on our website and to analyze our traffic, helping us deliver a better service.'}
             </p>
-            <div className="flex gap-3 flex-shrink-0">
+            <div className="flex items-center gap-4 flex-shrink-0">
+              <a
+                href="/privacy"
+                className="text-xs text-white/60 hover:text-white underline transition-colors"
+              >
+                {isAr ? 'سياسة الخصوصية' : 'Privacy Policy'}
+              </a>
               <button 
                 onClick={handleAccept}
-                className="bg-[#A78BFA] hover:bg-[#8B5CF6] text-white px-6 py-2 rounded-lg text-sm font-bold transition-colors shadow-lg"
+                className="bg-[#A78BFA] hover:bg-[#8B5CF6] text-white px-6 py-2 rounded-lg text-sm font-bold transition-colors shadow-lg cursor-pointer"
               >
                 {isAr ? 'موافق' : 'Accept All'}
               </button>
