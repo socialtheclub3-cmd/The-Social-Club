@@ -6,15 +6,15 @@ export const translations = {
       work: 'Our Work',
       process: 'Process',
       about: 'About',
-      cta: 'Start a Project →',
+      cta: 'Book Free Call →',
     },
     hero: {
       badge: 'DIGITAL GROWTH AGENCY',
       headlineStart: 'Growth, ',
       headlineItalic: 'made',
       headlineEnd: 'Social.',
-      subheadline: 'We build digital experiences, marketing systems, and lead generation strategies that turn attention into business growth.',
-      startProject: 'Start a Project →',
+      subheadline: 'We build digital experiences, marketing systems, and lead generation funnels that turn attention into measurable business revenue.',
+      startProject: 'Book Free Strategy Call →',
       seeWork: 'See Our Work',
       marketing: 'MARKETING',
       web: 'WEB',
@@ -127,11 +127,11 @@ export const translations = {
       badge: 'CLIENT TESTIMONIALS',
       title: 'Trusted by founders and growth leaders.',
       t1Text: 'Working with The Social Club completely restructured our client acquisition. We went from inconsistent leads to a predictable pipeline in less than 60 days.',
-      t1Author: 'Karim Mansour',
-      t1Role: 'Founder & CEO, Apex Living',
+      t1Author: 'Founder & CEO',
+      t1Role: 'D2C Retail & Home Living',
       t2Text: 'Their web development and creative team built a site that not only looks like a luxury design brand, but converts at more than triple our previous rate.',
-      t2Author: 'Sarah El-Gendy',
-      t2Role: 'Managing Director, Bloom E-Commerce',
+      t2Author: 'Managing Director',
+      t2Role: 'Omnichannel E-Commerce',
     },
     faq: {
       badge: 'COMMON QUESTIONS',
@@ -144,12 +144,16 @@ export const translations = {
       a3: 'Both. For custom web development and brand overhauls, we offer fixed sprint pricing. For marketing and continuous lead generation, we work on performance retainers.',
       q4: 'How will I track results and progress?',
       a4: 'You receive access to a 24/7 live analytics dashboard plus weekly video/call syncs with your dedicated growth director.',
+      q5: 'Is the advertising budget (ad spend) included in your fees?',
+      a5: 'No, ad spend is paid directly from your billing card to the advertising platforms (Meta, Google, TikTok). Our fee covers full-funnel strategy, campaign architecture, dynamic creative & copy production, landing page CRO, and daily optimization.',
+      q6: 'Do you offer a performance guarantee on results?',
+      a6: 'Any agency promising 100% guaranteed revenue is selling vanity. What we guarantee is our battle-tested methodology: live transparent dashboards, rapid ad angle testing, killing unprofitable campaigns immediately, and aggressively scaling what drives verified ROAS.',
     },
     finalCta: {
       badge: 'START YOUR GROWTH JOURNEY',
       title: 'Ready to build something unforgettable together?',
       desc: 'Tell us what you’re building. We’ll figure out where to take it next.',
-      ctaBtn: 'Start a Project →',
+      ctaBtn: 'Book Free Strategy Call →',
       emailUs: 'Or email us directly at socialtheclub.3@gmail.com',
     },
     contact: {
@@ -187,7 +191,7 @@ export const translations = {
       customCta: 'Book Growth Audit →',
       plan1: {
         name: 'Starter Growth',
-        tagline: 'Ideal for early-stage brands looking to launch and gain immediate market traction.',
+        tagline: 'Built for early-stage brands & startups needing a fast launch, conversion-ready landing page, and proven sales funnel.',
         price: 'Custom',
         period: '',
         features: [
@@ -200,7 +204,7 @@ export const translations = {
       },
       plan2: {
         name: 'Scale & Dominate',
-        tagline: 'Our flagship growth engine for businesses ready to aggressively scale revenue.',
+        tagline: 'Engineered for established brands ready to aggressively scale revenue with multi-channel paid ads and web optimization.',
         price: 'Custom',
         period: '',
         features: [
@@ -214,7 +218,7 @@ export const translations = {
       },
       plan3: {
         name: 'Enterprise Custom',
-        tagline: 'Tailored full-stack growth infrastructure for established brands and high-volume operations.',
+        tagline: 'Tailored for high-volume enterprises and multi-market brands requiring end-to-end custom systems and daily execution.',
         price: 'Custom',
         period: '',
         features: [
@@ -266,15 +270,15 @@ export const translations = {
       work: 'أعمالنا',
       process: 'خطوات العمل',
       about: 'من نحن',
-      cta: 'ابدأ مشروعك ←',
+      cta: 'احجز استشارتك ←',
     },
     hero: {
-      badge: 'وكالة النمو الرقمي المتكاملة',
-      headlineStart: 'النمو، برؤية ',
-      headlineItalic: 'مبتكرة',
-      headlineEnd: 'واجتماعية.',
-      subheadline: 'نبني تجارب رقمية وأنظمة تسويق واستراتيجيات استقطاب عملاء تحوّل التفاعل إلى نمو وأرباح مستدامة لأعمالك.',
-      startProject: 'ابدأ مشروعك ←',
+      badge: 'وكالة النمو والتسويق الرقمي المتكاملة',
+      headlineStart: 'النمو الرقمي... بطابع ',
+      headlineItalic: 'تفاعلي',
+      headlineEnd: 'ونتائج ملموسة.',
+      subheadline: 'نبني تجارب رقمية وأنظمة تسويق ومسارات استقطاب عملاء تحوّل التفاعل إلى أرقام، والزيارات إلى أرباح مستدامة لأعمالك.',
+      startProject: 'احجز استشارة نمو مجانية ←',
       seeWork: 'شاهد أعمالنا',
       marketing: 'تسويق رقمي',
       web: 'تطوير مواقع',
@@ -387,11 +391,11 @@ export const translations = {
       badge: 'آراء عملائنا',
       title: 'ثقة شركائنا وقادة الأعمال هي دافعنا الدائم.',
       t1Text: 'التعاون مع The Social Club غيّر طريقة جذبنا للعملاء تماماً. انتقلنا من مبيعات غير منتظمة إلى تدفق مستمر للعملاء في أقل من شهرين.',
-      t1Author: 'كريم منصور',
-      t1Role: 'مؤسس ورئيس تنفيذي، Apex Living',
+      t1Author: 'مؤسس ومدير تنفيذي',
+      t1Role: 'براند تجارة إلكترونية وأثاث عصري',
       t2Text: 'فريق التطوير والتصميم بنوا لنا موقعاً فخماً يواكب أرقى المواقع العالمية، ورفع نسبة التحويل لأكثر من ثلاثة أضعاف.',
-      t2Author: 'سارة الجندي',
-      t2Role: 'المدير العام، Bloom E-Commerce',
+      t2Author: 'المدير العام',
+      t2Role: 'متجر إلكتروني وعلامة تجارية رائدة',
     },
     faq: {
       badge: 'الأسئلة الشائعة',
@@ -404,12 +408,16 @@ export const translations = {
       a3: 'كلاهما. لتطوير المواقع والهوية الرقمية نقدم باقات محددة المخرجات، ولخدمات التسويق وجلب العملاء نعمل بنظام اشتراكات شهرية مبنية على الأداء.',
       q4: 'كيف يمكنني متابعة النتائج والتقدم المحرز؟',
       a4: 'نوفر لك لوحة تحكم رقمية مباشرة على مدار الساعة (Live Dashboard) بالإضافة لاجتماعات فيديو أسبوعية مع مدير النمو المخصص لمشروعك.',
+      q5: 'هل الميزانية الإعلانية مشمولة في أتعابكم؟',
+      a5: 'لا، الميزانية الإعلانية (Ad Spend) تُدفع مباشرة من بطاقتك الائتمانية للمنصات الإعلانية (مثل ميتا، جوجل، وتيك توك). بينما تشمل أتعاب الوكالة الإدارة الاستراتيجية الشاملة، صناعة الإعلانات الإبداعية والنصوص البيعية، بناء صفحات الهبوط، وأتمتة مسارات التحويل والمتابعة والتحسين اليومي.',
+      q6: 'هل يوجد ضمان لتحقيق النتائج والأرباح؟',
+      a6: 'أي وكالة تعدك بأرقام أرباح محددة مسبقاً بنسبة 100% تقدم وعوداً غير واقعية. ما نضمنه لك هو منهجيتنا الصارمة في العمل: متابعة دقيقة عبر لوحات تحكم حية، اختبارات سريعة للزوايا الإعلانية، إيقاف فوري لأي حملات غير مجدية، ومضاعفة الميزانيات فقط في القنوات الرابحة لحماية ميزانيتك وتحقيق أعلى عائد ممكن على الإنفاق (ROAS).',
     },
     finalCta: {
       badge: 'ابدأ رحلة النجاح اليوم',
       title: 'جاهز لنبني معاً قصة نجاح لا تُنسى؟',
       desc: 'أخبرنا عن أهدافك وطموحات مشروعك، وسنضع لك الخطة المناسبة لنصل به إلى أبعد مما تتوقع.',
-      ctaBtn: 'ابدأ مشروعك الآن ←',
+      ctaBtn: 'احجز استشارة نمو مجانية ←',
       emailUs: 'أو تواصل معنا مباشرة عبر socialtheclub.3@gmail.com',
     },
     contact: {
@@ -447,7 +455,7 @@ export const translations = {
       customCta: 'احجز جلسة استشارية ←',
       plan1: {
         name: 'باقة الانطلاق (Starter)',
-        tagline: 'مثالية للشركات الناشئة التي تريد إطلاق حضورها وبدء جلب المبيعات والعملاء فوراً.',
+        tagline: 'مخصصة للشركات والمتاجر الناشئة التي تطلق حضورها لأول مرة ومحتاجة انطلاقة سريعة وقمع بيع مجرب.',
         price: 'مخصصة',
         period: '',
         features: [
@@ -460,7 +468,7 @@ export const translations = {
       },
       plan2: {
         name: 'باقة التوسع والنمو (Scale)',
-        tagline: 'منظومتنا الرائدة لمضاعفة العملاء والمبيعات للشركات الجاهزة للانطلاق السريع.',
+        tagline: 'مُهندسة للعلامات التجارية القائمة الجاهزة لمضاعفة المبيعات والتوسع بحملات إعلانية متعددة القنوات.',
         price: 'مخصصة',
         period: '',
         features: [
@@ -474,7 +482,7 @@ export const translations = {
       },
       plan3: {
         name: 'الباقة المخصصة (Enterprise)',
-        tagline: 'بنية نمو تحتية مخصصة للعلامات التجارية الكبرى والشركات ذات العمليات الواسعة.',
+        tagline: 'مصممة للشركات الكبرى والمؤسسات ذات الفروع المتعددة التي تحتاج بنية تحتية رقمية كاملة وإدارة يومية مكثفة.',
         price: 'مخصصة',
         period: '',
         features: [
