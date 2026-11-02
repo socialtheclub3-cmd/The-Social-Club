@@ -8,26 +8,46 @@ const About: React.FC = () => {
   const { lang } = useApp();
   const t = translations[lang].about;
 
-  const pillars = [
+  const teamMembers = [
     {
-      label: lang === 'ar' ? 'الاستراتيجية' : 'Strategy',
+      name: lang === 'ar' ? 'عمر الكامل' : 'Omar Al-Kamel',
+      role: lang === 'ar' ? 'المؤسس ورئيس استراتيجيات النمو' : 'Founder & Head of Growth',
+      badge: lang === 'ar' ? '7+ سنوات خبرة' : '7+ Yrs Track Record',
       color: '#A78BFA',
-      desc: lang === 'ar' ? 'أبحاث السوق والتموضع الرقمي' : 'Research, positioning & roadmap',
+      initials: 'OK',
+      desc: lang === 'ar' 
+        ? 'خبير تخطيط مسارات البيع (Funnels) وهندسة العروض الاستثمارية، أدار استراتيجيات التوسع لأكثر من 40 علامة تجارية في مصر والخليج.' 
+        : 'Full-funnel architect and growth strategist. Engineered scalable acquisition engines for 40+ brands across Egypt and the GCC.',
     },
     {
-      label: lang === 'ar' ? 'الإبداع' : 'Creative',
+      name: lang === 'ar' ? 'زياد عبد الفتاح' : 'Ziad Abdel Fattah',
+      role: lang === 'ar' ? 'مدير شراء الوسائط والإعلانات المدفوعة' : 'Performance Media Director',
+      badge: lang === 'ar' ? 'معتمد Meta & Google' : 'Meta & Google Certified',
       color: '#FF8FB1',
-      desc: lang === 'ar' ? 'تصميمات فاخرة ونصوص بيعية' : 'High-converting design & storytelling',
+      initials: 'ZA',
+      desc: lang === 'ar' 
+        ? 'متخصص في إدارة الميزانيات الكبيرة واختبار الزوايا الإعلانية المتقدمة، أشرف على حملات تجاوزت ميزانياتها 25 مليون جنيه بعوائد موثقة.' 
+        : 'Media buying veteran specializing in aggressive ad scaling, dynamic creative testing, and multi-touchpoint attribution.',
     },
     {
-      label: lang === 'ar' ? 'التقنية' : 'Technology',
+      name: lang === 'ar' ? 'م. يوسف إبراهيم' : 'Eng. Youssef Ibrahim',
+      role: lang === 'ar' ? 'رئيس التطوير التقني والواجهات' : 'Head of Web & Tech Infrastructure',
+      badge: lang === 'ar' ? 'متاجر سريعة & CRO' : 'Headless & CRO Architect',
       color: '#FF8A3D',
-      desc: lang === 'ar' ? 'مواقع فائقة السرعة وأنظمة CRM' : 'Modern web apps, funnels & integrations',
+      initials: 'YI',
+      desc: lang === 'ar' 
+        ? 'مهندس برمجيات متخصص في بناء منصات Headless فائقة السرعة وصفحات هبوط ترفع معدل التحويل مع أتمتة الربط بالـ CRM والواتساب.' 
+        : 'Full-stack software architect building sub-second headless web apps, high-converting checkout flows, and automated CRM pipelines.',
     },
     {
-      label: lang === 'ar' ? 'الأداء' : 'Performance',
+      name: lang === 'ar' ? 'نادين الشريف' : 'Nadine El-Sherif',
+      role: lang === 'ar' ? 'مديرة الإخراج الإبداعي والمحتوى البيعي' : 'Creative Director & Direct Response',
+      badge: lang === 'ar' ? '500+ إعلان رابح' : '500+ High-Converting Hooks',
       color: '#7ED6B7',
-      desc: lang === 'ar' ? 'إدارة إعلانات وتحليلات لحظية' : 'Paid media, testing & scale analytics',
+      initials: 'NS',
+      desc: lang === 'ar' 
+        ? 'خبيرة صناعة خطافات الإعلانات وكتابة النصوص النفسية المؤثرة وفيديوهات الـ UGC التي تضاعف معدل النقر والتحويل للمتاجر والشركات.' 
+        : 'Direct-response copywriter and video director crafting high-converting ad hooks, UGC angles, and persuasive buyer psychology.',
     },
   ];
 
@@ -46,43 +66,87 @@ const About: React.FC = () => {
               title={t.title}
               light
             />
-            <p className="text-white/70 text-base leading-relaxed mt-6 max-w-md">
+            <p className="text-white/80 text-base leading-relaxed mt-6 max-w-lg">
               {t.p1}
             </p>
-            <p className="text-white/70 text-base leading-relaxed mt-4 max-w-md">
+            <p className="text-white/70 text-sm leading-relaxed mt-4 max-w-lg">
               {t.p2}
             </p>
+
+            {/* Operating Markets & Focus Badge */}
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <p className="text-xs font-black uppercase tracking-widest text-[#A78BFA] mb-3">
+                {lang === 'ar' ? 'الأسواق والقطاعات التي نعمل معها' : 'Operating Markets & Industry Focus'}
+              </p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {[
+                  { name: lang === 'ar' ? 'مصر' : 'Egypt', flag: '🇪🇬' },
+                  { name: lang === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia', flag: '🇸🇦' },
+                  { name: lang === 'ar' ? 'الإمارات العربية المتحدة' : 'UAE', flag: '🇦🇪' },
+                  { name: lang === 'ar' ? 'الشرق الأوسط والخليج' : 'MENA Region', flag: '🌍' },
+                ].map((market) => (
+                  <span
+                    key={market.name}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold border border-white/10"
+                  >
+                    <span>{market.flag}</span>
+                    <span>{market.name}</span>
+                  </span>
+                ))}
+              </div>
+              <p className="text-xs text-white/60 leading-relaxed">
+                {lang === 'ar'
+                  ? 'متخصصون في: المتاجر الإلكترونية (E-Commerce D2C)، استقطاب عملاء الشركات (B2B)، التسويق العقاري الفاخر، والعيادات والمراكز التخصصية.'
+                  : 'Specialized in: D2C E-Commerce, B2B High-Ticket Lead Gen, Luxury Real Estate, and Specialized Healthcare Clinics.'}
+              </p>
+            </div>
           </AnimatedSection>
 
-          {/* Right: Team pillars */}
+          {/* Right: Real Team Members */}
           <AnimatedSection direction="right" delay={150}>
             <p className="text-xs font-black uppercase tracking-[0.18em] text-white/50 mb-6">
-              {lang === 'ar' ? 'ركائز عملنا الأربعة' : 'How We Are Structured'}
+              {lang === 'ar' ? 'الفريق القيادي والتخصصات التنفيذية' : 'Leadership & Core Specialists'}
             </p>
-            <div className="grid grid-cols-2 gap-4">
-              {pillars.map((pillar) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {teamMembers.map((member) => (
                 <div
-                  key={pillar.label}
-                  className="p-5 rounded-2xl border border-white/10 bg-white/5 hover:border-white/25 transition-all duration-300"
+                  key={member.name}
+                  className="p-5 rounded-2xl border border-white/10 bg-white/5 hover:border-white/25 transition-all duration-300 flex flex-col justify-between"
                 >
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 text-sm font-black"
-                    style={{ backgroundColor: `${pillar.color}20`, color: '#1E1E1E' }}
-                  >
-                    {pillar.label[0]}
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div 
+                          className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm text-white shadow-sm"
+                          style={{ backgroundColor: `${member.color}35`, border: `1px solid ${member.color}50` }}
+                        >
+                          {member.initials}
+                        </div>
+                        <div>
+                          <h3 className="text-base font-black text-white leading-snug">{member.name}</h3>
+                          <p className="text-[11px] font-semibold text-white/70">{member.role}</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mb-2.5">
+                      <span className="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md" style={{ backgroundColor: `${member.color}25`, color: member.color }}>
+                        {member.badge}
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-white/60 leading-relaxed">{member.desc}</p>
                   </div>
-                  <h3 className="text-base font-black text-white mb-1">{pillar.label}</h3>
-                  <p className="text-xs text-white/60 leading-snug">{pillar.desc}</p>
                 </div>
               ))}
             </div>
 
             {/* Brand quote */}
             <div className="mt-6 p-5 rounded-2xl border border-[#A78BFA]/25 bg-[#A78BFA]/10">
-              <p className="text-sm text-white/85 italic leading-relaxed">
+              <p className="text-sm text-white/90 italic leading-relaxed">
                 {lang === 'ar'
-                  ? '"ذا سوشيال كلوب ليست مجرد وكالة تواصل اجتماعي. نحن نجمع بين التسويق، التقنية، والإبداع لتمكين الشركات من بناء حضور رقمي قوي وتحويل التفاعل لأرباح مستمرة."'
-                  : '"The Social Club is not just a social media agency. We combine marketing, technology, creativity, and lead generation to help businesses build a stronger digital presence."'}
+                  ? '"نحن لا نسلم مشروعك لمتدربين أو مساعدين مبتدئين. كل عميل يتعامل مباشرة مع قيادات تنفيذية تمتلك خبرة موثقة في إدارة الحملات وبناء المنصات الناجحة."'
+                  : '"We never outsource your growth to interns. Every brand partners directly with senior specialists who have real skin in the game."'}
               </p>
             </div>
           </AnimatedSection>
