@@ -188,8 +188,8 @@ export const translations = {
       plan1: {
         name: 'Starter Growth',
         tagline: 'Ideal for early-stage brands looking to launch and gain immediate market traction.',
-        price: '$1,200',
-        period: '/mo',
+        price: 'Custom',
+        period: '',
         features: [
           'Targeted Paid Ads (Meta or Google)',
           'High-converting landing page',
@@ -201,8 +201,8 @@ export const translations = {
       plan2: {
         name: 'Scale & Dominate',
         tagline: 'Our flagship growth engine for businesses ready to aggressively scale revenue.',
-        price: '$2,800',
-        period: '/mo',
+        price: 'Custom',
+        period: '',
         features: [
           'Full-Funnel Omnichannel Campaigns',
           'Custom Web Experience & CRO',
@@ -448,8 +448,8 @@ export const translations = {
       plan1: {
         name: 'باقة الانطلاق (Starter)',
         tagline: 'مثالية للشركات الناشئة التي تريد إطلاق حضورها وبدء جلب المبيعات والعملاء فوراً.',
-        price: '1,200$',
-        period: '/شهرياً',
+        price: 'مخصصة',
+        period: '',
         features: [
           'إدارة الحملات الإعلانية (ميتا أو جوجل)',
           'تصميم صفحة هبوط سريعة ومحولة (Landing Page)',
@@ -461,8 +461,8 @@ export const translations = {
       plan2: {
         name: 'باقة التوسع والنمو (Scale)',
         tagline: 'منظومتنا الرائدة لمضاعفة العملاء والمبيعات للشركات الجاهزة للانطلاق السريع.',
-        price: '2,800$',
-        period: '/شهرياً',
+        price: 'مخصصة',
+        period: '',
         features: [
           'حملات إعلانية متكاملة متعددة المنصات',
           'تصميم وبرمجة موقع متكامل مع تحسين معدل التحويل',
