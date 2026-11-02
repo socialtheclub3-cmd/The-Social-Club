@@ -10,7 +10,10 @@ import {
   ArrowLeft,
   MessageCircle,
   Sparkles,
-  ShieldCheck
+  ShieldCheck,
+  Info,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import AnimatedSection from '../ui/AnimatedSection';
 import SectionHeading from '../ui/SectionHeading';
@@ -77,6 +80,7 @@ const RoiCalculator: React.FC = () => {
   const [selectedIndustry, setSelectedIndustry] = useState<IndustryKey>('ecommerce');
   const [budget, setBudget] = useState<number>(3000);
   const [avgValue, setAvgValue] = useState<number>(industryConfigs.ecommerce.defaultAvgValue);
+  const [showAssumptions, setShowAssumptions] = useState<boolean>(false);
 
   const currentConfig = industryConfigs[selectedIndustry];
 
@@ -105,18 +109,24 @@ const RoiCalculator: React.FC = () => {
       contactSection.scrollIntoView({ behavior: 'smooth' });
       const textarea = document.getElementById('contact-message') as HTMLTextAreaElement | null;
       if (textarea) {
+        const formattedBudget = formatCurrency(budget);
+        const formattedRevenue = formatCurrency(projectedRevenue);
+        const formattedAvgValue = formatCurrency(avgValue);
         textarea.value = isAr
-          ? `مرحباً، قمت بحساب العائد لمشروع (${industryName}) بميزانية شهرياً $${budget.toLocaleString()}، وأود الحصول على خطة العمل لتحقيق إيراد متوقع $${projectedRevenue.toLocaleString()} (عائد ${roasMultiplier}x).`
-          : `Hi, I ran the growth calculator for (${industryName}) with a monthly budget of $${budget.toLocaleString()}, and would like to claim the roadmap to reach $${projectedRevenue.toLocaleString()} (est. ${roasMultiplier}x ROAS).`;
+          ? `مرحباً، قمت بحساب العائد لمشروع (${industryName}) بميزانية ${formattedBudget} شهرياً (متوسط قيمة العميل/الطلب: ${formattedAvgValue})، وأود الحصول على خطة العمل لتحقيق إيراد متوقع ${formattedRevenue} (عائد استرشادي ${roasMultiplier}x وفق الافتراضات).`
+          : `Hi, I ran the growth calculator for (${industryName}) with a monthly budget of ${formattedBudget} (avg ticket: ${formattedAvgValue}), and would like to claim the roadmap to reach ${formattedRevenue} (est. ${roasMultiplier}x ROAS).`;
         textarea.focus();
       }
     }
   };
 
   const getWhatsAppBlueprintUrl = () => {
+    const formattedBudget = formatCurrency(budget);
+    const formattedRevenue = formatCurrency(projectedRevenue);
+    const formattedAvgValue = formatCurrency(avgValue);
     const text = isAr
-      ? `مرحباً The Social Club 👋، قمت بحساب العائد لمشروعي (${industryName}) بميزانية $${budget.toLocaleString()} شهرياً، وأود مناقشة خطة الوصول لإيراد $${projectedRevenue.toLocaleString()} المتوقع.`
-      : `Hello The Social Club 👋, I calculated projected growth for (${industryName}) with a $${budget.toLocaleString()} monthly budget, and would like to discuss the roadmap to achieve $${projectedRevenue.toLocaleString()}.`;
+      ? `مرحباً The Social Club 👋، قمت بحساب العائد التقديري لمشروعي (${industryName}) بميزانية استثمارية ${formattedBudget} شهرياً بمتوسط قيمة طلب/عميل ${formattedAvgValue}. بناءً على افتراضات الحساب بعائد استرشادي ${roasMultiplier}x ROAS، أود مناقشة خطة العمل للوصول لإيراد ${formattedRevenue} المتوقع وتدقيق التوقعات لمشروعي.`
+      : `Hello The Social Club 👋, I calculated projected growth for (${industryName}) with a ${formattedBudget} monthly budget and ${formattedAvgValue} avg ticket value. Based on estimated ${roasMultiplier}x ROAS assumptions, I'd like to discuss the roadmap to achieve ${formattedRevenue}.`;
     return `https://wa.me/201043971900?text=${encodeURIComponent(text)}`;
   };
 
@@ -321,6 +331,78 @@ const RoiCalculator: React.FC = () => {
               </div>
             </div>
 
+          </div>
+
+          {/* Transparent Assumptions & Calculation Methodology Toggle */}
+          <div className="mt-8 pt-6 border-t border-[#1E1E1E]/8 dark:border-white/10">
+            <button
+              type="button"
+              onClick={() => setShowAssumptions(!showAssumptions)}
+              className="w-full flex items-center justify-between p-3 rounded-2xl bg-[#F8F4EE] dark:bg-[#222] hover:bg-[#F0E6D8] dark:hover:bg-[#282828] text-start transition-all cursor-pointer group"
+              aria-expanded={showAssumptions}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-[#A78BFA]/15 flex items-center justify-center text-[#A78BFA] group-hover:scale-105 transition-transform">
+                  <Info size={16} />
+                </div>
+                <div>
+                  <p className="text-xs sm:text-sm font-bold text-[#1E1E1E] dark:text-white">
+                    {isAr ? 'شرح طريقة الحساب والافتراضات المتبعة (شفافية كاملة)' : 'How We Calculate & Key Assumptions (Full Transparency)'}
+                  </p>
+                  <p className="text-[11px] text-[#1E1E1E]/50 dark:text-white/50">
+                    {isAr ? 'اضغط لعرض المعادلة الحسابية ومعدلات التحويل المعيارية' : 'Click to inspect the formula and conversion benchmarks'}
+                  </p>
+                </div>
+              </div>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-[#1E1E1E]/60 dark:text-white/60">
+                {showAssumptions ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </div>
+            </button>
+
+            {showAssumptions && (
+              <div className="mt-4 p-5 sm:p-6 rounded-2xl bg-[#FBF6EF] dark:bg-[#151515] border border-[#1E1E1E]/5 dark:border-white/5 text-xs text-[#1E1E1E]/80 dark:text-white/80 space-y-4 animate-in fade-in duration-300 leading-relaxed">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-3.5 rounded-xl bg-white dark:bg-[#1E1E1E] border border-[#1E1E1E]/5 dark:border-white/5">
+                    <p className="font-black text-[#A78BFA] mb-1">
+                      {isAr ? '1. المعادلة الحسابية' : '1. Calculation Formula'}
+                    </p>
+                    <p className="text-[11px] opacity-80 leading-normal">
+                      {isAr
+                        ? `الإيراد = الميزانية الإعلانية × مضاعف الـ ROAS المعياري للقطاع (${roasMultiplier}x). الطلبات التقديرية = الإيراد ÷ متوسط قيمة الطلب.`
+                        : `Revenue = Ad Budget × Industry ROAS benchmark (${roasMultiplier}x). Deals = Revenue ÷ Average Ticket Size.`}
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-white dark:bg-[#1E1E1E] border border-[#1E1E1E]/5 dark:border-white/5">
+                    <p className="font-black text-[#7ED6B7] mb-1">
+                      {isAr ? '2. معدلات التحويل المعتمدة' : '2. Benchmark Conversion'}
+                    </p>
+                    <p className="text-[11px] opacity-80 leading-normal">
+                      {isAr
+                        ? 'تعتمد الأرقام على افتراض معدل تحويل موقع أو متجر بين 2.2% - 4.5%، وسرعة استجابة مبيعات للعميل المؤهل خلال 15 دقيقة.'
+                        : 'Assumes landing page conversion between 2.2% - 4.5%, with sales team responding to qualified leads within 15 minutes.'}
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-white dark:bg-[#1E1E1E] border border-[#1E1E1E]/5 dark:border-white/5">
+                    <p className="font-black text-[#FF8A3D] mb-1">
+                      {isAr ? '3. تكاليف الإعلانات الإقليمية' : '3. Regional Ad Benchmarks'}
+                    </p>
+                    <p className="text-[11px] opacity-80 leading-normal">
+                      {isAr
+                        ? 'التقديرات متوافقة مع تكلفة النقرة والألف ظهور الفعلية على منصات Meta و Google في مصر والسعودية والإمارات.'
+                        : 'Calibrated to active CPC & CPM averages across Meta and Google ads in Egypt, KSA, and UAE.'}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-[11px] text-[#1E1E1E]/60 dark:text-white/60 italic border-t border-[#1E1E1E]/5 dark:border-white/5 pt-3">
+                  {isAr
+                    ? '💡 تنويه مهني: هذه النتائج استرشادية واقعية لمساعدتك في التخطيط وليست ضماناً قطعياً مستقلاً عن جودة منتجك وتنافسية سعرك. نقوم بتحديد الأهداف الدقيقة المخصصة لمشروعك بعد مكالمة الاستكشاف المجانية وتدقيق حساباتك.'
+                    : '💡 Professional note: Projections are realistic benchmarks for strategic planning. Actual outcomes depend on offer strength, pricing, and sales execution. Exact targets are scoped during your free discovery audit.'}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
