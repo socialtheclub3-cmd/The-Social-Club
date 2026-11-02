@@ -40,30 +40,30 @@ const Privacy: React.FC = () => {
                 <p>نحن في "The Social Club" نلتزم بحماية خصوصيتك وبياناتك الشخصية. توضح هذه السياسة كيف نقوم بجمع واستخدام وحماية معلوماتك عند استخدام موقعنا وخدماتنا.</p>
               </section>
               <section>
-                <h2 className="text-2xl font-black mb-4">2. المعلومات التي نجمعها</h2>
-                <p>قد نقوم بجمع البيانات التالية:</p>
+                <h2 className="text-2xl font-black mb-4">2. المعلومات وملفات تعريف الارتباط التي نجمعها</h2>
+                <p>قد نقوم بجمع البيانات التالية عند تصفحك الموقع أو تقديم طلب استشارة:</p>
                 <ul className="list-disc list-inside mt-2 space-y-2 opacity-80">
-                  <li>الاسم ومعلومات الاتصال (البريد الإلكتروني، رقم الهاتف).</li>
-                  <li>معلومات حول شركتك وميزانيتك التسويقية.</li>
-                  <li>بيانات الاستخدام وملفات تعريف الارتباط (Cookies) لتحسين تجربتك.</li>
+                  <li><strong>معلومات التواصل المباشرة:</strong> الاسم، البريد الإلكتروني، رقم الهاتف، اسم الشركة، والميزانية المقترحة عند ملء نموذج التواصل.</li>
+                  <li><strong>بيانات التحليلات الفنية:</strong> نوع المتصفح، الدولة، والصفحات التي تمت زيارتها عبر ملفات تعريف الارتباط وأدوات التحليل (مثل Google Analytics و Meta Pixel) لفهم مسار التصفح وتحسين تجربة الموقع.</li>
+                  <li><strong>بيانات التفضيلات:</strong> العملة المختارة (ج.م، ر.س، د.إ، دولار) واللغة والوضع الليلي المحفوظة محلياً في متصفحك.</li>
                 </ul>
               </section>
               <section>
                 <h2 className="text-2xl font-black mb-4">3. كيف نستخدم معلوماتك</h2>
-                <p>نستخدم هذه البيانات للأغراض التالية:</p>
+                <p>نستخدم هذه البيانات للأغراض التالية فقط:</p>
                 <ul className="list-disc list-inside mt-2 space-y-2 opacity-80">
-                  <li>التواصل معك لتقديم خدماتنا الاستشارية والتسويقية.</li>
-                  <li>تحسين تجربة المستخدم على موقعنا.</li>
-                  <li>إرسال تحديثات أو عروض ترويجية (إذا وافقت على ذلك).</li>
+                  <li>التواصل المباشر معك لتقديم العروض والاستشارات وخطة العمل لمشروعك.</li>
+                  <li>تحليل كفاءة وأداء صفحات الموقع وتحسين سرعة التصفح.</li>
+                  <li>عدم مشاركة أو بيع بياناتك لأي طرف ثالث لأغراض دعائية خارجية على الإطلاق.</li>
                 </ul>
               </section>
               <section>
-                <h2 className="text-2xl font-black mb-4">4. أمن البيانات</h2>
-                <p>نتخذ إجراءات أمنية صارمة وتشفير متقدم لحماية معلوماتك الشخصية من الوصول غير المصرح به أو التسريب. لا نقوم ببيع أو مشاركة بياناتك مع أي طرف ثالث لأغراض تجارية دون موافقتك.</p>
+                <h2 className="text-2xl font-black mb-4">4. أمن وحماية البيانات</h2>
+                <p>نلتزم بحماية بياناتك باستخدام بروتوكول نقل البيانات الآمن المشفر (HTTPS / TLS 1.3) لضمان سرية الاتصال بين متصفحك وخوادمنا. كما يتم حصر الوصول للبيانات الواردة في النماذج على مستشاري النمو وفريق العمل المخول بإدارة حسابك فقط داخل بيئة سحابية آمنة.</p>
               </section>
               <section>
                 <h2 className="text-2xl font-black mb-4">5. تواصل معنا</h2>
-                <p>إذا كانت لديك أي أسئلة حول سياسة الخصوصية، يمكنك التواصل معنا عبر: <br/>
+                <p>إذا كانت لديك أي أسئلة حول سياسة الخصوصية أو ترغب في تعديل أو حذف بياناتك، تواصل معنا عبر: <br/>
                 <a href="mailto:socialtheclub.3@gmail.com" className="text-[#A78BFA] font-bold">socialtheclub.3@gmail.com</a></p>
               </section>
             </>
@@ -72,33 +72,33 @@ const Privacy: React.FC = () => {
               <p className="font-bold text-[#A78BFA]">Last Updated: {new Date().toLocaleDateString('en-US')}</p>
               <section>
                 <h2 className="text-2xl font-black mb-4">1. Introduction</h2>
-                <p>At "The Social Club", we are committed to protecting your privacy and personal data. This policy explains how we collect, use, and protect your information when you use our website and services.</p>
+                <p>At "The Social Club", we are committed to protecting your privacy and personal data. This policy explains how we collect, use, and protect your information when you interact with our website and services.</p>
               </section>
               <section>
-                <h2 className="text-2xl font-black mb-4">2. Information We Collect</h2>
-                <p>We may collect the following data:</p>
+                <h2 className="text-2xl font-black mb-4">2. Information & Cookies We Collect</h2>
+                <p>We may collect the following data when you browse or submit an inquiry:</p>
                 <ul className="list-disc list-inside mt-2 space-y-2 opacity-80">
-                  <li>Name and contact information (Email, Phone Number).</li>
-                  <li>Information about your company and marketing budget.</li>
-                  <li>Usage data and cookies to improve your experience.</li>
+                  <li><strong>Direct Contact Data:</strong> Name, email address, phone/WhatsApp number, company name, and marketing budget submitted via our contact forms.</li>
+                  <li><strong>Analytics & Technical Data:</strong> Browser type, operating system, geolocation, and page interaction metrics via standard tools (such as Google Analytics and Meta Pixel) to improve usability.</li>
+                  <li><strong>Local Preferences:</strong> Selected currency, language, and theme mode saved locally in your browser.</li>
                 </ul>
               </section>
               <section>
                 <h2 className="text-2xl font-black mb-4">3. How We Use Your Information</h2>
-                <p>We use this data for the following purposes:</p>
+                <p>We use this data exclusively for:</p>
                 <ul className="list-disc list-inside mt-2 space-y-2 opacity-80">
-                  <li>Communicating with you to provide our consulting and marketing services.</li>
-                  <li>Improving the user experience on our website.</li>
-                  <li>Sending updates or promotional offers (if you opted in).</li>
+                  <li>Contacting you to prepare your growth audit, strategic roadmap, and proposals.</li>
+                  <li>Monitoring site performance, preventing abuse, and optimizing conversion funnels.</li>
+                  <li>We never sell, rent, or lease your private contact information to external third parties.</li>
                 </ul>
               </section>
               <section>
                 <h2 className="text-2xl font-black mb-4">4. Data Security</h2>
-                <p>We take strict security measures and advanced encryption to protect your personal information from unauthorized access or disclosure. We do not sell or share your data with third parties for commercial purposes without your consent.</p>
+                <p>All traffic between your browser and our website is strictly encrypted in transit using industry-standard HTTPS / TLS. Lead records are stored within secure cloud infrastructures with role-based access restricted strictly to authorized project growth managers.</p>
               </section>
               <section>
                 <h2 className="text-2xl font-black mb-4">5. Contact Us</h2>
-                <p>If you have any questions about this Privacy Policy, please contact us at: <br/>
+                <p>If you have any questions or wish to request data updates/deletion, please contact us at: <br/>
                 <a href="mailto:socialtheclub.3@gmail.com" className="text-[#A78BFA] font-bold">socialtheclub.3@gmail.com</a></p>
               </section>
             </>
