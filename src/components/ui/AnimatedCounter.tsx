@@ -9,14 +9,29 @@ interface AnimatedCounterProps {
 
 export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
   value,
-  duration = 2,
+  duration = 1.8,
   className = '',
 }) => {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
-  const [displayValue, setDisplayValue] = useState('0');
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  // Initialize with value if it shouldn't animate (like 24/7 or non-numeric)
+  const isSpecialRatio = value.includes('/');
+  const [displayValue, setDisplayValue] = useState(isSpecialRatio ? value : value);
 
   useEffect(() => {
+    // If it's a fixed badge like 24/7, display as is without counting
+    if (isSpecialRatio) {
+      setDisplayValue(value);
+      return;
+    }
+
+    // Check user preference for reduced motion
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setDisplayValue(value);
+      return;
+    }
+
     // Extract numerical part and prefix/suffix
     const match = value.match(/^([^0-9]*)(\d+(?:\.\d+)?)(.*)$/);
     if (!match) {
@@ -29,9 +44,13 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     const isDecimal = numStr.includes('.');
     const decimalPlaces = isDecimal ? numStr.split('.')[1].length : 0;
 
+    // Safety timeout: ensure target value is displayed within 2 seconds even if intersection fails
+    const safetyTimer = setTimeout(() => {
+      setDisplayValue(value);
+    }, 2500);
+
     if (!isInView) {
-      setDisplayValue(`${prefix}0${suffix}`);
-      return;
+      return () => clearTimeout(safetyTimer);
     }
 
     let startTimestamp: number | null = null;
@@ -57,8 +76,11 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     };
 
     const animFrame = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animFrame);
-  }, [isInView, value, duration]);
+    return () => {
+      cancelAnimationFrame(animFrame);
+      clearTimeout(safetyTimer);
+    };
+  }, [isInView, value, duration, isSpecialRatio]);
 
   return (
     <span ref={ref} className={className}>
