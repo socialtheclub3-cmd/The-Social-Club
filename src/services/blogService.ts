@@ -3,6 +3,8 @@ import { db } from '../firebase';
 import { blogPosts as defaultBlogPosts } from '../data/blogData';
 import type { BlogPost } from '../data/blogData';
 
+export { defaultBlogPosts };
+
 const STORAGE_KEY = 'tsc_blog_database';
 
 export const blogService = {
@@ -20,6 +22,10 @@ export const blogService = {
 
   // Subscribe to real-time changes
   subscribe: (callback: (posts: BlogPost[]) => void): (() => void) => {
+    // Deliver local posts immediately so the page is NEVER blank
+    const localPosts = blogService.getPostsLocal();
+    callback(localPosts);
+
     if (db) {
       const unsubscribe = onSnapshot(collection(db, 'blog_posts'), (snapshot) => {
         let posts = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as BlogPost));
@@ -28,7 +34,7 @@ export const blogService = {
         if (posts.length === 0) {
           posts = defaultBlogPosts;
           defaultBlogPosts.forEach(p => {
-             setDoc(doc(db!, 'blog_posts', p.id), p).catch(console.error);
+             setDoc(doc(db!, 'blog_posts', p.id), p).catch(() => {});
           });
         }
         
@@ -36,7 +42,8 @@ export const blogService = {
         posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         callback(posts);
       }, (error) => {
-        console.error("Firestore blog subscription error:", error);
+        console.warn("Firestore blog subscription fallback to local:", error);
+        callback(blogService.getPostsLocal());
       });
       return unsubscribe;
     } else {
