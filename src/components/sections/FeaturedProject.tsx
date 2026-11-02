@@ -1,13 +1,55 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { BookOpen, TrendingUp, DollarSign, Target, Users } from 'lucide-react';
 import { SiGoogleads, SiTiktok, SiMeta, SiShopify } from 'react-icons/si';
 import AnimatedSection from '../ui/AnimatedSection';
 import Button from '../ui/Button';
 import { useApp } from '../../context/AppContext';
 import { translations } from '../../data/translations';
+import CaseStudyModal, { type CaseStudy } from '../ui/CaseStudyModal';
+
+const featuredCaseStudyData: CaseStudy = {
+  id: 'apex-living',
+  name: 'Apex Omnichannel Brand',
+  nameAr: 'أبيكس للمنتجات والحلول الراقية',
+  category: 'Omnichannel D2C & Retail',
+  categoryAr: 'تجارة تجزئة متعددة القنوات وبيع مباشر',
+  gradient: 'linear-gradient(135deg, #1E1E1E 0%, #2E2E2E 50%, #A78BFA 100%)',
+  industry: 'D2C Retail & Home Living',
+  industryAr: 'التجارة الإلكترونية والتجزئة',
+  timeline: '90-Day Scaling Sprint',
+  challenge:
+    'Apex faced high customer acquisition costs ($84/customer) and flatlined sales due to fragmented ad creatives and an unoptimized mobile checkout that lost 68% of cart visitors.',
+  challengeAr:
+    'واجهت أبيكس ارتفاعاً حاداً في تكلفة اكتساب العميل (84 دولار لكل عميل) وركوداً في المبيعات بسبب عشوائية الحملات الإعلانية وضعف صفحة الدفع على الموبايل التي كانت تفقد 68% من الزوار.',
+  solution:
+    'We overhauled their funnel with a high-velocity mobile headless storefront, installed full-funnel Meta and Google tracking, and created 45+ dynamic video ad angles highlighting social proof and luxury craftsmanship. We also automated cart-recovery and retention sequences.',
+  solutionAr:
+    'أعدنا هيكلة قمع المبيعات بمتجر فائق السرعة مخصص للهواتف، وضبطنا أنظمة تتبع المبيعات المتقدمة على ميتا وجوجل، وأنتجنا 45 زاوية إعلانية بالفيديو تركز على الإثبات الاجتماعي. كما فعلنا أتمتة استرداد السلات المتروكة وسلاسل البريد البيعية.',
+  results: [
+    { icon: TrendingUp, value: '+340%', label: 'Revenue Increase', labelAr: 'زيادة صافي الإيرادات', color: '#A78BFA' },
+    { icon: DollarSign, value: '2.8x', label: 'ROAS Scaled', labelAr: 'مضاعفة عائد الإعلانات', color: '#7ED6B7' },
+    { icon: Target, value: '-42%', label: 'Cost Per Acquisition', labelAr: 'انخفاض تكلفة الاكتساب', color: '#FF8A3D' },
+    { icon: Users, value: '82%', label: 'Cart Checkout Rate', labelAr: 'إتمام عمليات الشراء', color: '#FF8FB1' },
+  ],
+  deliverables: [
+    'Complete UX/UI redesign & mobile checkout optimization',
+    'Omnichannel Meta & Google Performance Max campaigns',
+    'Automated Klaviyo email & SMS revenue flows',
+    'Custom Conversion API (CAPI) & real-time analytics dashboard',
+    '45+ short-form creative assets tested monthly',
+  ],
+  deliverablesAr: [
+    'إعادة تصميم تجربة المستخدم وتحسين مسار الدفع على الموبايل',
+    'حملات إعلانات متعددة القنوات عبر Meta و Google Performance Max',
+    'أتمتة سلاسل البريد الإلكتروني والرسائل القصيرة لاسترداد السلات',
+    'ربط Conversion API (CAPI) ولوحة تحكم حية لمتابعة النتائج',
+    'صناعة واختبار أكثر من 45 تصميماً وفيديو إعلاني شهرياً',
+  ],
+};
 
 const FeaturedProject: React.FC = () => {
   const { lang } = useApp();
+  const [showModal, setShowModal] = useState(false);
   const t = translations[lang].featuredProject;
 
   const servicesUsed =
@@ -16,7 +58,8 @@ const FeaturedProject: React.FC = () => {
       : ['Lead Generation', 'Landing Page', 'Paid Ads', 'CRM Setup'];
 
   return (
-    <section
+    <>
+      <section
       id="featured"
       className="section-padding bg-[#FBF6EF] dark:bg-[#121212] overflow-hidden transition-colors duration-300"
       aria-label="Featured case study"
@@ -141,24 +184,38 @@ const FeaturedProject: React.FC = () => {
                 </div>
               </div>
 
-              <Button
-                href="#contact"
-                variant="primary"
-                size="md"
-                className="self-start mt-2"
-                onClick={(e?: React.MouseEvent) => {
-                  e?.preventDefault();
-                  document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                <span>{t.readFull}</span>
-                <ArrowRight size={16} className={lang === 'ar' ? 'rotate-180' : ''} />
-              </Button>
-            </div>
-          </AnimatedSection>
+                <div className="flex flex-wrap items-center gap-3 mt-2">
+                  <Button
+                    type="button"
+                    variant="primary"
+                    size="md"
+                    onClick={() => setShowModal(true)}
+                    className="cursor-pointer"
+                  >
+                    <BookOpen size={16} />
+                    <span>{t.readFull}</span>
+                  </Button>
+
+                  <a
+                    href="#contact"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="text-xs sm:text-sm font-bold text-[#1E1E1E]/70 dark:text-white/70 hover:text-[#A78BFA] dark:hover:text-[#A78BFA] transition-colors py-2 px-3"
+                  >
+                    {lang === 'ar' ? 'اطلب خطة مماثلة لمشروعك ←' : 'Get a Similar Roadmap →'}
+                  </a>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Case Study Full Modal */}
+      <CaseStudyModal study={showModal ? featuredCaseStudyData : null} onClose={() => setShowModal(false)} />
+    </>
   );
 };
 
