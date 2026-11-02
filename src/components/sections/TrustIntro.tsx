@@ -54,7 +54,7 @@ const TrustIntro: React.FC = () => {
 
           {/* Right: Paragraph & Stats */}
           <AnimatedSection direction="right" delay={150}>
-            <p className="text-lg text-white/70 leading-relaxed mb-8">
+            <p className="text-lg text-white/80 leading-relaxed mb-8">
               {t.description}
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -64,14 +64,20 @@ const TrustIntro: React.FC = () => {
                 { val: t.stat3Value, lbl: t.stat3Label },
                 { val: t.stat4Value, lbl: t.stat4Label },
               ].map((stat, idx) => (
-                <div key={idx} className="p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-xs transition-transform duration-300 hover:-translate-y-1">
-                  <p className="text-2xl font-black text-[#1E1E1E] mb-1">
-                    <AnimatedCounter value={stat.val} duration={2} />
+                <div key={idx} className="p-4 rounded-xl border border-white/10 bg-white/10 backdrop-blur-xs transition-transform duration-300 hover:-translate-y-1">
+                  <p className="text-2xl font-black text-[#1E1E1E] dark:text-white mb-1">
+                    <AnimatedCounter value={stat.val} duration={1.6} />
                   </p>
-                  <p className="text-xs text-white/60 font-medium leading-snug">{stat.lbl}</p>
+                  <p className="text-xs text-white/75 font-medium leading-snug">{stat.lbl}</p>
                 </div>
               ))}
             </div>
+            {/* Audited data note */}
+            {t.sourceNote && (
+              <p className="text-[11px] text-white/50 mt-4 leading-relaxed italic">
+                {t.sourceNote}
+              </p>
+            )}
           </AnimatedSection>
         </div>
       </div>
