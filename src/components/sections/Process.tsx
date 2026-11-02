@@ -37,15 +37,15 @@ const Process: React.FC = () => {
             <div className="grid grid-cols-4 gap-8 relative z-10">
               {steps.map((step, i) => (
                 <AnimatedSection key={step.number} delay={i * 90}>
-                  <div className="flex flex-col items-center text-center">
+                  <div className="flex flex-col items-center text-center p-6 rounded-3xl bg-white dark:bg-[#1C1C1C] border border-[#1E1E1E]/8 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-[#A78BFA]/40 transition-all duration-300 h-full">
                     {/* Step circle */}
-                    <div className="w-[84px] h-[84px] rounded-full bg-white dark:bg-[#1C1C1C] border-2 border-[#1E1E1E]/10 dark:border-white/10 flex flex-col items-center justify-center mb-5 transition-all duration-300 hover:border-[#A78BFA] hover:shadow-lg hover:shadow-[#A78BFA]/15 group">
-                      <span className="text-sm font-black text-[#A78BFA]">
+                    <div className="w-[64px] h-[64px] rounded-2xl bg-[#A78BFA]/10 border border-[#A78BFA]/25 flex flex-col items-center justify-center mb-4 transition-all duration-300 group">
+                      <span className="text-base font-black text-[#A78BFA]">
                         {step.number}
                       </span>
                     </div>
-                    <h3 className="text-base font-black text-[#1E1E1E] dark:text-white mb-2">{step.title}</h3>
-                    <p className="text-xs text-[#1E1E1E]/60 dark:text-white/65 leading-relaxed">{step.description}</p>
+                    <h3 className="text-base font-black text-[#1E1E1E] dark:text-white mb-3 min-h-[44px] flex items-center justify-center">{step.title}</h3>
+                    <p className="text-xs text-[#1E1E1E]/70 dark:text-white/70 leading-relaxed text-start">{step.description}</p>
                   </div>
                 </AnimatedSection>
               ))}
