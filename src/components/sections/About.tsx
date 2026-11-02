@@ -1,4 +1,5 @@
 import React from 'react';
+import { TrendingUp, Target, Code2, Sparkles } from 'lucide-react';
 import AnimatedSection from '../ui/AnimatedSection';
 import SectionHeading from '../ui/SectionHeading';
 import { useApp } from '../../context/AppContext';
@@ -8,46 +9,46 @@ const About: React.FC = () => {
   const { lang } = useApp();
   const t = translations[lang].about;
 
-  const teamMembers = [
+  const specialists = [
     {
-      name: lang === 'ar' ? 'عمر الكامل' : 'Omar Al-Kamel',
-      role: lang === 'ar' ? 'المؤسس ورئيس استراتيجيات النمو' : 'Founder & Head of Growth',
-      badge: lang === 'ar' ? '7+ سنوات خبرة' : '7+ Yrs Track Record',
+      title: lang === 'ar' ? 'استراتيجيات النمو وقمع المبيعات' : 'Growth Strategy & Funnels',
+      subtitle: lang === 'ar' ? 'هندسة التوسع والاستحواذ' : 'Acquisition & Funnel Architecture',
+      badge: lang === 'ar' ? 'خبرة 7+ سنوات' : '7+ Yrs Track Record',
       color: '#A78BFA',
-      initials: 'OK',
+      icon: TrendingUp,
       desc: lang === 'ar' 
-        ? 'خبير تخطيط مسارات البيع (Funnels) وهندسة العروض الاستثمارية، أدار استراتيجيات التوسع لأكثر من 40 علامة تجارية في مصر والخليج.' 
-        : 'Full-funnel architect and growth strategist. Engineered scalable acquisition engines for 40+ brands across Egypt and the GCC.',
+        ? 'تخطيط مسارات البيع (Funnels) وهندسة العروض الاستثمارية، وإدارة استراتيجيات التوسع لأكثر من 40 علامة تجارية في مصر والخليج.' 
+        : 'Full-funnel architecture and growth strategy. Engineered scalable acquisition engines for 40+ brands across Egypt and the GCC.',
     },
     {
-      name: lang === 'ar' ? 'زياد عبد الفتاح' : 'Ziad Abdel Fattah',
-      role: lang === 'ar' ? 'مدير شراء الوسائط والإعلانات المدفوعة' : 'Performance Media Director',
+      title: lang === 'ar' ? 'شراء الوسائط والإعلانات المدفوعة' : 'Performance Media & Paid Ads',
+      subtitle: lang === 'ar' ? 'إدارة وتحسين الحملات الممولة' : 'Ad Scaling & Media Buying',
       badge: lang === 'ar' ? 'معتمد Meta & Google' : 'Meta & Google Certified',
       color: '#FF8FB1',
-      initials: 'ZA',
+      icon: Target,
       desc: lang === 'ar' 
-        ? 'متخصص في إدارة الميزانيات الكبيرة واختبار الزوايا الإعلانية المتقدمة، أشرف على حملات تجاوزت ميزانياتها 25 مليون جنيه بعوائد موثقة.' 
-        : 'Media buying veteran specializing in aggressive ad scaling, dynamic creative testing, and multi-touchpoint attribution.',
+        ? 'إدارة الميزانيات الكبيرة واختبار الزوايا الإعلانية المتقدمة، وإشراف على حملات تجاوزت ميزانياتها 25 مليون جنيه بعوائد موثقة.' 
+        : 'Specialized media buying unit managing aggressive ad scaling, dynamic creative testing, and multi-touchpoint attribution.',
     },
     {
-      name: lang === 'ar' ? 'م. يوسف إبراهيم' : 'Eng. Youssef Ibrahim',
-      role: lang === 'ar' ? 'رئيس التطوير التقني والواجهات' : 'Head of Web & Tech Infrastructure',
+      title: lang === 'ar' ? 'البنية التقنية وتطوير الويب' : 'Web & Tech Infrastructure',
+      subtitle: lang === 'ar' ? 'مواقع فائقة السرعة ومسارات تحويل' : 'Headless & High-Converting UI',
       badge: lang === 'ar' ? 'متاجر سريعة & CRO' : 'Headless & CRO Architect',
       color: '#FF8A3D',
-      initials: 'YI',
+      icon: Code2,
       desc: lang === 'ar' 
-        ? 'مهندس برمجيات متخصص في بناء منصات Headless فائقة السرعة وصفحات هبوط ترفع معدل التحويل مع أتمتة الربط بالـ CRM والواتساب.' 
-        : 'Full-stack software architect building sub-second headless web apps, high-converting checkout flows, and automated CRM pipelines.',
+        ? 'بناء منصات Headless ومتاجر فائقة السرعة وصفحات هبوط ترفع معدل التحويل مع أتمتة الربط بالـ CRM وأنظمة التتبع والواتساب.' 
+        : 'Full-stack software engineering building sub-second headless web apps, high-converting checkout flows, and automated CRM pipelines.',
     },
     {
-      name: lang === 'ar' ? 'نادين الشريف' : 'Nadine El-Sherif',
-      role: lang === 'ar' ? 'مديرة الإخراج الإبداعي والمحتوى البيعي' : 'Creative Director & Direct Response',
+      title: lang === 'ar' ? 'الإخراج الإبداعي والمحتوى البيعي' : 'Creative & Direct Response',
+      subtitle: lang === 'ar' ? 'خطافات إعلانية وفيديوهات UGC' : 'High-Converting Hooks & UGC',
       badge: lang === 'ar' ? '500+ إعلان رابح' : '500+ High-Converting Hooks',
       color: '#7ED6B7',
-      initials: 'NS',
+      icon: Sparkles,
       desc: lang === 'ar' 
-        ? 'خبيرة صناعة خطافات الإعلانات وكتابة النصوص النفسية المؤثرة وفيديوهات الـ UGC التي تضاعف معدل النقر والتحويل للمتاجر والشركات.' 
-        : 'Direct-response copywriter and video director crafting high-converting ad hooks, UGC angles, and persuasive buyer psychology.',
+        ? 'صناعة خطافات الإعلانات وكتابة النصوص النفسية المؤثرة وفيديوهات الـ UGC التي تضاعف معدل النقر والتحويل للمتاجر والشركات.' 
+        : 'Direct-response copywriting and creative production crafting high-converting ad hooks, UGC angles, and persuasive buyer psychology.',
     },
   ];
 
@@ -102,43 +103,46 @@ const About: React.FC = () => {
             </div>
           </AnimatedSection>
 
-          {/* Right: Real Team Members */}
+          {/* Right: Core Specialists */}
           <AnimatedSection direction="right" delay={150}>
             <p className="text-xs font-black uppercase tracking-[0.18em] text-white/50 mb-6">
-              {lang === 'ar' ? 'الفريق القيادي والتخصصات التنفيذية' : 'Leadership & Core Specialists'}
+              {lang === 'ar' ? 'التخصصات والخبرات التنفيذية' : 'Core Disciplines & Specialist Units'}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {teamMembers.map((member) => (
-                <div
-                  key={member.name}
-                  className="p-5 rounded-2xl border border-white/10 bg-white/5 hover:border-white/25 transition-all duration-300 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-3">
-                        <div 
-                          className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm text-white shadow-sm"
-                          style={{ backgroundColor: `${member.color}35`, border: `1px solid ${member.color}50` }}
-                        >
-                          {member.initials}
-                        </div>
-                        <div>
-                          <h3 className="text-base font-black text-white leading-snug">{member.name}</h3>
-                          <p className="text-[11px] font-semibold text-white/70">{member.role}</p>
+              {specialists.map((specialist) => {
+                const Icon = specialist.icon;
+                return (
+                  <div
+                    key={specialist.title}
+                    className="p-5 rounded-2xl border border-white/10 bg-white/5 hover:border-white/25 transition-all duration-300 flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div 
+                            className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-sm flex-shrink-0"
+                            style={{ backgroundColor: `${specialist.color}35`, border: `1px solid ${specialist.color}50` }}
+                          >
+                            <Icon size={18} style={{ color: specialist.color }} />
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-black text-white leading-snug">{specialist.title}</h3>
+                            <p className="text-[11px] font-semibold text-white/70">{specialist.subtitle}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    
-                    <div className="mb-2.5">
-                      <span className="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md" style={{ backgroundColor: `${member.color}25`, color: member.color }}>
-                        {member.badge}
-                      </span>
-                    </div>
+                      
+                      <div className="mb-2.5">
+                        <span className="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md" style={{ backgroundColor: `${specialist.color}25`, color: specialist.color }}>
+                          {specialist.badge}
+                        </span>
+                      </div>
 
-                    <p className="text-xs text-white/60 leading-relaxed">{member.desc}</p>
+                      <p className="text-xs text-white/60 leading-relaxed">{specialist.desc}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Brand quote */}
