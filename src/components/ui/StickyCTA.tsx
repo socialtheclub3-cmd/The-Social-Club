@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
-import { ArrowRight, Flame, X } from 'lucide-react';
+import { ArrowRight, Sparkles, X } from 'lucide-react';
 
 const StickyCTA: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -49,28 +49,28 @@ const StickyCTA: React.FC = () => {
         >
           <div className="container-custom mx-auto py-3 px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <span className="flex w-6 h-6 rounded-full bg-[#FF8FB1]/20 items-center justify-center animate-pulse">
-                <Flame size={14} className="text-[#FF8FB1]" />
+              <span className="flex w-6 h-6 rounded-full bg-[#A78BFA]/20 items-center justify-center animate-pulse">
+                <Sparkles size={14} className="text-[#A78BFA]" />
               </span>
               <p className="text-sm font-semibold text-[#1E1E1E] dark:text-white">
                 {isAr
-                  ? 'خصم 10% لأول 3 عملاء هذا الشهر!'
-                  : '10% OFF for the first 3 clients this month!'}
+                  ? '💡 متاح عدد محدود من جلسات تدقيق الحسابات واستراتيجيات النمو المجانية هذا الأسبوع.'
+                  : '💡 Limited free growth audit & strategy sessions available for scaling brands this week.'}
               </p>
             </div>
             
             <div className="flex items-center gap-4">
               <button
                 onClick={handleBooking}
-                className="bg-[#1E1E1E] dark:bg-white text-white dark:text-[#1E1E1E] px-6 py-2 rounded-full text-sm font-bold flex items-center gap-2 hover:scale-105 transition-transform duration-200 shadow-lg shadow-black/10"
+                className="bg-[#A78BFA] hover:bg-[#906fe7] text-[#1E1E1E] px-6 py-2 rounded-full text-sm font-bold flex items-center gap-2 hover:scale-105 transition-all duration-200 shadow-md shadow-[#A78BFA]/20 cursor-pointer"
               >
-                {isAr ? 'احصل على الخصم' : 'Claim Offer'}
+                {isAr ? 'احجز جلستك المجانية' : 'Claim Free Audit'}
                 <ArrowRight size={16} className={isAr ? 'rotate-180' : ''} />
               </button>
               
               <button 
                 onClick={handleDismiss}
-                className="text-[#1E1E1E]/50 dark:text-white/50 hover:text-[#1E1E1E] dark:hover:text-white transition-colors"
+                className="text-[#1E1E1E]/50 dark:text-white/50 hover:text-[#1E1E1E] dark:hover:text-white transition-colors cursor-pointer"
                 aria-label="Close CTA"
               >
                 <X size={20} />
