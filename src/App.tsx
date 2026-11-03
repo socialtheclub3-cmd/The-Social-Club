@@ -1,11 +1,8 @@
+import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
-import NotFound from './pages/NotFound';
-import Admin from './pages/Admin';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
 import Preloader from './components/ui/Preloader';
 import ScrollProgress from './components/ui/ScrollProgress';
 import WhatsAppButton from './components/ui/WhatsAppButton';
@@ -16,9 +13,13 @@ import StickyCTA from './components/ui/StickyCTA';
 import Chatbot from './components/ui/Chatbot';
 import EasterEgg from './components/ui/EasterEgg';
 
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
-import { useEffect } from 'react';
+// Lazy loaded secondary & admin pages for fast initial load
+const Admin = lazy(() => import('./pages/Admin'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Terms = lazy(() => import('./pages/Terms'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -56,15 +57,21 @@ function App() {
       {!isAdmin && <LiveTicker />}
       {!isAdmin && <ExitIntentPopup />}
       {!isAdmin && <EasterEgg />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:id" element={<BlogPost />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={
+        <div className="min-h-[50vh] flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full border-2 border-[#A78BFA] border-t-transparent animate-spin" />
+        </div>
+      }>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
       {!isAdmin && <Footer />}
     </div>
   );
