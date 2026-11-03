@@ -127,6 +127,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   );
 };
 
+// oxlint-disable-next-line react/only-export-components
 export const useApp = (): AppContextType => {
   const context = useContext(AppContext);
   if (!context) {
