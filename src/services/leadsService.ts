@@ -29,7 +29,7 @@ export const leadsService = {
       if (!data) return [];
       const parsed: Lead[] = JSON.parse(data);
       return parsed.filter((l) => !l.id.startsWith('lead_demo_'));
-    } catch (e) {
+    } catch {
       return [];
     }
   },
