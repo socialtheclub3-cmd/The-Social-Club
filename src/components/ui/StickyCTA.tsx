@@ -11,7 +11,6 @@ const StickyCTA: React.FC = () => {
 
   useEffect(() => {
     if (isDismissed) {
-      setIsVisible(false);
       return;
     }
 
