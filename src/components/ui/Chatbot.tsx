@@ -26,30 +26,29 @@ const Chatbot: React.FC = () => {
   const [inputText, setInputText] = useState('');
   const [leadData, setLeadData] = useState({ name: '', phone: '' });
 
-  // Clear messages when language changes so it can re-greet in the new language
-  useEffect(() => {
-    setMessages([]);
-    setFlowState('menu');
-    setLeadData({ name: '', phone: '' });
-  }, [lang]);
+  const msgIdRef = useRef(10);
+  const nextId = () => {
+    msgIdRef.current += 1;
+    return msgIdRef.current;
+  };
 
-  // Initial Greeting
-  useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      setMessages([
-        {
-          id: 1,
-          text: isAr ? 'أهلاً بيك في The Social Club 👋 أقدر أساعدك إزاي النهاردة؟' : 'Welcome to The Social Club 👋 How can I help you today?',
-          sender: 'bot',
-          options: [
-            { label: isAr ? 'إيه هي خدماتكم؟' : 'What are your services?', action: 'services' },
-            { label: isAr ? 'عايز أعرف الأسعار' : 'I want to know pricing', action: 'pricing' },
-            { label: isAr ? 'أحجز استشارة مجانية' : 'Book a free consultation', action: 'book' }
-          ]
-        }
-      ]);
-    }
-  }, [isOpen, isAr, messages.length]);
+  const getInitialGreeting = (arabic: boolean): Message => ({
+    id: 1,
+    text: arabic
+      ? 'أهلاً بيك في The Social Club 👋 أقدر أساعدك إزاي النهاردة؟'
+      : 'Welcome to The Social Club 👋 How can I help you today?',
+    sender: 'bot',
+    options: [
+      { label: arabic ? 'إيه هي خدماتكم؟' : 'What are your services?', action: 'services' },
+      { label: arabic ? 'عايز أعرف الأسعار' : 'I want to know pricing', action: 'pricing' },
+      { label: arabic ? 'أحجز استشارة مجانية' : 'Book a free consultation', action: 'book' },
+    ],
+  });
+
+  const handleOpenChat = () => {
+    setIsOpen(true);
+    setMessages((prev) => (prev.length === 0 ? [getInitialGreeting(isAr)] : prev));
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -57,7 +56,7 @@ const Chatbot: React.FC = () => {
 
   const handleOptionClick = (option: { label: string; action: string }) => {
     // Add user message
-    const userMsg: Message = { id: Date.now(), text: option.label, sender: 'user' };
+    const userMsg: Message = { id: nextId(), text: option.label, sender: 'user' };
     setMessages(prev => [...prev, userMsg]);
 
     // Simulate bot thinking
@@ -67,7 +66,7 @@ const Chatbot: React.FC = () => {
       switch (option.action) {
         case 'services':
           botResponse = {
-            id: Date.now() + 1,
+            id: nextId(),
             text: isAr 
               ? 'إحنا وكالة نمو رقمي متكاملة. بنقدم:\n- التسويق الرقمي وإدارة السوشيال ميديا\n- تصميم وتطوير المواقع\n- تحسين محركات البحث (SEO)\n- توليد العملاء المحتملين (Lead Gen)' 
               : 'We are a full-stack growth agency offering:\n- Digital Marketing & SMM\n- Web Design & Dev\n- SEO\n- Lead Generation',
@@ -80,10 +79,10 @@ const Chatbot: React.FC = () => {
           break;
         case 'pricing':
           botResponse = {
-            id: Date.now() + 1,
+            id: nextId(),
             text: isAr 
-              ? 'باقاتنا بتبدأ من $1,000 وتصل لـ $5,000+ حسب حجم مشروعك وأهدافك. الأفضل نتكلم في ميتنج عشان نحدد الباقة الأنسب ليك.' 
-              : 'Our packages start at $1,000 up to $5,000+ depending on your goals. It\'s best to discuss this on a quick call.',
+              ? 'باقاتنا مصممة خصيصاً حسب حجم مشروعك وأهدافك. الأفضل نتكلم في ميتنج سريع عشان نحدد الخطة الأنسب ليك.' 
+              : 'Our packages are custom-tailored depending on your goals. It\'s best to discuss this on a quick strategy call.',
             sender: 'bot',
             options: [
               { label: isAr ? 'أحجز الميتنج دلوقتي' : 'Book a meeting now', action: 'book' },
@@ -93,7 +92,7 @@ const Chatbot: React.FC = () => {
           break;
         case 'book':
           botResponse = {
-            id: Date.now() + 1,
+            id: nextId(),
             text: isAr 
               ? 'خطوة ممتازة! خلينا نبدأ.. ممكن أعرف اسم حضرتك؟' 
               : 'Great step! Let\'s get started. May I have your name?',
@@ -108,7 +107,7 @@ const Chatbot: React.FC = () => {
         case 'menu':
         default:
           botResponse = {
-            id: Date.now() + 1,
+            id: nextId(),
             text: isAr ? 'تؤمر بإيه تاني؟' : 'What else can I do for you?',
             sender: 'bot',
             options: [
@@ -131,7 +130,7 @@ const Chatbot: React.FC = () => {
     setInputText('');
 
     // Add user message
-    const userMsg: Message = { id: Date.now(), text: userText, sender: 'user' };
+    const userMsg: Message = { id: nextId(), text: userText, sender: 'user' };
     setMessages(prev => [...prev, userMsg]);
 
     setTimeout(() => {
@@ -140,7 +139,7 @@ const Chatbot: React.FC = () => {
       if (flowState === 'asking_name') {
         setLeadData(prev => ({ ...prev, name: userText }));
         botResponse = {
-          id: Date.now() + 1,
+          id: nextId(),
           text: isAr 
             ? `أهلاً بيك يا ${userText}! 🌟 رقم تليفونك كام عشان فريقنا يتواصل معاك؟`
             : `Nice to meet you, ${userText}! 🌟 What's your phone number so our team can reach you?`,
@@ -161,7 +160,7 @@ const Chatbot: React.FC = () => {
         });
 
         botResponse = {
-          id: Date.now() + 1,
+          id: nextId(),
           text: isAr 
             ? 'تم استلام بياناتك بنجاح! 🎉 فريقنا هيكلمك في أقرب وقت. تقدر تستكشف الموقع براحتك دلوقتي.'
             : 'Your request is received successfully! 🎉 Our team will call you ASAP. Feel free to explore the site.',
@@ -183,7 +182,7 @@ const Chatbot: React.FC = () => {
     <>
       {/* Floating Button (Draggable) */}
       <DraggableFAB
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpenChat}
         className={`fixed bottom-6 ${isAr ? 'right-6' : 'left-6'} z-40 ${isOpen ? 'hidden' : ''}`}
       >
         <button
