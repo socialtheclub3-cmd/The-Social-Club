@@ -26,12 +26,14 @@ import {
   Send,
   Building2,
   FileText,
-  Calendar
+  Calendar,
+  Briefcase
 } from 'lucide-react';
 import { leadsService } from '../services/leadsService';
 import type { Lead, LeadStatus } from '../services/leadsService';
 import { useApp } from '../context/AppContext';
 import BlogAdminView from '../components/admin/BlogAdminView';
+import CaseStudyAdminView from '../components/admin/CaseStudyAdminView';
 import AnalyticsCharts from '../components/admin/AnalyticsCharts';
 
 const DEFAULT_PASSWORD = 'Thesocialclub26';
@@ -57,7 +59,7 @@ const Admin: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('kanban');
-  const [activeTab, setActiveTab] = useState<'leads' | 'blog'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'blog' | 'portfolio'>('leads');
 
   // Modals
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
@@ -375,6 +377,18 @@ const Admin: React.FC = () => {
                 <FileText size={13} />
                 <span>{isAr ? 'المدونة' : 'Blog'}</span>
               </button>
+
+              <button
+                onClick={() => setActiveTab('portfolio')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  activeTab === 'portfolio'
+                    ? 'bg-white dark:bg-[#222] text-[#1E1E1E] dark:text-white shadow-xs'
+                    : 'text-[#1E1E1E]/50 dark:text-white/50 hover:text-[#1E1E1E]'
+                }`}
+              >
+                <Briefcase size={13} />
+                <span>{isAr ? 'الأعمال' : 'Portfolio'}</span>
+              </button>
             </div>
 
             {/* View Mode Switcher */}
@@ -454,6 +468,8 @@ const Admin: React.FC = () => {
       <div className="container-custom py-8">
         {activeTab === 'blog' ? (
           <BlogAdminView isAr={isAr} />
+        ) : activeTab === 'portfolio' ? (
+          <CaseStudyAdminView isAr={isAr} />
         ) : (
           <>
         {/* KPI Metrics Summary */}
