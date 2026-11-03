@@ -1,163 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, TrendingUp, Users, DollarSign, Target } from 'lucide-react';
 import AnimatedSection from '../ui/AnimatedSection';
 import SectionHeading from '../ui/SectionHeading';
 import { useApp } from '../../context/AppContext';
 import { translations } from '../../data/translations';
 import CaseStudyModal, { type CaseStudy } from '../ui/CaseStudyModal';
+import { caseStudyService } from '../../services/caseStudyService';
+import type { StorableCaseStudy, ResultIconKey } from '../../data/caseStudyData';
 
-const caseStudies: CaseStudy[] = [
+// Map string icon keys to actual React components
+const ICON_MAP: Record<ResultIconKey, React.ElementType> = {
+  TrendingUp,
+  Users,
+  DollarSign,
+  Target,
+};
 
-  {
-    id: 'bloom',
-    name: 'Bloom Fashion Studio',
-    nameAr: 'بلوم للأزياء الفاخرة',
-    category: 'Direct to Consumer · E-Commerce',
-    categoryAr: 'متجر إلكتروني · بيع مباشر للمستهلك',
-    gradient: 'linear-gradient(135deg, #FF8FB1 0%, #A78BFA 100%)',
-    industry: 'E-Commerce & Retail',
-    industryAr: 'التجارة الإلكترونية',
-    timeline: 'Results in first 90 days',
-    challenge:
-      'Bloom had a beautiful physical boutique but a slow, poorly converting online store. Their social media was inconsistent, and return on ad spend was below 1.2x, making paid growth unprofitable.',
-    challengeAr:
-      'كانت بلوم تمتلك بوتيك فيزيائي جميل لكن متجرها الإلكتروني كان بطيئاً وضعيف التحويل. كان التواجد على منصات التواصل غير منتظم، وعائد الإنفاق الإعلاني أقل من 1.2x مما يجعل النمو المدفوع غير مجدٍ.',
-    solution:
-      'We rebuilt their e-commerce experience as a high-speed, mobile-first headless store with conversion-focused UX. We then deployed performance creative testing across Meta Ads — iterating on 30+ ad creatives monthly — until we found the winning hooks that resonated with their target audience.',
-    solutionAr:
-      'أعدنا بناء تجربة التسوق الإلكتروني كمتجر headless سريع يركز على الهاتف المحمول مع تصميم تجربة مستخدم محورها التحويل. أطلقنا بعدها اختبارات إعلانات إبداعية مكثفة على ميتا — مكررين أكثر من 30 إعلاناً شهرياً — حتى وجدنا الصيغ الفائزة.',
-    results: [
-      { icon: TrendingUp, value: '3.4x', label: 'Return on Ad Spend', labelAr: 'عائد الإنفاق الإعلاني', color: '#FF8FB1' },
-      { icon: DollarSign, value: '+180%', label: 'Average Order Value', labelAr: 'زيادة متوسط قيمة الطلب', color: '#A78BFA' },
-      { icon: Users, value: '2.9x', label: 'Repeat Purchase Rate', labelAr: 'معدل تكرار الشراء', color: '#22C55E' },
-      { icon: Target, value: '-55%', label: 'Page Load Time', labelAr: 'تحسن سرعة الموقع', color: '#F59E0B' },
-    ],
-    deliverables: [
-      'Headless e-commerce store (React)',
-      '30+ ad creative variations tested',
-      'Email & SMS nurturing sequences',
-      'Conversion rate optimization',
-      'Influencer collaboration strategy',
-    ],
-    deliverablesAr: [
-      'متجر إلكتروني Headless بتقنية React',
-      'اختبار 30+ تصميم إعلاني مختلف',
-      'سلاسل بريد إلكتروني وSMS تلقائية',
-      'تحسين معدل التحويل (CRO)',
-      'استراتيجية التعاون مع المؤثرين',
-    ],
-  },
-  {
-    id: 'strata',
-    name: 'Strata Cloud Solutions',
-    nameAr: 'ستراتا للحلول السحابية',
-    category: 'B2B Enterprise · SaaS Lead Generation',
-    categoryAr: 'شركات B2B · جلب عملاء SaaS',
-    gradient: 'linear-gradient(135deg, #1E1E1E 0%, #FF8A3D 100%)',
-    industry: 'B2B & SaaS',
-    industryAr: 'B2B والبرمجيات',
-    timeline: 'Results in 60 days',
-    challenge:
-      'Strata had a powerful cloud product but a generic website that failed to communicate technical value to enterprise buyers. Their sales team was spending too much time on cold outreach with low conversion rates.',
-    challengeAr:
-      'كانت ستراتا تمتلك منتجاً سحابياً قوياً لكن موقعها العادي كان يفشل في إيصال القيمة التقنية لمشتري المؤسسات. كان فريق المبيعات يُضيّع وقتاً كبيراً في التواصل البارد بمعدلات تحويل ضعيفة.',
-    solution:
-      'We created an interactive SaaS landing experience with live product demos, ROI calculators, and automated qualification sequences. Paired with LinkedIn and Google demand-gen campaigns targeting C-suite executives, we built a self-qualifying inbound pipeline that booked demos on autopilot.',
-    solutionAr:
-      'أنشأنا تجربة صفحة هبوط تفاعلية تشمل عروضاً توضيحية حية وحاسبات ROI ومتسلسلات تأهيل تلقائية. جنباً إلى جنب مع حملات LinkedIn وGoogle تستهدف المسؤولين التنفيذيين، بنينا خط أنابيب وارد يحجز العروض التوضيحية تلقائياً.',
-    results: [
-      { icon: Users, value: '40+', label: 'Executive Demos / Month', labelAr: 'عرض توضيحي تنفيذي شهرياً', color: '#FF8A3D' },
-      { icon: TrendingUp, value: '6.2x', label: 'Pipeline Growth', labelAr: 'نمو خط الأنابيب', color: '#22C55E' },
-      { icon: DollarSign, value: '-68%', label: 'Cost Per Demo Booked', labelAr: 'انخفاض تكلفة الحجز', color: '#A78BFA' },
-      { icon: Target, value: '92%', label: 'Lead Quality Score', labelAr: 'نقاط جودة العملاء', color: '#F59E0B' },
-    ],
-    deliverables: [
-      'Interactive SaaS landing page',
-      'LinkedIn & Google demand gen campaigns',
-      'Automated demo booking system',
-      'Lead scoring & CRM automation',
-      'C-suite targeted content strategy',
-    ],
-    deliverablesAr: [
-      'صفحة هبوط تفاعلية للـ SaaS',
-      'حملات LinkedIn وGoogle للطلب',
-      'نظام حجز تلقائي للعروض التوضيحية',
-      'تقييم العملاء وأتمتة CRM',
-      'استراتيجية محتوى مستهدفة للمسؤولين',
-    ],
-  },
-  {
-    id: 'eduguide',
-    name: 'EduGuide Chatbot',
-    nameAr: 'إديوجايد شات بوت',
-    category: 'Education · Conversational AI',
-    categoryAr: 'التعليم · الذكاء الاصطناعي',
-    gradient: 'linear-gradient(135deg, #7ED6B7 0%, #1E1E1E 100%)',
-    logo: '/eduguide-logo.jpg',
-    industry: 'Education Services',
-    industryAr: 'الخدمات التعليمية',
-    timeline: 'Results in 30 days',
-    challenge:
-      'The student service center was overwhelmed with repetitive inquiries about admissions, schedules, and exams. Response times were slow, and students were frustrated with the lack of instant support.',
-    challengeAr:
-      'كان مركز خدمة الطلاب غارقاً في الاستفسارات المتكررة حول القبول، الجداول، والامتحانات. كانت أوقات الرد بطيئة، وكان الطلاب يشعرون بالإحباط بسبب غياب الدعم الفوري.',
-    solution:
-      'We developed "EduGuide", an intelligent conversational AI chatbot integrated directly into their website and WhatsApp. It automatically resolves 85% of standard student queries 24/7, routing only complex issues to human advisors.',
-    solutionAr:
-      'قمنا بتطوير "إديوجايد"، وهو شات بوت ذكي متكامل مع موقعهم وواتساب. يقوم بحل 85٪ من استفسارات الطلاب الشائعة تلقائياً على مدار الساعة، ويحول الحالات المعقدة فقط للمستشارين البشريين.',
-    results: [
-      { icon: Users, value: '10k+', label: 'Students Assisted', labelAr: 'طالب تمت مساعدته', color: '#7ED6B7' },
-      { icon: TrendingUp, value: '85%', label: 'Auto-Resolution Rate', labelAr: 'معدل الحل التلقائي', color: '#22C55E' },
-      { icon: Target, value: '< 2s', label: 'Average Response Time', labelAr: 'متوسط سرعة الرد', color: '#FF8A3D' },
-      { icon: DollarSign, value: '-60%', label: 'Support Costs', labelAr: 'انخفاض تكاليف الدعم', color: '#A78BFA' },
-    ],
-    deliverables: [
-      'Custom NLP Chatbot Development',
-      'WhatsApp Business API Integration',
-      'Student Portal Web Widget',
-      'Analytics & Training Dashboard',
-    ],
-    deliverablesAr: [
-      'تطوير شات بوت ذكي مخصص',
-      'الربط مع واتساب أعمال (API)',
-      'أداة محادثة ذكية على بوابة الطلاب',
-      'لوحة تحكم وتقارير الأداء',
-    ],
-  },
-];
+// Convert a StorableCaseStudy (serializable) → CaseStudy (with React icons) for the modal
+function toModalCaseStudy(cs: StorableCaseStudy): CaseStudy {
+  return {
+    ...cs,
+    results: cs.results.map(r => ({
+      ...r,
+      icon: ICON_MAP[r.icon] ?? TrendingUp,
+    })),
+  };
+}
 
 const OurWork: React.FC = () => {
   const { lang } = useApp();
   const t = translations[lang].ourWork;
   const [activeStudy, setActiveStudy] = useState<CaseStudy | null>(null);
+  const [caseStudies, setCaseStudies] = useState<StorableCaseStudy[]>([]);
+
+  useEffect(() => {
+    const unsub = caseStudyService.subscribe(setCaseStudies);
+    return () => unsub();
+  }, []);
 
   const projectItems = caseStudies.map((cs) => ({
     ...cs,
-    label: lang === 'ar' ? cs.categoryAr.split(' · ')[1] || cs.categoryAr.split(' · ')[0] : cs.category.split(' · ')[1] || cs.category.split(' · ')[0],
+    label:
+      lang === 'ar'
+        ? cs.categoryAr.split(' · ')[1] || cs.categoryAr.split(' · ')[0]
+        : cs.category.split(' · ')[1] || cs.category.split(' · ')[0],
     description:
-      cs.id === 'apex'
-        ? lang === 'ar'
-          ? 'إعادة إطلاق المنصة الرقمية وبناء قمع إعلانات موجهة لكبار المشترين والمستثمرين، مما حقق نمواً قياسياً في المبيعات.'
-          : 'Complete web ecosystem overhaul with hyper-targeted paid lead funnels generating over 450+ qualified property buyer inquiries.'
-        : cs.id === 'bloom'
-        ? lang === 'ar'
-          ? 'متجر إلكتروني عالي الأداء مع حملات محتوى إبداعي رفعت متوسط سلة الشراء ومعدل تكرار الطلبات.'
-          : 'High-speed headless e-commerce store with performance creative testing driving 3.4x return on ad spend in first 90 days.'
-        : cs.id === 'eduguide'
-        ? lang === 'ar'
-          ? 'بناء شات بوت ذكي لخدمة الطلاب على مدار الساعة، مما قلل ضغط الاستفسارات بنسبة 85%.'
-          : 'An intelligent student service chatbot providing 24/7 support and resolving 85% of queries automatically.'
-        : lang === 'ar'
-        ? 'بناء صفحة هبوط تقنية فائقة الإقناع مع نظام تأهيل تلقائي للمكالمات الاستشارية لكبار المديرين التنفيذيين.'
-        : 'Interactive SaaS landing experience paired with automated qualification sequences booking 40+ executive demos monthly.',
-    tags:
-      cs.id === 'apex'
-        ? lang === 'ar' ? ['إعلانات مدفوعة', 'موقع ويب فخم', 'جلب عملاء'] : ['Paid Media', 'Luxury Web', 'Lead Gen']
-        : cs.id === 'bloom'
-        ? lang === 'ar' ? ['تصميم متجر', 'تسويق رقمي', 'تحسين تحويلات'] : ['E-Commerce', 'Creative Ads', 'CRO']
-        : cs.id === 'eduguide'
-        ? lang === 'ar' ? ['ذكاء اصطناعي', 'خدمة عملاء', 'أتمتة'] : ['AI Chatbot', 'Customer Support', 'Automation']
-        : lang === 'ar' ? ['موقع مخصص', 'أتمتة CRM', 'جلب عملاء'] : ['Custom Web', 'CRM Automation', 'Lead Gen'],
+      lang === 'ar'
+        ? cs.descriptionAr || (lang === 'ar' ? cs.challengeAr.slice(0, 100) + '…' : cs.challenge.slice(0, 100) + '…')
+        : cs.description || cs.challenge.slice(0, 120) + '…',
+    tags: lang === 'ar' ? (cs.tagsAr?.filter(Boolean) ?? []) : (cs.tags?.filter(Boolean) ?? []),
   }));
 
   return (
@@ -215,7 +106,7 @@ const OurWork: React.FC = () => {
                       </div>
                     )}
                     
-                    {/* Concept label */}
+                    {/* Category label */}
                     <span className={`absolute top-4 ${lang === 'ar' ? 'right-4' : 'left-4'} bg-black/40 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full z-10`}>
                       {project.label}
                     </span>
@@ -249,7 +140,7 @@ const OurWork: React.FC = () => {
                     <p className="text-sm text-[#1E1E1E]/60 dark:text-white/65 leading-relaxed flex-1">{project.description}</p>
 
                     <button
-                      onClick={() => setActiveStudy(project)}
+                      onClick={() => setActiveStudy(toModalCaseStudy(project))}
                       className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#1E1E1E] dark:text-white hover:text-[#A78BFA] transition-all duration-200 group-hover:gap-3 cursor-pointer bg-transparent border-none p-0"
                       aria-label={`View case study for ${lang === 'ar' ? project.nameAr : project.name}`}
                     >
