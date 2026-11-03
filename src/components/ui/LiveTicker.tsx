@@ -25,29 +25,35 @@ const LiveTicker: React.FC = () => {
   const events = isAr ? eventsAr : eventsEn;
 
   useEffect(() => {
+    let hideTimer: ReturnType<typeof setTimeout>;
+    let nextTimer: ReturnType<typeof setTimeout>;
+
+    const showNextEvent = () => {
+      setEventIndex(Math.floor(Math.random() * events.length));
+      setIsVisible(true);
+
+      // Hide after 15 seconds (duration of animation)
+      hideTimer = setTimeout(() => {
+        setIsVisible(false);
+
+        // Show next one after 10 minutes (600,000 ms)
+        nextTimer = setTimeout(() => {
+          showNextEvent();
+        }, 600000);
+      }, 15000);
+    };
+
     // Show first one after 5 minutes (300,000 ms)
     const initialDelay = setTimeout(() => {
       showNextEvent();
     }, 300000);
 
-    return () => clearTimeout(initialDelay);
-  }, [lang]);
-
-  const showNextEvent = () => {
-    setEventIndex(Math.floor(Math.random() * events.length));
-    setIsVisible(true);
-    
-    // Hide after 15 seconds (duration of animation)
-    setTimeout(() => {
-      setIsVisible(false);
-      
-      // Show next one after 10 minutes (600,000 ms)
-      setTimeout(() => {
-        showNextEvent();
-      }, 600000);
-      
-    }, 15000);
-  };
+    return () => {
+      clearTimeout(initialDelay);
+      clearTimeout(hideTimer);
+      clearTimeout(nextTimer);
+    };
+  }, [events.length, lang]);
 
   const currentEvent = events[eventIndex];
 
