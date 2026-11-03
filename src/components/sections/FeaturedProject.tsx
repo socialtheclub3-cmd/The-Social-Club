@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BookOpen, TrendingUp, DollarSign, Target, Users } from 'lucide-react';
 import { SiGoogleads, SiTiktok, SiMeta, SiShopify } from 'react-icons/si';
 import AnimatedSection from '../ui/AnimatedSection';
@@ -6,6 +6,15 @@ import Button from '../ui/Button';
 import { useApp } from '../../context/AppContext';
 import { translations } from '../../data/translations';
 import CaseStudyModal, { type CaseStudy } from '../ui/CaseStudyModal';
+import { caseStudyService } from '../../services/caseStudyService';
+import type { StorableCaseStudy, ResultIconKey } from '../../data/caseStudyData';
+
+const ICON_MAP: Record<ResultIconKey, React.ElementType> = {
+  TrendingUp,
+  Users,
+  DollarSign,
+  Target,
+};
 
 const featuredCaseStudyData: CaseStudy = {
   id: 'apex-living',
@@ -50,12 +59,66 @@ const featuredCaseStudyData: CaseStudy = {
 const FeaturedProject: React.FC = () => {
   const { lang } = useApp();
   const [showModal, setShowModal] = useState(false);
+  const [customFeatured, setCustomFeatured] = useState<StorableCaseStudy | null>(null);
   const t = translations[lang].featuredProject;
 
-  const servicesUsed =
-    lang === 'ar'
-      ? ['إعلانات مدفوعة', 'صفحات هبوط بيعية', 'تأهيل العملاء', 'أتمتة CRM']
-      : ['Lead Generation', 'Landing Page', 'Paid Ads', 'CRM Setup'];
+  useEffect(() => {
+    const unsub = caseStudyService.subscribe((studies) => {
+      const feat = studies.find((s) => s.isFeatured);
+      setCustomFeatured(feat ?? null);
+    });
+    return () => unsub();
+  }, []);
+
+  const activeModalStudy: CaseStudy = customFeatured
+    ? {
+        ...customFeatured,
+        results: customFeatured.results.map((r) => ({
+          ...r,
+          icon: ICON_MAP[r.icon] ?? TrendingUp,
+        })),
+      }
+    : featuredCaseStudyData;
+
+  const displayTitle = customFeatured
+    ? lang === 'ar'
+      ? customFeatured.nameAr
+      : customFeatured.name
+    : t.title;
+
+  const displaySubtitle = customFeatured
+    ? lang === 'ar'
+      ? customFeatured.industryAr || customFeatured.categoryAr
+      : customFeatured.industry || customFeatured.category
+    : lang === 'ar'
+    ? 'تجارة إلكترونية وشركات رائدة'
+    : 'D2C Brand / Multi-Channel Growth';
+
+  const displayDesc = customFeatured
+    ? lang === 'ar'
+      ? customFeatured.descriptionAr || customFeatured.challengeAr
+      : customFeatured.description || customFeatured.challenge
+    : t.desc;
+
+  const displayMetrics =
+    customFeatured && customFeatured.results.length >= 3
+      ? customFeatured.results.slice(0, 3).map((r) => ({
+          val: r.value,
+          lbl: lang === 'ar' ? r.labelAr : r.label,
+        }))
+      : [
+          { val: t.metric1Val, lbl: t.metric1Lbl },
+          { val: t.metric2Val, lbl: t.metric2Lbl },
+          { val: t.metric3Val, lbl: t.metric3Lbl },
+        ];
+
+  const servicesUsed = customFeatured
+    ? (lang === 'ar' ? customFeatured.tagsAr : customFeatured.tags)?.filter(Boolean).length
+      ? (lang === 'ar' ? customFeatured.tagsAr! : customFeatured.tags!).filter(Boolean)
+      : (lang === 'ar' ? customFeatured.deliverablesAr : customFeatured.deliverables).slice(0, 4)
+    : lang === 'ar'
+    ? ['إعلانات مدفوعة', 'صفحات هبوط بيعية', 'تأهيل العملاء', 'أتمتة CRM']
+    : ['Lead Generation', 'Landing Page', 'Paid Ads', 'CRM Setup'];
 
   return (
     <>
@@ -145,24 +208,20 @@ const FeaturedProject: React.FC = () => {
             <div className="flex flex-col gap-5">
               <div>
                 <h2 className="text-3xl sm:text-4xl font-black text-[#1E1E1E] dark:text-white leading-tight mb-2">
-                  {t.title}
+                  {displayTitle}
                 </h2>
                 <p className="text-sm font-bold text-[#A78BFA]">
-                  {lang === 'ar' ? 'تجارة إلكترونية وشركات رائدة' : 'D2C Brand / Multi-Channel Growth'}
+                  {displaySubtitle}
                 </p>
               </div>
 
               <p className="text-sm text-[#1E1E1E]/70 dark:text-white/70 leading-relaxed">
-                {t.desc}
+                {displayDesc}
               </p>
 
               {/* Metrics Grid */}
               <div className="grid grid-cols-3 gap-3 my-2">
-                {[
-                  { val: t.metric1Val, lbl: t.metric1Lbl },
-                  { val: t.metric2Val, lbl: t.metric2Lbl },
-                  { val: t.metric3Val, lbl: t.metric3Lbl },
-                ].map((m, idx) => (
+                {displayMetrics.map((m, idx) => (
                   <div key={idx} className="p-3.5 rounded-2xl bg-white dark:bg-[#1E1E1E] border border-[#1E1E1E]/8 dark:border-white/10 text-center">
                     <p className="text-xl font-black text-[#A78BFA]">{m.val}</p>
                     <p className="text-[11px] font-semibold text-[#1E1E1E]/60 dark:text-white/60 mt-1">{m.lbl}</p>
@@ -214,7 +273,7 @@ const FeaturedProject: React.FC = () => {
       </section>
 
       {/* Case Study Full Modal */}
-      <CaseStudyModal study={showModal ? featuredCaseStudyData : null} onClose={() => setShowModal(false)} />
+      <CaseStudyModal study={showModal ? activeModalStudy : null} onClose={() => setShowModal(false)} />
     </>
   );
 };
