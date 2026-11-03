@@ -15,7 +15,7 @@ export const blogService = {
       if (!data) return defaultBlogPosts;
       const parsed: BlogPost[] = JSON.parse(data);
       return parsed.length > 0 ? parsed : defaultBlogPosts;
-    } catch (e) {
+    } catch {
       return defaultBlogPosts;
     }
   },
