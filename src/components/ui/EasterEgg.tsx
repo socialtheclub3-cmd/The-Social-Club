@@ -11,15 +11,30 @@ interface Rocket {
 }
 
 const EasterEgg: React.FC = () => {
-  const [keys, setKeys] = useState<string[]>([]);
+  const [, setKeys] = useState<string[]>([]);
   const [rockets, setRockets] = useState<Rocket[]>([]);
 
   useEffect(() => {
+    const triggerEasterEgg = () => {
+      const newRockets = Array.from({ length: 25 }).map((_, i) => ({
+        id: Date.now() + i,
+        left: `${Math.random() * 90 + 5}%`,
+        delay: Math.random() * 1.5,
+        size: `${Math.random() * 2 + 2}rem`,
+      }));
+
+      setRockets(newRockets);
+
+      setTimeout(() => {
+        setRockets([]);
+      }, 5000);
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) {
         return;
       }
-      
+
       const key = e.key.toLowerCase();
       if (!/^[a-z]$/.test(key)) return;
 
@@ -28,6 +43,10 @@ const EasterEgg: React.FC = () => {
         if (newKeys.length > EASTER_EGG_CODE.length) {
           newKeys.shift();
         }
+        if (newKeys.join('') === EASTER_EGG_CODE) {
+          triggerEasterEgg();
+          return [];
+        }
         return newKeys;
       });
     };
@@ -35,28 +54,6 @@ const EasterEgg: React.FC = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
-
-  useEffect(() => {
-    if (keys.join('') === EASTER_EGG_CODE) {
-      triggerEasterEgg();
-      setKeys([]);
-    }
-  }, [keys]);
-
-  const triggerEasterEgg = () => {
-    const newRockets = Array.from({ length: 25 }).map((_, i) => ({
-      id: Date.now() + i,
-      left: `${Math.random() * 90 + 5}%`, // Keeps them from hitting the very edges
-      delay: Math.random() * 1.5, // Used in framer-motion delay
-      size: `${Math.random() * 2 + 2}rem`,
-    }));
-    
-    setRockets(newRockets);
-
-    setTimeout(() => {
-      setRockets([]);
-    }, 5000);
-  };
 
   return (
     <AnimatePresence>
