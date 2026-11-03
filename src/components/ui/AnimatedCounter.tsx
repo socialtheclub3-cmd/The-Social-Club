@@ -21,21 +21,18 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
   useEffect(() => {
     // If it's a fixed badge like 24/7, display as is without counting
     if (isSpecialRatio) {
-      setDisplayValue(value);
       return;
     }
 
     // Check user preference for reduced motion
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
-      setDisplayValue(value);
       return;
     }
 
     // Extract numerical part and prefix/suffix
     const match = value.match(/^([^0-9]*)(\d+(?:\.\d+)?)(.*)$/);
     if (!match) {
-      setDisplayValue(value);
       return;
     }
 
