@@ -4,17 +4,17 @@ import { useApp } from '../../context/AppContext';
 import { CheckCircle } from 'lucide-react';
 
 const eventsEn = [
-  { name: 'Ahmed from Cairo', action: 'requested a free audit' },
-  { name: 'Tech Startup', action: 'booked the Growth Suite' },
-  { name: 'Sarah from Dubai', action: 'scheduled a consultation' },
-  { name: 'E-commerce Brand', action: 'started a new project' },
+  { name: 'D2C Retail Brand', action: 'requested a free growth audit' },
+  { name: 'Enterprise SaaS Startup', action: 'booked a discovery sprint' },
+  { name: 'Luxury Real Estate Group', action: 'scheduled a strategy consultation' },
+  { name: 'Specialized Healthcare Center', action: 'initiated a new patient lead funnel' },
 ];
 
 const eventsAr = [
-  { name: 'أحمد من القاهرة', action: 'طلب استشارة مجانية' },
-  { name: 'شركة تقنية', action: 'حجزت باقة النمو الشامل' },
-  { name: 'سارة من دبي', action: 'حددت موعد استشارة' },
-  { name: 'متجر إلكتروني', action: 'بدأ مشروع جديد معنا' },
+  { name: 'علامة تجارة إلكترونية (D2C)', action: 'طلبت تدقيقاً مجانياً لإعلاناتها' },
+  { name: 'شركة برمجيات وخدمات B2B', action: 'حجزت جلسة استكشاف استراتيجية' },
+  { name: 'مجموعة استثمار وتسويق عقاري', action: 'حددت موعد استشارة لتوليد المشترين' },
+  { name: 'مركز طبي تخصصي', action: 'أطلق منظومة استقطاب مرضى جديدة' },
 ];
 
 const LiveTicker: React.FC = () => {
