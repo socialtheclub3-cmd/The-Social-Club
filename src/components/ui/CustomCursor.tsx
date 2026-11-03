@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 const CustomCursor: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia('(hover: hover)').matches : false
+  );
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   
@@ -14,9 +16,7 @@ const CustomCursor: React.FC = () => {
 
   useEffect(() => {
     // Only show on devices with hover capability
-    if (window.matchMedia('(hover: hover)').matches) {
-      setIsVisible(true);
-      
+    if (isVisible) {
       const moveCursor = (e: MouseEvent) => {
         cursorX.set(e.clientX);
         cursorY.set(e.clientY);
@@ -42,7 +42,7 @@ const CustomCursor: React.FC = () => {
         window.removeEventListener('mouseover', handleMouseOver);
       };
     }
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, isVisible]);
 
   if (!isVisible) return null;
 
