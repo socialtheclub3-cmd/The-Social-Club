@@ -175,7 +175,7 @@ const InteractiveBackground: React.FC = () => {
       observer.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
-  }, [lang, isMobile]);
+  }, [lang, isMobile, isDark]);
 
   if (isMobile) return null;
 
